@@ -5,12 +5,26 @@
 		<title>Popeye's Game</title>
 
 		<!-- Load game states and js libraries -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.2/EventEmitter.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+		<script type="text/javascript" src="js/MockGameService.js"></script>
+		
+		<script type="text/javascript">
+  
+			// create game service
+			var gameService = new MockGameService({
+			onConnectionError: function (error) {
+			  console.log('[TestCallback]: something went wrong:', error);
+			}
+			});
+
+		</script>
+		
 		<script type="text/javascript" src="../build/phaser.min.js"></script>
 		<script type="text/javascript" src="js/boot.js"></script>
 		<script type="text/javascript" src="js/load.js"></script>
 		<script type="text/javascript" src="js/howtoplay.js"></script>
 		<script type="text/javascript" src="js/waitforplayer.js"></script>
-		<script type="text/javascript" src="js/menu.js"></script>
 		<script type="text/javascript" src="js/play.js"></script>
 		<script type="text/javascript" src="js/win.js"></script>
 		<script type="text/javascript" src="js/game.js"></script>

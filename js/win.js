@@ -19,8 +19,16 @@ var winState = {
 		gameOverText.anchor.set(0.5);
 		
 		// Final Score
-		var winnerText = game.add.text(game.world.centerX, gHeight*.5, 'Winner: ' + gameWinner, { font: '40px Arial', fill: '#ffff33' });
+		var winnerText = game.add.text(game.world.centerX, gHeight*.4, 'Winner: ' + gameWinner, { font: '40px Arial', fill: '#ffff33' });
 		winnerText.anchor.set(0.5);
+		
+		// Game stats
+		var statsText = game.add.text(game.world.centerX, gHeight*.5,
+									  'Game stats:' +
+									  '\nTotal Bubble pops: ' + totalTaps +
+									  '\nTotal Misses: ' + tapMisses +
+									  '\nNo-Tap Warnings: ' + tapWarnings, { font: '30px Arial', fill: '#ffff33' });
+		statsText.anchor.set(0.5);
 		
 		// Final Score
 		//var finalScoreText = game.add.text(game.world.centerX, gHeight*.5, 'Final Score: ' + score, { font: '40px Arial', fill: '#ffff33' });
@@ -33,6 +41,11 @@ var winState = {
 		restartGameButton.width = gWidth*.3;
 		restartGameButton.height = (gWidth*.3)/3;
 		restartGameButton.events.onInputDown.add(this.restartGame, this);
+		
+		// do some clean up
+		gameService.addListener('onLeavingCurrentState', function () {
+			console.log('[TestListener]: leaving win state');
+		});
 	},
 	
 	// Call play state

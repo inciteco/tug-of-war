@@ -5,7 +5,7 @@ var waitforplayerState = {
 	preload: function() {
 		
 		// Start to listen for Player 2
-		this.fetchRemotePlayer();
+		gameService.findOpponent();
 		
 		game.load.image('avatarPic', 'testingAssets/waitingAvatar.png'); // Get waiting Avatar pic
 	},
@@ -47,70 +47,57 @@ var waitforplayerState = {
 		waitingforplayerText = game.add.text(game.world.centerX, gHeight*.5, 'WAITING FOR PLAYER...', { font: '30px Arial', fill: '#fff' });
 		waitingforplayerText.anchor.set(0.5);
 		
+		// Player 2 has arrived, run popPlayer2Obj
+		gameService.addListener('onOpponentArrived', waitforplayerState.popPlayer2Obj);
+		
+		// Start game countdown
+		gameService.addListener('onCountDownStart', waitforplayerState.showCounter); 
+		
+		// do some clean up
+		gameService.addListener('onLeavingCurrentState', function () {
+			
+			gameService.removeListener('onOpponentArrived', waitforplayerState.popPlayer2Obj); // quit this listener
+			gameService.removeListener('onCountDownStart', waitforplayerState.showCounter); // quit this listener
+			
+			console.log('[TestListener]: leaving waitforplayer state');
+		});
+		
 	},
 	
-	// When we're ready for another player to join, call this
-	fetchRemotePlayer: function(forceFailure) {
-		if (forceFailure) {
-			// request cannot be made (assume connection problems, show try again button, etc...)
-			return false;
-		}
-	  
-		// For now, assume player found and load object
-		player2Obj = this.getRemotePlayer(); // populate Player 2 object
-		game.load.image('player2Pic', player2Obj.image); // Get Player 1 pic from object
-		
-		// For now, call it after 3 seconds
-		setTimeout(this.onRemotePlayerArrived, 5000);
+	// Populate Player 2 object
+	popPlayer2Obj: function(opponent) {
+		player2Obj = opponent; // reassign object to global variable
 
-		// request has been made, a user should arrive shortly
-		return true;
-	},
-	
-	onConnectionError: function(error) {
-		console.log('something went wrong: ', error)
-	},
-	
-	onRemotePlayerArrived: function() {
-		
 		waitingforplayerText.text = "PLAYER FOUND!"; // change waiting text
-		
+
 		player2Name.text = player2Obj.name; // change waiting text
 		
+		game.load.image('player2Pic', player2Obj.image); // Get Player 2 pic from object
+
 		avatarPic.kill(); // delete avatarPic and replace it with P2 pic
-		
+
 		// pop in P2 pic
 		player2Pic = game.add.sprite(game.world.centerX+150, gHeight*.4, 'player2Pic');
 		player2Pic.height = 100;
 		player2Pic.width = 100;
 		player2Pic.anchor.set(0.5);
+
+		console.log('[TestListener]: opponent arrived:', player2Obj);
+	},
+	
+	// Show Countdown timer
+	showCounter: function(secondsUntilStart) {
 		
 		// Countdown timer to start game
-		counter = 5; // initialize countdown variable
+		counter = 10; // initialize countdown variable
 		game.time.events.loop(Phaser.Timer.SECOND * 1, waitforplayerState.startGame, this);
-		
+
 		// Countdown text
 		countdownText = game.add.text(game.world.centerX, gHeight*.6, counter, { font: '80px Courier', fill: '#ffffff' });
-		countdownText.anchor.set(0.5);	
-		
-		console.log('remote player arrived:', player2Obj.name);
-		
-		
-		// remote player arrived: {
-		//  image: 'http://service.game.com/player-1.png',
-		//  name: 'remote-player-name'
-		// }
-	},
+		countdownText.anchor.set(0.5);		
+	},	
 	
-	// Get Player 2 data
-	getRemotePlayer: function () {
-	  return {
-		image: 'http://incitemagic.net/brs/phaser/popeyes/testingAssets/sandy.jpg',
-		name: 'Sandy L.'
-	  }
-	},
-	
-	// Call play state
+	// Call play state when countdown finishes
 	startGame: function() {
 		counter = counter-1;
 		countdownText.text = counter;

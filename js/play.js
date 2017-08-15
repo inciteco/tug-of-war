@@ -66,14 +66,44 @@ var playState = {
 
 		// ACTIONS and EVENTS
 			
-			// Temp: Start the game and P2 simulation
-			playState.onGameplayStart();
+			// Game play has started, run this stuff
+			gameService.addListener('onGameplayStart', function () {
+				console.log('[TestListener]: onGameplayStart');
+			});
+		
+			// When opponent moves, do this stuff
+			gameService.addListener('onOpponentMove', function (move) {
+				
+				// update P2 move
+				p2Move = move;
+				chicken.body.velocity.y += p2Move; // adjust chicken velocity
+				console.log('[TestListener]: remote player moved:', move);
+			});
+		
+			// When game is over, do this stuff
+			gameService.addListener('onGameplayEnd', function (userWon) {
+				
+				bgMusic.stop(); // Stop background music
+		
+				// Find out where chicken box is to determine winner
+				if(chicken.position.y > crossbarPos) {
+					gameWinner = player1Obj.name;
+				} else {
+					gameWinner = player2Obj.name;
+				}
+				
+				userWon = gameWinner;
+				
+				game.state.start('win'); // call win state
+				
+				console.log('[TestListener]: onGameplayEnd, user won?', userWon);
+			});
 		
 			// Start the background music
 			bgMusic.play();
 		
 			// Start the timer loop for bubble appear/disappear
-			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);	
+			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);
 		
 			// Get current time for very first tapBubble
 			nowTime = this.time.now;
@@ -81,50 +111,17 @@ var playState = {
 		
 			// When player taps bubble, kill it and update score
 			tapBubble.events.onInputDown.add(this.updateScore, this);
-			tapArea.events.onInputDown.add(this.noScore, this);
+			tapArea.events.onInputDown.add(this.missedBubble, this);
 	},
 
 	update: function() {
 		// If chicken leg crosses threshold, end game
 		if(chicken.position.y >= gHeight-550 || chicken.position.y <= 200) {
-			this.endGame();
+			gameService.endGame();
 		}
 		
 		// If user isn't tapping, give shoutOut and penalize
-		this.notTapping();
-	},
-	
-	// functions and variables to call/declare upon game start
-	onGameplayStart: function() {
-		this.onLeavingCurrentState();
-
-		// start simulating remote player
-		clearInterval(simulateRemotePlayerMoveInterval);
-		simulateRemotePlayerMoveInterval = setInterval(this.simulateRemotePlayerMove, 500);
-
-		// schedule the end of play
-		clearTimeout(endGameTimeout);
-		endGameTimeout = setTimeout(this.endGame, gameDuration);
-
-		console.log('user should be taken to results screen');
-	},
-	
-	// Send Player 1 moves to server
-	makeMove: function(move) {
-		console.log('sending my move to the server:', move); 
-	},
-	
-	// Temp: simulate a player 2 move
-	simulateRemotePlayerMove: function() {
-		p2Move = game.rnd.integerInRange(-3, 1);
-  		playState.onRemotePlayerMove(p2Move);
-	},
-	
-	// gets called whenever remote player makes a move
-	onRemotePlayerMove: function(move) {
-		chicken.body.velocity.y += move;
-	//	console.log('remote player moved:', move);
-		// remote player moved
+		this.notTapping();	
 	},
 
 	// function to create random bubbles
@@ -156,11 +153,12 @@ var playState = {
 	},
 	
 	// function called when P1 taps tapArea and not tapBubble
-	noScore: function() {
+	missedBubble: function() {
 		
 		shoutOutText.kill(); // Destroy response text
-		badTap.play();
-		p1Move = -.5;
+		badTap.play(); // play badTap sound effect
+		p1Move = -.5; // update Player 1 move
+		tapMisses++; // update # of tapMisses
 		chicken.body.velocity.y += p1Move;
 		
 		// Update Total Score and Text
@@ -170,7 +168,7 @@ var playState = {
 			this.updateShoutOutText(scoreValues[7] + "pts \n" + scoreResponse[7]);
 		
 		// Send P1 move to server
-		this.makeMove(p1Move);
+		gameService.makeMove(p1Move);
 	},
 	
 	notTapping: function() {
@@ -181,6 +179,12 @@ var playState = {
 			this.updateShoutOutText("Start Tapping!");
 			p1Move = -.5;
 			chicken.body.velocity.y += p1Move;
+			
+			gameService.makeMove(p1Move); // Send P1 move to server
+			
+			tapWarnings++; // update # of warnings
+			
+			tapTime = game.time.now; // reset time since warning	
 		}
 	},
 
@@ -196,6 +200,10 @@ var playState = {
 		tapTime = game.time.now; // Get time the bubble was popped
 
 		tapScore = tapTime-nowTime; // Calculate speed of bubble pop
+		
+		tapsArray.push(tapScore); // store this tapScore
+		
+		totalTaps++; // update total # of successful taps
 		
 		// Determine speed score for response text and +/- chicken leg velocity
 		switch (true) {
@@ -233,7 +241,7 @@ var playState = {
 		chicken.body.velocity.y += p1Move;
 		
 		// Send P1 move to server
-		this.makeMove(p1Move);
+		gameService.makeMove(p1Move);
 
 		//  Update the total score and give tap response text
 		
@@ -243,7 +251,7 @@ var playState = {
 		
 			this.updateShoutOutText(scoreValues[tmpY] + "pts \n" + scoreResponse[tmpY]);
 			
-		this.newBubble(); // Create a new tap bubble	
+		this.newBubble(); // Create a new tap bubble
 	},
 	
 	// function called to update response text
@@ -257,40 +265,6 @@ var playState = {
 			shoutOutText.anchor.set(0.5);
 		
 			game.add.tween(shoutOutText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true); // Fade out response text	
-	},
-	
-	// Do some clean-up as we leave this state
-	onLeavingCurrentState: function() {
-  		console.log('cleanup phaser state');
-	},
-	
-	endGame: function() {	
-  		console.log('end game called');
-		
-		bgMusic.stop(); // Stop background music
-		
-		// Find out where chicken box is to determine winner
-		if(chicken.position.y > crossbarPos) {
-			gameWinner = player1Obj.name;
-		} else {
-			gameWinner = player2Obj.name;
-		}
-		playState.onGameplayEnd(gameWinner); // start clean up to end game
-	},
-	
-	onGameplayEnd: function(userWon) {
-		playState.onLeavingCurrentState();
-
-		console.log('onGameplayEnd, user won?', userWon);
-
-		// stop simulating remote player
-		clearInterval(simulateRemotePlayerMoveInterval);
-		clearTimeout(endGameTimeout);
-
-		console.log('user should be taken to results screen');
-		
-		// Call win game state
-		game.state.start('win');
 	},
 
 	render: function() {

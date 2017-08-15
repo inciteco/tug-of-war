@@ -32,6 +32,10 @@ var game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	// Gameplay variables
 	var score; // player's total game score
 	var tapScore; // player's per tap score
+	var tapMisses = 0; // how many times a player misses a tapBubble
+	var tapsArray = new Array(); // store tapScores for final tally
+	var tapWarnings = 0; // how many times you were warned to start tapping
+	var totalTaps = 0; // how many successful taps
 	var crossbarPos = gHeight*.365; // position of crossbar
 	var minBall = 80; // min tapBubble h+w
 	var maxBall = 200; // max tapBubble h+w

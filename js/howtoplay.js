@@ -4,7 +4,7 @@ var howtoplayState = {
 	
 	preload: function() {
 		
-		player1Obj = this.getMe(); // populate Player 1 object
+		player1Obj = gameService.getPlayer(); // populate Player 1 object
 		
 		game.load.image('player1Pic', player1Obj.image); // Get Player 1 pic from object
 	},
@@ -37,15 +37,6 @@ var howtoplayState = {
 		findamatchText.anchor.set(0.5);
 		findamatchText.inputEnabled = true;
 		findamatchText.events.onInputDown.add(this.startGame, this);
-	},
-	
-	// Get Player 1 data
-	getMe: function () {
-	  return {
-		token:'secrettoken',
-		image: 'http://incitemagic.net/brs/phaser/popeyes/testingAssets/brs.jpg',
-		name: 'Brett S.'
-	  }
 	},
 	
 	// Call play state
