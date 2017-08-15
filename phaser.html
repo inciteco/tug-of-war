@@ -8,9 +8,9 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.2/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 		<script type="text/javascript" src="js/MockGameService.js"></script>
-		
+
 		<script type="text/javascript">
-  
+
 			// create game service
 			var gameService = new MockGameService({
 			onConnectionError: function (error) {
@@ -19,8 +19,8 @@
 			});
 
 		</script>
-		
-		<script type="text/javascript" src="../build/phaser.min.js"></script>
+
+		<script type="text/javascript" src="js/phaser.min.js"></script>
 		<script type="text/javascript" src="js/boot.js"></script>
 		<script type="text/javascript" src="js/load.js"></script>
 		<script type="text/javascript" src="js/howtoplay.js"></script>
@@ -28,7 +28,7 @@
 		<script type="text/javascript" src="js/play.js"></script>
 		<script type="text/javascript" src="js/win.js"></script>
 		<script type="text/javascript" src="js/game.js"></script>
-	
+
 		<style>
 			* {
 				-webkit-box-sizing: border-box;
@@ -43,11 +43,11 @@
 				margin: 0;
 				padding: 0;
 			}
-			
+
 			#main, body {
-				background: #fff;    
+				background: #fff;
 			}
-			
+
 			#primary{
 /*
 				max-width: 650px;
@@ -62,7 +62,7 @@
 			<div class="wrap">
 				<div id="primary">
 					<div id="popeye-game" role="main">
-					
+
 					</div><!-- #popeye-game -->
 				</div><!-- #primary -->
 			</div><!-- .wrap -->
