@@ -6,8 +6,8 @@
 function MockGameService (options) {
 
   // constants
-  this.COUNTDOWN_SECONDS = 10;
-  this.GAMEPLAY_SECONDS = 30;
+  this.COUNTDOWN_SECONDS = 3; // Brett changed to 3 from 10 for testing
+  this.GAMEPLAY_SECONDS = 45;
 
   // mappings for callbacks
   this.options = options || {};
@@ -93,7 +93,7 @@ function MockGameService (options) {
     // const randomMove = Math.round(Math.random() * 30);
       
 	  // Brett version for now
-	  const randomMove = Math.floor(Math.random()*5) - 3
+	  const randomMove = Math.floor(Math.random()*26) - 15;
 	  
 	  this.onOpponentMove(randomMove);
   }
@@ -168,7 +168,7 @@ function MockGameService (options) {
     // start simulating remote player
     clearInterval(this.state.simulateOpponentMoveInterval);
     this.state.simulateOpponentMoveInterval = setInterval(
-      _.bind(this.simulateOpponentMove, this), 750); // Brett changed from 500 to 750
+      _.bind(this.simulateOpponentMove, this), 1300); // Brett changed from 500 to 1300
 
     // schedule the end of play
     clearTimeout(this.state.gameplayEndTimeout);

@@ -27,7 +27,7 @@ var winState = {
 									  'Game stats:' +
 									  '\nTotal Bubble pops: ' + totalTaps +
 									  '\nTotal Misses: ' + tapMisses +
-									  '\nNo-Tap Warnings: ' + tapWarnings, { font: '30px Arial', fill: '#ffff33' });
+									  '\n"No Tap" Warnings: ' + tapWarnings, { font: '30px Arial', fill: '#ffff33' });
 		statsText.anchor.set(0.5);
 		
 		// Final Score

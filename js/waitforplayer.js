@@ -16,7 +16,7 @@ var waitforplayerState = {
 		game.stage.backgroundColor = '#000';
 
 		// State title
-		var gameTitleText = game.add.text(game.world.centerX, gHeight*.3, 'PHASER: waitforplayer.js', { font: '30px Arial', fill: 'yellow' });
+		var gameTitleText = game.add.text(game.world.centerX, gHeight*.3, 'waitforplayer.js', { font: '30px Arial', fill: 'yellow' });
 		gameTitleText.anchor.set(0.5);
 
 		// Player 1 Pic
@@ -69,44 +69,36 @@ var waitforplayerState = {
 		player2Obj = opponent; // reassign object to global variable
 
 		waitingforplayerText.text = "PLAYER FOUND!"; // change waiting text
+		
+		avatarPic.kill(); // delete avatarPic and replace it with P2 pic
 
 		player2Name.text = player2Obj.name; // change waiting text
 
+		// load an asset outside of the preload function:
+		const loader = new Phaser.Loader(game)
+		loader.image('player2Pic', player2Obj.image);
+		loader.onLoadComplete.addOnce(waitforplayerState.loadComplete);
+		
+		loader.start(); // load the pic
 
-    // load an assets outside of the preload function:
-    const loader = new Phaser.Loader(game)
-    loader.image('player2Pic', player2Obj.image);
-    loader.onLoadComplete.addOnce(function(){
-      // pop in P2 pic
-  		player2Pic = game.add.sprite(game.world.centerX+150, gHeight*.4, 'player2Pic');
-  		player2Pic.height = 100;
-  		player2Pic.width = 100;
-  		player2Pic.anchor.set(0.5);
-    })
-    loader.start()
-
-
-
-
-    game.load.start();
-
-		avatarPic.kill(); // delete avatarPic and replace it with P2 pic
-
-
-		console.log('[TestListener]: opponent arrived:', player2Obj);
+		console.log('Opponent has arrived:', player2Obj);
 	},
 
-  loadComplete: function() {
-    console.log('load completed!!!!!!!!!!!!!!!');
-
-
-  },
+	// load is complete, put it in a sprite
+	loadComplete: function() {
+		// pop in P2 pic
+		player2Pic = game.add.sprite(game.world.centerX+150, gHeight*.4, 'player2Pic');
+		player2Pic.height = 100;
+		player2Pic.width = 100;
+		player2Pic.anchor.set(0.5);
+		console.log('Player 2 pic load completed');
+	},
 
 	// Show Countdown timer
 	showCounter: function(secondsUntilStart) {
 
 		// Countdown timer to start game
-		counter = 10; // initialize countdown variable
+		counter = 3; // initialize countdown variable
 		game.time.events.loop(Phaser.Timer.SECOND * 1, waitforplayerState.startGame, this);
 
 		// Countdown text

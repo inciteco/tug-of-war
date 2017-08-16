@@ -11,9 +11,14 @@ var game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 
 	//  Time and Timers
 	var counter; // countdown to gametime
-	var timerPos; // interval for tapBubble creation
+	var timerPos; // bubble creation timer
+	var timerVal; // interval for tapBubble creation
 	var nowTime; // the exact time a tapBubble is created
 	var tapTime; // the exact time a tapBubble is tapped/destroyed
+	var gameTimer; // full game timer
+	var gameCount = 45; // game length
+	var gameTimerText; // game timer text
+	
 
 	// Text
 	var countdownText; // text for var counter
@@ -36,12 +41,15 @@ var game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var tapsArray = new Array(); // store tapScores for final tally
 	var tapWarnings = 0; // how many times you were warned to start tapping
 	var totalTaps = 0; // how many successful taps
+	var missOrNoTap = -4.5 // velocity penalty for miss or not tapping
+	var threeMisses; // flag for user doing poorly
 	var crossbarPos = gHeight*.365; // position of crossbar
-	var minBall = 80; // min tapBubble h+w
-	var maxBall = 200; // max tapBubble h+w
+	var minBall = 180; // min tapBubble h+w
+	var maxBall = 260; // max tapBubble h+w
 	var randPosX = game.rnd.integerInRange(0, gWidth); // rnd x pos for tapBubble appearance
 	var randPosY = game.rnd.integerInRange(gHeight-300, gHeight-250) // rnd y pos for tapBubble appearance
 	var randSizeXY = game.rnd.integerInRange(minBall, maxBall); // ball size for next tapBubble
+	var randSprite; // instantiate pick a random sprite var
 	var scoreResponse = ["Pathetic!", "So Slow Bro", "Eh, Fine", "Very Nice", "So Good!", "Amazing!", "Incredi-Fast!", "You missed!"]; // array of tap responses
 	var scoreValues = [0, 1, 2, 5, 10, 20, 50, -5]; // array of tap score values
 	

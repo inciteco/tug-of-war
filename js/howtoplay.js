@@ -15,7 +15,7 @@ var howtoplayState = {
 		game.stage.backgroundColor = '#000';
 		
 		// State title
-		var gameTitleText = game.add.text(game.world.centerX, gHeight*.1, 'PHASER: howtoplay.js', { font: '30px Arial', fill: '#ff9900' });
+		var gameTitleText = game.add.text(game.world.centerX, gHeight*.1, 'howtoplay.js', { font: '30px Arial', fill: '#ff9900' });
 		gameTitleText.anchor.set(0.5);
 		
 		// Player 1 Pic
@@ -29,7 +29,7 @@ var howtoplayState = {
 		player1Name.anchor.set(0.5);
 		
 		// How To Play text
-		var howtoplayText = game.add.text(game.world.centerX, gHeight*.5, 'TUG-OF-WAR INSTRUCTIONS:\n\nTap the green circle before it disappears.\n\nThe quicker and more accurate your taps,\nthe stronger your pull on the chicken leg.\n\nFirst player to bring the chicken to their side wins\nOR\nwhoever is ahead after 45 seconds.', { font: '30px Arial', fill: '#fff', align: 'center' });
+		var howtoplayText = game.add.text(game.world.centerX, gHeight*.5, 'TUG-OF-WAR INSTRUCTIONS:\n\nTap the food item before it disappears.\n\nThe quicker and more accurate your taps,\nthe stronger your pull on the chicken leg.\n\nFirst player to bring the chicken to their side wins\nOR\nwhoever is ahead after 45 seconds.', { font: '30px Arial', fill: '#fff', align: 'center' });
 		howtoplayText.anchor.set(0.5);
 		
 		// Find a match text
