@@ -1,11 +1,23 @@
 // Game.js
 
 // Set game height and width to device height and width
-var gWidth = window.innerWidth;
-var gHeight = window.innerHeight;
+
+var gWidth = 1440; // game width per assets
+var gHeight = 2100; // game height per assets
+var gameAspectRatio = 1.45833333; // aspect ratio of game canvas
+var dpr = window.devicePixelRatio; // dpr of device
+var dWidth = window.innerWidth * dpr; // viewport width
+var dHeight = window.innerHeight * dpr; // viewport height
+var dHeightAdj = dHeight-dHeight*.08; // give a little room at the bottom on desktop
+//alert(window.devicePixelRatio+','+dWidth+','+dHeight); // for testing
 
 // Initialize game
-var game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
+var game; // instantiate variable
+
+game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
+
+// properly scale the game
+	//	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
 // Global game variables
 
@@ -19,7 +31,6 @@ var game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var gameCount = 45; // game length
 	var gameTimerText; // game timer text
 	
-
 	// Text
 	var countdownText; // text for var counter
 	var shoutOutText; // tap response text
