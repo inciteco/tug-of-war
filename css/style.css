@@ -15,19 +15,56 @@ div {
 	padding: 0;
 }
 
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
 #main, body {
 	background: #000;
 	color: #fff; /* temp */
+	font-size: 100%;
+	font-family: Helvetica;
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
 	font-family: 'Built Titling Sb';
     font-weight: normal;
     font-style: normal;
 }
 
-#primary {
-	max-width: 300px;
+h2 {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size: 1em;
+	font-weight: 300;
+}
+
+.wrap {
+	max-width: 80%;
 	margin: 0 auto;
-	margin-top: 10%;
+}
+
+#primary {
+	max-width: 400px;
+	margin: 0 auto;
+	margin-top: 3%;
 	text-align: center;
+}
+
+#register {
+	font-size: .9em;
+	margin-top: -10px;
+	margin-bottom: 20px;
+}
+
+#formWrapper {
+	max-width: 400px;
+	margin: 0 auto;
 }
 
 #popeye-game {
@@ -38,4 +75,89 @@ div {
 
 a {
 	color: aqua;
+	text-decoration: underline;
+	cursor: pointer;
 }
+
+
+/* Sign-up form */
+
+#signupForm {
+	max-width: 400px;
+	text-align: left;
+}
+
+#signupForm label.error {
+	color: cyan;
+	padding-left: 2px;
+	font-family: "Lucida Grande", Helvetica, "sans-serif";
+	font-size: 12px;
+	font-style: italic;
+	letter-spacing: 1px;
+	margin-top: 4px;
+	width: 100%;
+	float: left;
+	text-align: left;
+	display: inline-block;
+	vertical-align: top;
+}
+
+input[type="text"], input[type="email"] {	
+	height: 30px;
+	width: 100%;
+	font-size: 18px;
+	margin-bottom: 8px;
+	border: 1px solid #fff;
+	padding-left: 8px;
+	outline: none;
+}
+
+input[type="submit"] {
+	width: 80%;
+	height: 36px;
+	text-align: center;
+	background:#F58426;
+	border: 1px solid #fff;
+	color: #fff;
+	border-radius: 1px;
+
+	display: inline-block;
+	outline: 0;
+
+	font-weight: bold;
+	font-size: 18px;		
+	font-family: 'Built Titling Sb'; !important
+	letter-spacing: 4px;
+}
+
+.checkbox-wrapper {
+	width: 100%;
+	height: 20px;
+	margin-top: 10px;
+}
+
+.checkboxText
+{
+	width: 80%;
+	margin-left: 10px;
+	display: inline-block;
+	vertical-align: bottom;
+	text-align: left;
+	color: #fff;
+	vertical-align: text-top;
+}
+
+#18text {
+	font-size: 1.2em;
+}
+
+#newsletterText, #officialRules, #privacyPolicy {
+	font-size: .8em;
+}
+
+#legalText {
+	margin-top: 40px;
+	font-size: .6em;
+}
+
+

@@ -5,7 +5,7 @@ var playState = {
 	create: function() {
 		
 		// Set play canvas background color
-		game.stage.backgroundColor = '#124184';
+		game.stage.backgroundColor = '#000';
 		
 		// Initialize game variables
 		score = 0; // Player 1 total score
@@ -31,10 +31,6 @@ var playState = {
 			// Tap response text initialization
 			shoutOutText = game.add.text(0, 0, "");
 		
-			// Temp: game state title
-			var stateTitle = game.add.text(gWidth-150, 30, 'play.js', { fontSize: '32px', fill: '#fff' });
-			stateTitle.anchor.set(0.5);
-		
 			// Game timer countdown
 			gameTimerText = game.add.text(20, gHeight-500, 'Time left: ' + 45, {
 				font: "52px Arial",
@@ -44,26 +40,29 @@ var playState = {
 		
 		// Add SPRITES
 		
+			// add game table sprite
+			gameBoard = game.add.sprite(0, 0, 'gameBoard');
+		
 			// Set finger tap area
-			tapArea = game.add.sprite(0,gHeight-400, 'tapArea');
+			tapArea = game.add.sprite(game.world.centerX, 1790, 'tapArea');
 			game.physics.enable(tapArea, Phaser.Physics.ARCADE);
-			tapArea.width = gWidth;
-			tapArea.height = 400;
+			tapArea.width = 1300;
+			tapArea.height = 620;
+			tapArea.anchor.set(0.5);
+			tapArea.alpha = 0;
 			tapArea.inputEnabled = true;
+		
+		
+		
+			bounds = new Phaser.Rectangle(70, 1480, 1300, 540);
+		
+			game.physics.startSystem(Phaser.Physics.P2JS);
+			game.physics.p2.restitution = 0.9;
+
+    		tapArea.body.collideWorldBounds = true;
 		
 			// create a bubble
 			this.createTapBubble();
-
-			// Set tug of war path
-			rail = game.add.sprite(game.world.centerX,200, 'rail');
-			rail.width = 10;
-			rail.height = gHeight-750;
-		
-			// Set tug of war crossbar
-			crossbar = game.add.sprite(game.world.centerX, crossbarPos, 'rail');
-			crossbar.width = gWidth*.8;
-			crossbar.height = 10;
-			crossbar.anchor.set(0.5);
 
 			// Set chicken leg
 			chicken = game.add.sprite(game.world.centerX,gHeight*.35, 'chicken');
@@ -140,6 +139,8 @@ var playState = {
 				chicken.body.velocity.y += 20;
 				break;
 		}
+		
+		game.physics.arcade.collide(tapArea, tapBubble);
 	},
 	
 	// Total game timer
@@ -151,7 +152,8 @@ var playState = {
 	createTapBubble: function() {
 		// Set tap bubbles
 		randSprite = game.rnd.integerInRange(0, 8); // pick a random sprite
-		tapBubble = game.add.sprite(randPosX, randPosY, 'tapBubble', randSprite);
+		tapBubble = game.add.sprite(bounds.randomX, bounds.randomY, 'tapBubble', randSprite);
+        //tapBubble.body.setCircle(16);
 		game.physics.enable(tapBubble, Phaser.Physics.ARCADE);
 		tapBubble.body.collideWorldBounds = true; // keep bubbles within stage
 		tapBubble.width = randSizeXY;

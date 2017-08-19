@@ -6,7 +6,7 @@
 function MockGameService (options) {
 
   // constants
-  this.COUNTDOWN_SECONDS = 3; // Brett changed to 3 from 10 for testing
+  this.COUNTDOWN_SECONDS = 5; // Brett changed to 5 from 10
   this.GAMEPLAY_SECONDS = 45;
 
   // mappings for callbacks
@@ -78,7 +78,7 @@ function MockGameService (options) {
     }
 
     // for now call it after 3 seconds
-    setTimeout(_.bind(this.onOpponentArrived, this), 3000, mockOpponent);
+    setTimeout(_.bind(this.onOpponentArrived, this), 5000, mockOpponent); // Brett temp changed from 3000 to 5000 for styling
 
     // request has been made, a user should arrive shortly
     return true;

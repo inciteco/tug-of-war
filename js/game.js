@@ -16,9 +16,6 @@ var game; // instantiate variable
 
 game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 
-// properly scale the game
-	//	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
 // Global game variables
 
 	//  Time and Timers
@@ -36,14 +33,32 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var shoutOutText; // tap response text
 	var scoreText; // total score text
 	var waitingforplayerText; // text while waiting for Player 2
+	
+	// Fonts
+	var playerNamesFont = { font: '70px Futura', fill: '#fff' };
+	var player2Font = { font: '44px Futura', fill: '#fff' };
+	var bodyFont = { font: '50px Helvetica', fill: '#fff', wordWrap: true, wordWrapWidth: 700, align: 'center' };
+	var tipsFont = { font: '46px Helvetica', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
+	
 
 	// Sprites
 	var tapBubble; // sprite: the bubbles the player taps
-	var tapArea; // sprite: the area where the player taps
+	var tapArea; // sprite: area where player taps
 	var preLoadBar; // sprite: progress loading bar
-	var rail; // sprite: line chickenbox rides on
-	var crossbar; // sprite: middle line for tug of war
 	var chicken; // sprite: chickenbox
+	var gameBoard; // sprite: game table
+	var gameBoardWait; // sprite: low opacity game table
+	var waitingCircle; // sprite: spins while waiting for player
+
+	// Audio
+	var blaster;
+	var bgmusic;
+	var badTap;
+	var under500;
+	var over500;
+	var playerfoundSound;
+	var countdownSound;
+	var playgameSound;
 
 	// Gameplay variables
 	var score; // player's total game score
@@ -55,11 +70,13 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var missOrNoTap = -4.5 // velocity penalty for miss or not tapping
 	var threeMisses; // flag for user doing poorly
 	var crossbarPos = gHeight*.365; // position of crossbar
-	var minBall = 180; // min tapBubble h+w
-	var maxBall = 260; // max tapBubble h+w
-	var randPosX = game.rnd.integerInRange(0, gWidth); // rnd x pos for tapBubble appearance
-	var randPosY = game.rnd.integerInRange(gHeight-300, gHeight-250) // rnd y pos for tapBubble appearance
+	var minBall = 280; // min tapBubble h+w
+	var maxBall = 360; // max tapBubble h+w
+	var randPosX = game.rnd.integerInRange(70, 1370); // rnd x pos for tapBubble appearance
+	var randPosY = game.rnd.integerInRange(1790, gHeight) // rnd y pos for tapBubble appearance
 	var randSizeXY = game.rnd.integerInRange(minBall, maxBall); // ball size for next tapBubble
+	var bounds; // coordinates of tapArea
+	var foodItems; // collision group
 	var randSprite; // instantiate pick a random sprite var
 	var scoreResponse = ["Pathetic!", "So Slow Bro", "Eh, Fine", "Very Nice", "So Good!", "Amazing!", "Incredi-Fast!", "You missed!"]; // array of tap responses
 	var scoreValues = [0, 1, 2, 5, 10, 20, 50, -5]; // array of tap score values
@@ -73,14 +90,16 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var player1Obj; // Player 1 object
 	var player1Pic; // sprite: Player 1 pic
 	var player1Name; // text: Player 1 name
+	var player1Caps; // text: for uppercase names
 	var p1Move; // integer sent to server to move game box
 
 	var player2Obj; // Player 2 object
 	var player2Pic; // sprite: Player 2 pic
 	var player2Name; // text: Player 2 name
+	var player2Caps; // text: for uppercase names
 	var p2Move; // integer sent to server to move game box
 	
-	var avatarPic; // waiting for player pic
+	var waitingPic; // waiting for player pic
 	
 
 // Add game states

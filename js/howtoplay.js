@@ -12,31 +12,37 @@ var howtoplayState = {
 	create: function() {
 		
 		// Set play canvas background color
-		game.stage.backgroundColor = '#000';
-		
-		// State title
-		var gameTitleText = game.add.text(game.world.centerX, gHeight*.1, 'howtoplay.js', { font: '30px Arial', fill: '#ff9900' });
-		gameTitleText.anchor.set(0.5);
+		game.stage.backgroundColor = '#F58426';
 		
 		// Player 1 Pic
-		player1Pic = game.add.sprite(game.world.centerX, gHeight*.2, 'player1Pic');
-		player1Pic.height = 200;
-		player1Pic.width = 200;
+		player1Pic = game.add.sprite(game.world.centerX, 300, 'player1Pic');
+		player1Pic.height = 400;
+		player1Pic.width = 400;
 		player1Pic.anchor.set(0.5);
 		
-		//Player1 Name
-		player1Name = game.add.text(game.world.centerX, gHeight*.29, 'Player 1: ' + player1Obj.name, { font: '24px Arial', fill: '#fff' });
-		player1Name.anchor.set(0.5);
+		// Player1 Name
+		player1Caps = player1Obj.name.toUpperCase();
+		player1Name = game.add.text(0, 0, player1Caps, playerNamesFont);
+    	player1Name.alignTo(player1Pic, Phaser.BOTTOM_CENTER);
+		
+		// "You have entered" Text
+		var youHaveEnteredText = game.add.text(0, 0, 'You have entered the contest and are almost ready to play', bodyFont);
+		youHaveEnteredText.alignTo(player1Name, Phaser.BOTTOM_CENTER, 0, 80);
+		
+		// "Game Tips" Text
+		var gameTipsText = game.add.text(150, 900, 'GAME TIPS', playerNamesFont);
 		
 		// How To Play text
-		var howtoplayText = game.add.text(game.world.centerX, gHeight*.5, 'TUG-OF-WAR INSTRUCTIONS:\n\nTap the food item before it disappears.\n\nThe quicker and more accurate your taps,\nthe stronger your pull on the chicken leg.\n\nFirst player to bring the chicken to their side wins\nOR\nwhoever is ahead after 45 seconds.', { font: '30px Arial', fill: '#fff', align: 'center' });
-		howtoplayText.anchor.set(0.5);
+		var howtoplayText = game.add.text(0, 0, '1) Tap the food item before it disappears.\n\n2) The quicker and more accurate your taps, the stronger your pull on the Big Box.\n\n3) First player to bring the chicken to their side wins, or whoever is ahead after 45 seconds.', tipsFont);
+		howtoplayText.alignTo(gameTipsText, Phaser.BOTTOM_LEFT, 0, 20);
 		
-		// Find a match text
-		var findamatchText = game.add.text(game.world.centerX, gHeight*.75, 'FIND ME AN OPPONENT', { font: '30px Arial', fill: 'aqua' });
-		findamatchText.anchor.set(0.5);
-		findamatchText.inputEnabled = true;
-		findamatchText.events.onInputDown.add(this.startGame, this);
+		
+		// User clicks this to start game
+		var findmatchButton = game.add.sprite(0, 0, 'findmatchButton');
+		findmatchButton.anchor.set(0.5);
+		findmatchButton.inputEnabled = true;
+		findmatchButton.alignTo(howtoplayText, Phaser.BOTTOM_CENTER, 0, 100);
+		findmatchButton.events.onInputDown.add(this.startGame, this);
 	},
 	
 	// Call play state
