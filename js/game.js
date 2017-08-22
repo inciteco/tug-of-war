@@ -8,7 +8,7 @@ var gameAspectRatio = 1.45833333; // aspect ratio of game canvas
 var dpr = window.devicePixelRatio; // dpr of device
 var dWidth = window.innerWidth * dpr; // viewport width
 var dHeight = window.innerHeight * dpr; // viewport height
-var dHeightAdj = dHeight-dHeight*.08; // give a little room at the bottom on desktop
+var dHeightAdj = dHeight-dHeight*.09; // give a little room at the bottom on desktop
 //alert(window.devicePixelRatio+','+dWidth+','+dHeight); // for testing
 
 // Initialize game
@@ -30,7 +30,6 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	
 	// Text
 	var countdownText; // text for var counter
-	var shoutOutText; // tap response text
 	var scoreText; // total score text
 	var waitingforplayerText; // text while waiting for Player 2
 	
@@ -45,10 +44,13 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var tapBubble; // sprite: the bubbles the player taps
 	var tapArea; // sprite: area where player taps
 	var preLoadBar; // sprite: progress loading bar
-	var chicken; // sprite: chickenbox
+	var bigBox; // sprite: bigBox
 	var gameBoard; // sprite: game table
 	var gameBoardWait; // sprite: low opacity game table
 	var waitingCircle; // sprite: spins while waiting for player
+	var popeyesBG; // background image
+	var shoutOuts; // response feedback to player
+	var gameResults; // Winner/Loser graphic
 
 	// Audio
 	var blaster;
@@ -80,6 +82,9 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var randSprite; // instantiate pick a random sprite var
 	var scoreResponse = ["Pathetic!", "So Slow Bro", "Eh, Fine", "Very Nice", "So Good!", "Amazing!", "Incredi-Fast!", "You missed!"]; // array of tap responses
 	var scoreValues = [0, 1, 2, 5, 10, 20, 50, -5]; // array of tap score values
+	var baseY = 875; // used for scaling calculation, this is "0" Y
+	var diffY; // how far away from baseY are we
+	var scaleVal; // how much to scale by
 	
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
 	var gameDuration = 45000; // duration of game
@@ -107,7 +112,6 @@ game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('howtoplay', howtoplayState);
 game.state.add('waitforplayer', waitforplayerState);
-//game.state.add('menu', menuState);
 game.state.add('play', playState);
 game.state.add('win', winState);
 

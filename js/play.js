@@ -22,28 +22,25 @@ var playState = {
 		blaster = game.add.audio('blaster');
 		bgMusic = game.add.audio('bgMusic');
 		badTap = game.add.audio('badTap');
-
-		// TEXT declarations
-		
-			// Total Score text
-			scoreText = game.add.text(10, 10, 'Total score: 0', { fontSize: '32px', fill: '#000' });
-		
-			// Tap response text initialization
-			shoutOutText = game.add.text(0, 0, "");
-		
-			// Game timer countdown
-			gameTimerText = game.add.text(20, gHeight-500, 'Time left: ' + 45, {
-				font: "52px Arial",
-				fill: "#fff",
-				align: "center"
-			});
 		
 		// Add SPRITES
 		
 			// add game table sprite
 			gameBoard = game.add.sprite(0, 0, 'gameBoard');
 		
-			// Set finger tap area
+			// Player 2 Pic Stroke
+			player2Stroke = game.add.sprite(game.world.centerX, 175, 'player1Stroke');
+			player2Stroke.height = 261;
+			player2Stroke.width = 261;
+			player2Stroke.anchor.set(0.5);
+		
+			// Player 2 Pic 
+			player2Pic = game.add.sprite(game.world.centerX, 175, 'player2Pic');
+			player2Pic.height = 255;
+			player2Pic.width = 255;
+			player2Pic.anchor.set(0.5);
+		
+			// Set finger tap area for missed taps
 			tapArea = game.add.sprite(game.world.centerX, 1790, 'tapArea');
 			game.physics.enable(tapArea, Phaser.Physics.ARCADE);
 			tapArea.width = 1300;
@@ -52,24 +49,40 @@ var playState = {
 			tapArea.alpha = 0;
 			tapArea.inputEnabled = true;
 		
+			// Initialize Shoutouts
+			shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', 0);
+			shoutOuts.scale.setTo(.7,.7);
+			shoutOuts.anchor.set(0.5);
+			shoutOuts.visible = false;
 		
-		
+			// Set game boundaries
 			bounds = new Phaser.Rectangle(70, 1480, 1300, 540);
-		
-			game.physics.startSystem(Phaser.Physics.P2JS);
-			game.physics.p2.restitution = 0.9;
-
-    		tapArea.body.collideWorldBounds = true;
+			game.physics.arcade.setBounds(70, 1480, 1300, 540);
 		
 			// create a bubble
 			this.createTapBubble();
 
-			// Set chicken leg
-			chicken = game.add.sprite(game.world.centerX,gHeight*.35, 'chicken');
-			game.physics.enable(chicken, Phaser.Physics.ARCADE);
-			chicken.width = gWidth*.2;
-			chicken.height = chicken.width/1.29;
-			chicken.anchor.set(0.5);
+			// Set bigBox
+			bigBox = game.add.sprite(game.world.centerX, 875, 'bigBox');
+			game.physics.enable(bigBox, Phaser.Physics.ARCADE);
+			bigBox.anchor.set(0.5);
+		
+		// TEXT declarations
+		
+			// Total Score text
+			//scoreText = game.add.text(10, 10, 'Total score: 0', { fontSize: '32px', fill: '#000' });
+		
+			// Player 2 Name 
+			player2Name = game.add.text(0, 0, player2Caps, player2Font);
+			player2Name.anchor.set(0.5);
+			player2Name.alignTo(waitingPic, Phaser.BOTTOM_CENTER, 0, 10);
+		
+			// Game timer countdown
+			gameTimerText = game.add.text(90, 1340, ':' + 45, {
+				font: "bold 110px Arial",
+				fill: "#fff",
+				align: "center"
+			});
 
 		// ACTIONS and EVENTS
 			
@@ -83,7 +96,7 @@ var playState = {
 				
 				// update P2 move
 				p2Move = move;
-				chicken.body.velocity.y += p2Move; // adjust chicken velocity
+				bigBox.body.velocity.y += p2Move; // adjust bigBox velocity
 				console.log('[TestListener]: remote player moved:', move);
 			});
 		
@@ -92,11 +105,12 @@ var playState = {
 				
 				bgMusic.stop(); // Stop background music
 				gameTimer.stop(false); // stop and reset the game timer
+				bigBox.body.velocity.y = 0; // stop the bigBox
 		
-				// Find out where chicken box is to determine winner
-				if(chicken.position.y > crossbarPos) {
+				// Find out where bigBox box is to determine winner
+				if(bigBox.position.y > crossbarPos) {
 					gameWinner = player1Obj.name;
-				} else {
+					} else {
 					gameWinner = player2Obj.name;
 				}
 				
@@ -122,8 +136,19 @@ var playState = {
 	},
 
 	update: function() {
-		// If chicken leg crosses threshold, end game
-		if(chicken.position.y >= gHeight-550 || chicken.position.y <= 200) {
+		// set scaling formula for big box
+		diffY = baseY-bigBox.position.y;
+		if(diffY > 0){
+			scaleVal = 1-(diffY/1400);
+			bigBox.scale.setTo(scaleVal, scaleVal);
+		} else {
+			diffY = Math.abs(diffY);
+			scaleVal = 1+(diffY/2000);
+			bigBox.scale.setTo(scaleVal, scaleVal);
+		}
+		
+		// If bigBox crosses threshold, end game
+		if(bigBox.position.y >= 1290 || bigBox.position.y <= 560) {
 			gameService.endGame();
 		}
 		
@@ -132,33 +157,32 @@ var playState = {
 		
 		// throttle velocity
 		switch (true) {
-			case (chicken.body.velocity.y >= 40):
-				chicken.body.velocity.y += -20;
+			case (bigBox.body.velocity.y >= 40):
+				bigBox.body.velocity.y += -20;
 				break;
-			case (chicken.body.velocity.y <= -40):
-				chicken.body.velocity.y += 20;
+			case (bigBox.body.velocity.y <= -40):
+				bigBox.body.velocity.y += 20;
 				break;
 		}
 		
-		game.physics.arcade.collide(tapArea, tapBubble);
+		//game.physics.arcade.collide(tapArea, tapBubble);
 	},
 	
 	// Total game timer
 	updateGameCounter: function() {
 		gameCount = gameCount-1;
-		gameTimerText.text = 'Time left: ' + gameCount;	
+		gameTimerText.text = ':' + gameCount;	
 	},
 	
 	createTapBubble: function() {
 		// Set tap bubbles
 		randSprite = game.rnd.integerInRange(0, 8); // pick a random sprite
 		tapBubble = game.add.sprite(bounds.randomX, bounds.randomY, 'tapBubble', randSprite);
-        //tapBubble.body.setCircle(16);
 		game.physics.enable(tapBubble, Phaser.Physics.ARCADE);
 		tapBubble.body.collideWorldBounds = true; // keep bubbles within stage
 		tapBubble.width = randSizeXY;
 		tapBubble.height = randSizeXY;
-		tapBubble.anchor.set(0.5);
+		tapBubble.anchor.set(0.5, 0.5);
 		tapBubble.inputEnabled = true;
 		
 		tapBubble.events.onInputDown.add(this.updateScore, this);
@@ -171,9 +195,7 @@ var playState = {
 		
 		nowTime = game.time.now; // Get time the bubble was killed
 		
-		// Set new random position and size for next bubble
-		randPosX = game.rnd.integerInRange(0, gWidth);
-		randPosY = game.rnd.integerInRange(gHeight-300, gHeight-150)
+		// Set size for next bubble
 		randSizeXY = game.rnd.integerInRange(minBall, maxBall);
 
 		// Create new bubble and its physics
@@ -194,20 +216,20 @@ var playState = {
 	// function called when P1 taps tapArea and not tapBubble
 	missedBubble: function() {
 		
-		shoutOutText.kill(); // Destroy response text
+		shoutOuts.kill(); // Destroy response text
 		badTap.play(); // play badTap sound effect
 		p1Move = missOrNoTap; // update Player 1 move
 		tapMisses++; // update # of tapMisses
 		threeMisses++; // add to threeMisses flag
-		chicken.body.velocity.y += p1Move; // update chicken velocity
-		tapArea.tint = 0xff33ff;
-		setTimeout('tapArea.tint = 0xffffff', 100);
+		bigBox.body.velocity.y += p1Move; // update bigBox velocity
+		tapArea.alpha = .4; // brings up alpha error flash
+		setTimeout('tapArea.alpha = 0', 100); // turn off error
 		
 		// Update Total Score and Text
 			score += scoreValues[7]; 
-			scoreText.text = ' Total Score: ' + score; 
+		//	scoreText.text = ' Total Score: ' + score; 
 		
-			this.updateShoutOutText(scoreValues[7] + "pts \n" + scoreResponse[7]);
+			this.updateShoutOut(8);
 		
 		// Send P1 move to server
 		gameService.makeMove(p1Move);
@@ -217,10 +239,10 @@ var playState = {
 		
 		// If 3 seconds have passed, shout and penalize
 		if(tapTime+3000 <= game.time.now) {
-			shoutOutText.kill(); // Destroy response text
-			this.updateShoutOutText("Start Tapping!");
+			shoutOuts.kill(); // Destroy response text
+			this.updateShoutOut(9);
 			p1Move = missOrNoTap;
-			chicken.body.velocity.y += p1Move;
+			bigBox.body.velocity.y += p1Move;
 			
 			gameService.makeMove(p1Move); // Send P1 move to server
 			
@@ -235,7 +257,7 @@ var playState = {
 		
 		threeMisses = 0; // reset threeMisses variable
 		
-		shoutOutText.kill(); // Destroy response text
+		shoutOuts.kill(); // Destroy response text
 		
 		blaster.play(); // Play bubble pop effect
 		
@@ -255,7 +277,7 @@ var playState = {
 		
 		totalTaps++; // update total # of successful taps
 		
-		// Determine speed score for response text and +/- chicken leg velocity
+		// Determine speed score for response text and +/- bigBox leg velocity
 		switch (true) {
 			case (tapScore <= 325):
 				tmpY = 6;
@@ -287,8 +309,8 @@ var playState = {
 				break;		
 		}
 		
-		// update chicken velocity with P1 move
-		chicken.body.velocity.y += p1Move;
+		// update bigBox velocity with P1 move
+		bigBox.body.velocity.y += p1Move;
 		
 		// Send P1 move to server
 		gameService.makeMove(p1Move);
@@ -297,28 +319,28 @@ var playState = {
 		
 			// Update Total Score and Text
 			score += scoreValues[tmpY]; 
-			scoreText.text = ' Total Score: ' + score; 
+		//	scoreText.text = ' Total Score: ' + score; 
 		
-			this.updateShoutOutText(scoreValues[tmpY] + "pts \n" + scoreResponse[tmpY]);
+			this.updateShoutOut(tmpY);
 	},
 	
 	// function called to update response text
-	updateShoutOutText: function(shoutText){
-		// Update tap response text
-		shoutOutText = game.add.text(gWidth-200, gHeight-500, shoutText, {
-			font: "52px Arial",
-			fill: "#fff",
-			align: "center"
-		});
-		shoutOutText.anchor.set(0.5);
+	updateShoutOut: function(shoutOutSprite){
+		// Update Shoutouts
+		shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', shoutOutSprite);
+		shoutOuts.scale.setTo(.7,.7);
+		shoutOuts.anchor.set(0.5);
+		shoutOuts.visible = true;
 
-		game.add.tween(shoutOutText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true); // Fade out response text	
+		game.add.tween(shoutOuts).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true); // Fade out response text	
 	},
 
 	render: function() {
+		game.debug.rectangle(bounds, '#ffffff', false);
 		game.debug.text("Player 1 Move: " + p1Move, 10, 100);
     	game.debug.text("Player 2 Move: " + p2Move, 10, 130);
-		game.debug.text("Chicken Velocity: " + chicken.body.velocity.y, 10, 160);
+		game.debug.text("bigBox Velocity: " + bigBox.body.velocity.y, 10, 160);
+    	game.debug.text("Box position: " + bigBox.position.y, 10, 190);
 
 	}
 }

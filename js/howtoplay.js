@@ -11,8 +11,11 @@ var howtoplayState = {
 	
 	create: function() {
 		
-		// Set play canvas background color
-		game.stage.backgroundColor = '#F58426';
+		// Set play canvas background
+		popeyesBG = game.add.sprite(0, 0, 'popeyesBG');
+		popeyesBG.height = gHeight;
+		popeyesBG.width = gWidth;
+		//game.stage.backgroundColor = '#F58426';
 		
 		// Player 1 Pic
 		player1Pic = game.add.sprite(game.world.centerX, 300, 'player1Pic');

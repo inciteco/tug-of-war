@@ -23,10 +23,13 @@ var bootState = {
 				game.scale.maxWidth = dHeightAdj/gameAspectRatio; // keep aspect ratio of game on desktop
 				game.scale.maxHeight = dHeightAdj; // give some room at the bottom
 			}
-			
-			game.scale.pageAlignHorizontally = true;
-			game.scale.pageAlignVertically = true;
-		} 
+		} else if (dpr == 2) { // mostly retina screens
+				game.scale.maxWidth = (dHeight/gameAspectRatio)/2; // use as much height as possible (ipads)
+				game.scale.maxHeight = dHeight/2; // use as much height as possible (ipads)
+		}
+		
+		game.scale.pageAlignHorizontally = true;
+		game.scale.pageAlignVertically = true;
 		
 		// Start physics engine
 		game.physics.startSystem(Phaser.Physics.ARCADE);

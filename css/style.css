@@ -23,7 +23,6 @@ fieldset {
 }
 
 #main, body {
-	background: #000;
 	color: #fff; /* temp */
 	font-size: 100%;
 	font-family: Helvetica;
@@ -54,6 +53,31 @@ h2 {
 	margin: 0 auto;
 	margin-top: 3%;
 	text-align: center;
+}
+
+.video_container {
+	position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 35px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video_container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#playorshare {
+	margin: 50px auto;
+	text-align: center;
+}
+
+#playButton, #shareButton {
+	display:inline-block;
 }
 
 #register {
