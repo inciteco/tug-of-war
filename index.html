@@ -22,7 +22,11 @@
 			});
 
 			$().ready(function() {
-
+				
+				$('#submitForm').on("click", function () {
+					$('#signupForm').submit();
+				});
+				
 				// validate signup form on keyup and submit
 				$("#signupForm").validate({
 					rules: {
@@ -60,47 +64,34 @@
 		</script>
 		<style>
 			body {
-				background: url("assets/popeyesBG.png") no-repeat center;
+				background: url("finalassets/popeyesCraveBG.jpg") no-repeat center top;
 			}
 		</style>
 	</head>
 
 	<body>
-		<!-- start facebook SDK -->
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=47112855578";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-		<!-- end facebook SDK -->
-		
 		<div id="main">
 			<div class="wrap">
 				<div id="primary">
-					<img src="assets/popeye_logo.png" width="150" alt="Popeye's Chicken Logo" /><br />
-					<h1>BIG BOX CRAVE OFF</h1>
+					<img src="finalassets/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
 					<div id="register">
-						Register below to play Big Box
-						Crave Off and to have a chance to
-						win a year of Popeye's chicken.
+						Log in to play and enter for a chance to win Popeyes for a year
 					</div>
 					
 					<!-- Facebook Login -->
-					<div class="fb-login-button" data-width="200" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+					<div><img src="finalassets/facebookButton.png" /></div>
 					
-					<h2>- OR -</h2>
+					<div id="orText">&mdash; OR &mdash;</div>
 					
 					<!-- E-mail login -->
 					<div id="formWrapper">
 						<fieldset>
 							<form class="cmxform" id="signupForm" method="get" action>
 								<label for="firstname" generated="true" class="error"></label>
+								<label for="lastname" generated="true" class="error"></label>
 								<input id="firstname" name="firstname" placeholder="First Name" type="text" title="firstname">
 
-								<label for="lastname" generated="true" class="error"></label>
+								
 								<input id="lastname" name="lastname" placeholder="Last Name" type="text" title="lastname">
 
 								<label for="email" generated="true" class="error"></label>
@@ -109,7 +100,7 @@
 								<div class="checkbox-wrapper">
 									<input type="checkbox" class="checkbox" id="eightteen" name="eightteen" checked title="eightteen">
 									<div id="18text" class="checkboxText">
-										<label for="eightteen">Are you 18 or over?</label>
+										<label for="eightteen">Yes, I am 18 or over.</label>
 									</div>
 								</div>
 
@@ -119,14 +110,13 @@
 										<label for="newsletter">Yes, I would like to receive future emails from Popeye's&reg; about special offers and promotions. (Optional)</label>
 									</div>
 								</div>
-							</div><!-- #formWrapper -->
-							<div id="legalText">
-								Complete all required fields to register. By registering you are comfirming that you understand and agree to the <a  id="rulesOpener">Official Rules</a> and <a id="privacyOpener">Privacy Policy</a>.
-							</div>
-							<br />
-							<input class="submit" type="submit" value="Submit">
-						</form>
-					</fieldset>
+								<div id="submitButton"><img id="submitForm" src="finalassets/submitButton.png"></div>
+							</form>
+						</fieldset>
+					</div><!-- #formWrapper -->
+					<div id="legalText">
+						Complete all required fields to register. By registering you are comfirming that you understand and agree to the <a  id="rulesOpener">Official Rules</a> & <a id="privacyOpener">Privacy Policy</a>.
+					</div>
 					
 					<!-- Rules modal -->
 					<div id="officialRules" title="OFFICIAL RULES">

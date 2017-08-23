@@ -21,22 +21,29 @@ var winState = {
 		// add game table sprite
 		gameBoardWait = game.add.sprite(0, 0, 'gameBoardWait');
 
-		// Player 2 Pic Stroke
-		player2Stroke = game.add.sprite(game.world.centerX, 175, 'player1Stroke');
-		player2Stroke.height = 261;
-		player2Stroke.width = 261;
-		player2Stroke.anchor.set(0.5);
+		// Player2 Pic Stroke
+		player2PicStroke = game.add.sprite(game.world.centerX, 300, 'playerPicStroke');
+		player2PicStroke.height = 400;
+		player2PicStroke.width = 400;
+		player2PicStroke.anchor.set(0.5);
 
-		// Player 2 Pic 
-		player2Pic = game.add.sprite(game.world.centerX, 175, 'player2Pic');
-		player2Pic.height = 255;
-		player2Pic.width = 255;
+		// Player 2 Pic
+		player2Pic = game.add.sprite(game.world.centerX, 300, 'player2Pic');
+		player2Pic.height = 300;
+		player2Pic.width = 300;
 		player2Pic.anchor.set(0.5);
 
+		// Player 2 mask
+		player2PicMask = game.add.graphics(game.world.centerX, 300);
+		player2PicMask.anchor.set(0.5);
+		player2PicMask.beginFill(0xffffff);
+		player2PicMask.drawCircle(0, 0, 300);
+		player2Pic.mask = player2PicMask;
+		
 		// Player 2 Name 
-		player2Name = game.add.text(0, 0, player2Caps, player2Font);
+		player2Name = game.add.text(0, 0, player2Obj.name, playerNamesFont);
 		player2Name.anchor.set(0.5);
-		player2Name.alignTo(waitingPic, Phaser.BOTTOM_CENTER, 0, 10);
+		player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, 0);
 
 		// Player 1 Pic Shadow
 		player1Shadow = game.add.sprite(game.world.centerX, 1700, 'player1Shadow');

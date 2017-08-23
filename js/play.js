@@ -15,7 +15,7 @@ var playState = {
 		
 		// start game timer
 		gameTimer = game.time.create(false); // create timer
-		gameTimer.loop(1000, this.updateGameCounter, this); // start 1s loop
+		gameTimer.loop(1000, this.updateGameCounter, this); // start 1sec loop
 		gameTimer.start(); // start timer
 
 		// AUDIO Declarations
@@ -23,22 +23,37 @@ var playState = {
 		bgMusic = game.add.audio('bgMusic');
 		badTap = game.add.audio('badTap');
 		
-		// Add SPRITES
+		// add game table sprite
+		gameBoard = game.add.sprite(0, 0, 'gameBoard');
 		
-			// add game table sprite
-			gameBoard = game.add.sprite(0, 0, 'gameBoard');
 		
-			// Player 2 Pic Stroke
-			player2Stroke = game.add.sprite(game.world.centerX, 175, 'player1Stroke');
-			player2Stroke.height = 261;
-			player2Stroke.width = 261;
-			player2Stroke.anchor.set(0.5);
+		// PLAYER 2
 		
-			// Player 2 Pic 
-			player2Pic = game.add.sprite(game.world.centerX, 175, 'player2Pic');
-			player2Pic.height = 255;
-			player2Pic.width = 255;
+			// Player2 Pic Stroke
+			player2PicStroke = game.add.sprite(game.world.centerX, 300, 'playerPicStroke');
+			player2PicStroke.height = 400;
+			player2PicStroke.width = 400;
+			player2PicStroke.anchor.set(0.5);
+
+			// Player 2 Pic
+			player2Pic = game.add.sprite(game.world.centerX, 300, 'player2Pic');
+			player2Pic.height = 300;
+			player2Pic.width = 300;
 			player2Pic.anchor.set(0.5);
+
+			// Player 2 mask
+			player2PicMask = game.add.graphics(game.world.centerX, 300);
+			player2PicMask.anchor.set(0.5);
+			player2PicMask.beginFill(0xffffff);
+			player2PicMask.drawCircle(0, 0, 300);
+			player2Pic.mask = player2PicMask;
+		
+			// Player 2 Name 
+			player2Name = game.add.text(0, 0, player2Obj.name, playerNamesFont);
+			player2Name.anchor.set(0.5);
+			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, 0);
+
+		// GAMEPLAY SPRITES
 		
 			// Set finger tap area for missed taps
 			tapArea = game.add.sprite(game.world.centerX, 1790, 'tapArea');
@@ -48,17 +63,17 @@ var playState = {
 			tapArea.anchor.set(0.5);
 			tapArea.alpha = 0;
 			tapArea.inputEnabled = true;
-		
+
 			// Initialize Shoutouts
 			shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', 0);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);
 			shoutOuts.visible = false;
-		
+
 			// Set game boundaries
 			bounds = new Phaser.Rectangle(70, 1480, 1300, 540);
 			game.physics.arcade.setBounds(70, 1480, 1300, 540);
-		
+
 			// create a bubble
 			this.createTapBubble();
 
@@ -72,11 +87,6 @@ var playState = {
 			// Total Score text
 			//scoreText = game.add.text(10, 10, 'Total score: 0', { fontSize: '32px', fill: '#000' });
 		
-			// Player 2 Name 
-			player2Name = game.add.text(0, 0, player2Caps, player2Font);
-			player2Name.anchor.set(0.5);
-			player2Name.alignTo(waitingPic, Phaser.BOTTOM_CENTER, 0, 10);
-		
 			// Game timer countdown
 			gameTimerText = game.add.text(90, 1340, ':' + 45, {
 				font: "bold 110px Arial",
@@ -84,8 +94,22 @@ var playState = {
 				align: "center"
 			});
 
-		// ACTIONS and EVENTS
+		// ACTIONS, EVENTS, & GAMESERVICES
+		
+			// Start the background music
+			bgMusic.play();
+		
+			// Start the timer loop for bubble appear/disappear
+			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);
+		
+			// Get current time for very first tapBubble
+			nowTime = this.time.now;
+			tapTime = nowTime; //initialize tapTime for notTapping function
+		
+			// Listen for missed taps
+			tapArea.events.onInputDown.add(this.missedBubble, this);
 			
+		
 			// Game play has started, run this stuff
 			gameService.addListener('onGameplayStart', function () {
 				console.log('[TestListener]: onGameplayStart');
@@ -120,22 +144,10 @@ var playState = {
 				
 				console.log('[TestListener]: onGameplayEnd, user won?', userWon);
 			});
-		
-			// Start the background music
-			bgMusic.play();
-		
-			// Start the timer loop for bubble appear/disappear
-			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);
-		
-			// Get current time for very first tapBubble
-			nowTime = this.time.now;
-			tapTime = nowTime; //initialize tapTime for notTapping function
-		
-			// Listen for missed taps
-			tapArea.events.onInputDown.add(this.missedBubble, this);
 	},
 
 	update: function() {
+		
 		// set scaling formula for big box
 		diffY = baseY-bigBox.position.y;
 		if(diffY > 0){
@@ -164,8 +176,6 @@ var playState = {
 				bigBox.body.velocity.y += 20;
 				break;
 		}
-		
-		//game.physics.arcade.collide(tapArea, tapBubble);
 	},
 	
 	// Total game timer
@@ -174,7 +184,9 @@ var playState = {
 		gameTimerText.text = ':' + gameCount;	
 	},
 	
+	// create a random Popeye's item
 	createTapBubble: function() {
+		
 		// Set tap bubbles
 		randSprite = game.rnd.integerInRange(0, 8); // pick a random sprite
 		tapBubble = game.add.sprite(bounds.randomX, bounds.randomY, 'tapBubble', randSprite);
@@ -188,7 +200,7 @@ var playState = {
 		tapBubble.events.onInputDown.add(this.updateScore, this);
 	},
 
-	// function to create random bubbles
+	// function to kill and create new Popeye's items at interval
 	newBubble: function() {
 		
 		tapBubble.kill(); // Destroy bubble
@@ -235,6 +247,7 @@ var playState = {
 		gameService.makeMove(p1Move);
 	},
 	
+	// user is being lazy, not tapping
 	notTapping: function() {
 		
 		// If 3 seconds have passed, shout and penalize
@@ -319,9 +332,9 @@ var playState = {
 		
 			// Update Total Score and Text
 			score += scoreValues[tmpY]; 
-		//	scoreText.text = ' Total Score: ' + score; 
+			//	scoreText.text = ' Total Score: ' + score; 
 		
-			this.updateShoutOut(tmpY);
+			this.updateShoutOut(tmpY); // call shoutOut function
 	},
 	
 	// function called to update response text

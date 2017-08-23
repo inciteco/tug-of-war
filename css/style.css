@@ -25,34 +25,44 @@ fieldset {
 #main, body {
 	color: #fff; /* temp */
 	font-size: 100%;
-	font-family: Helvetica;
+	font-family: Trebuchet MS;
     font-weight: normal;
     font-style: normal;
 }
 
-h1 {
-	font-family: 'Built Titling Sb';
-    font-weight: normal;
-    font-style: normal;
-}
-
-h2 {
-	margin-top: 10px;
+#orText {
+	margin-top: 0px;
 	margin-bottom: 5px;
-	font-size: 1em;
-	font-weight: 300;
+	font-size: 1.2em;
+	font-weight: bold;
 }
 
 .wrap {
-	max-width: 80%;
+	width: 80%;
+	max-width: 700px;
 	margin: 0 auto;
 }
 
-#primary {
+#primary, #shareprimary {
+	width: 100%;
 	max-width: 400px;
 	margin: 0 auto;
-	margin-top: 3%;
+	margin-top: 5%;
 	text-align: center;
+}
+
+#shareprimary {
+	margin-top: 20px;
+}
+
+#primary img, #shareprimary img {
+	width: 90%;
+}
+
+#register {
+	width: 95%;
+	font-size: 1.1em;
+	margin: 20px auto;
 }
 
 .video_container {
@@ -65,29 +75,29 @@ h2 {
 
 .video_container iframe {
     position: absolute;
-    top:0;
+    top: 20px;
     left: 0;
     width: 100%;
     height: 100%;
 }
 
+#seeitinaction {
+	margin: 20px auto 10px;
+	text-align: center;
+	font-size: 1.7em;
+}
+
 #playorshare {
-	margin: 50px auto;
+	margin: 10px auto;
 	text-align: center;
 }
 
-#playButton, #shareButton {
-	display:inline-block;
-}
-
-#register {
-	font-size: .9em;
-	margin-top: -10px;
-	margin-bottom: 20px;
+#playorshare img {
+	margin-top: 10px;
 }
 
 #formWrapper {
-	max-width: 400px;
+	width: 90%;
 	margin: 0 auto;
 }
 
@@ -112,9 +122,9 @@ a {
 }
 
 #signupForm label.error {
-	color: cyan;
+	color: #000;
 	padding-left: 2px;
-	font-family: "Lucida Grande", Helvetica, "sans-serif";
+	font-family: Trebuchet MS;
 	font-size: 12px;
 	font-style: italic;
 	letter-spacing: 1px;
@@ -128,12 +138,18 @@ a {
 
 input[type="text"], input[type="email"] {	
 	height: 30px;
-	width: 100%;
 	font-size: 18px;
 	margin-bottom: 8px;
-	border: 1px solid #fff;
-	padding-left: 8px;
+	border: none;
+	border-bottom: 1px solid #fff;
+	background: none;
+	padding-left: 1px;
 	outline: none;
+	color: #fff;
+	
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border-radius: 0;
 }
 
 input[type="submit"] {
@@ -150,9 +166,39 @@ input[type="submit"] {
 
 	font-weight: bold;
 	font-size: 18px;		
-	font-family: 'Built Titling Sb'; !important
 	letter-spacing: 4px;
 }
+
+input[type="checkbox"] 
+	{
+		display: inline-block;
+		width: 24px;
+		height: 25px;
+		vertical-align: middle;
+		background:url(../finalassets/checkboxes.png) left top no-repeat;
+		cursor: pointer;
+		border: 0;
+		border-style: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		/*appearance: none;*/
+	}
+
+input[type="checkbox"]:checked
+	{
+		display: inline-block;
+		width: 24px;
+		height: 25px;
+		vertical-align: middle;
+		background:url(../finalassets/checkboxes.png) -26px top no-repeat;
+		cursor: pointer;
+		border: 0;
+		border-style: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		/*appearance: none;*/
+	}
+
 
 .checkbox-wrapper {
 	width: 100%;
@@ -162,13 +208,62 @@ input[type="submit"] {
 
 .checkboxText
 {
-	width: 80%;
+	width: 85%;
 	margin-left: 10px;
 	display: inline-block;
-	vertical-align: bottom;
 	text-align: left;
 	color: #fff;
 	vertical-align: text-top;
+}
+
+#firstname {
+	width: 40%;
+}
+
+#lastname {
+	width: 58%;
+}
+
+#email {
+	width: 99.5%;
+}
+
+#firstname, #lastname {
+	display: inline-block;
+}
+
+#submitButton {
+	width: 50%;
+	text-align: center;
+	margin: 40px auto 0px;
+}
+
+::-webkit-input-placeholder 
+{
+	color: #fff;
+	font-style: italic;
+	font-weight: 400;
+}
+
+:-moz-placeholder  
+{
+	color: #fff;
+	font-style: italic;
+	font-weight: 400;
+}
+
+::-moz-placeholder
+{
+	color: #fff;
+	font-style: italic;
+	font-weight: 400;
+}
+
+:-ms-input-placeholder 
+{  
+	color: #fff;
+	font-style: italic;
+	font-weight: 400;
 }
 
 #18text {
@@ -180,8 +275,11 @@ input[type="submit"] {
 }
 
 #legalText {
-	margin-top: 40px;
-	font-size: .6em;
+	width: 95%;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	font-size: .8em;
+	font-style: italic;
 }
 
 

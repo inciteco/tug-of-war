@@ -20,46 +20,60 @@ var waitforplayerState = {
 		
 		// add game table sprite
 		gameBoardWait = game.add.sprite(0, 0, 'gameBoardWait');
-
-		// Player 1 Pic Shadow
-		player1Shadow = game.add.sprite(game.world.centerX, 1700, 'player1Shadow');
-		player1Shadow.height = 426;
-		player1Shadow.width = 426;
-		player1Shadow.anchor.set(0.5);
 		
-		// Player 1 Pic Stroke
-		player1Stroke = game.add.sprite(game.world.centerX, 1694, 'player1Stroke');
-		player1Stroke.height = 354;
-		player1Stroke.width = 354;
-		player1Stroke.anchor.set(0.5);
+		// PLAYER 1
 		
-		// Player 1 Pic
-		player1Pic = game.add.sprite(game.world.centerX, 1694, 'player1Pic');
-		player1Pic.height = 348;
-		player1Pic.width = 348;
-		player1Pic.anchor.set(0.5);
+			// Player1 Pic Stroke
+			player1PicStroke = game.add.sprite(game.world.centerX, 1694, 'playerPicStroke');
+			player1PicStroke.height = 400;
+			player1PicStroke.width = 400;
+			player1PicStroke.anchor.set(0.5);
 
-		//Player 1 Name
-		player1Name = game.add.text(0, 0, player1Caps, playerNamesFont);
-		player1Name.anchor.set(0.5);
-    	player1Name.alignTo(player1Pic, Phaser.BOTTOM_CENTER, 0, 20);
+			// Player 1 Pic
+			player1Pic = game.add.sprite(game.world.centerX, 1694, 'player1Pic');
+			player1Pic.height = 300;
+			player1Pic.width = 300;
+			player1Pic.anchor.set(0.5);
 
-		// Player 2 Pic Stroke
-		player2Stroke = game.add.sprite(game.world.centerX, 175, 'player1Stroke');
-		player2Stroke.height = 261;
-		player2Stroke.width = 261;
-		player2Stroke.anchor.set(0.5);
+			// Player 1 mask
+			playerPicMask = game.add.graphics(game.world.centerX, 1694);
+			playerPicMask.anchor.set(0.5);
+			playerPicMask.beginFill(0xffffff);
+			playerPicMask.drawCircle(0, 0, 300);
+			player1Pic.mask = playerPicMask;
+
+			// Player1 Name
+			//player1Caps = player1Obj.name.toUpperCase();
+			player1Name = game.add.text(0, 0, player1Obj.name, playerNamesFont);
+			player1Name.alignTo(player1PicStroke, Phaser.BOTTOM_CENTER);
 		
-		// Waiting Pic -- will eventually be replaced by Player 2 pic
-		waitingPic = game.add.sprite(game.world.centerX, 175, 'waitingPic');
-		waitingPic.height = 255;
-		waitingPic.width = 255;
-		waitingPic.anchor.set(0.5);
+		
+		// PLAYER 2
+		
+			// Player2 Pic Stroke
+			player2PicStroke = game.add.sprite(game.world.centerX, 300, 'playerPicStroke');
+			player2PicStroke.height = 400;
+			player2PicStroke.width = 400;
+			player2PicStroke.anchor.set(0.5);
 
-		// Player 2 Name -- Initially set to Waiting...
-		player2Name = game.add.text(0, 0, 'OPPONENT', player2Font);
-		player2Name.anchor.set(0.5);
-    	player2Name.alignTo(waitingPic, Phaser.BOTTOM_CENTER, 0, 10);
+			// Waiting Pic
+			waitingPic = game.add.sprite(game.world.centerX, 300, 'waitingPic');
+			waitingPic.height = 300;
+			waitingPic.width = 300;
+			waitingPic.anchor.set(0.5);
+
+			// Player 2 mask
+			player2PicMask = game.add.graphics(game.world.centerX, 300);
+			player2PicMask.anchor.set(0.5);
+			player2PicMask.beginFill(0xffffff);
+			player2PicMask.drawCircle(0, 0, 300);
+			waitingPic.mask = player2PicMask;
+
+			// Player 2 Name -- Initially set to OPPONENT
+			player2Name = game.add.text(0, 0, 'OPPONENT', playerNamesFont);
+			player2Name.anchor.set(0.5);
+			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, 0);
+		
 		
 		// Waiting Circle
 		waitingCircle = game.add.sprite(game.world.centerX, game.world.centerY-160, 'waitingCircle');
@@ -69,21 +83,22 @@ var waitforplayerState = {
 		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'WAITING\nFOR LIVE\nPLAYER', { font: 'bold 110px Arial', fill: '#000', align: 'center' });
 		waitingforplayerText.anchor.set(0.5);
 
-		// Player 2 has arrived, run popPlayer2Obj
-		gameService.addListener('onOpponentArrived', waitforplayerState.popPlayer2Obj);
+		// GAME SERVICES
+		
+			// Player 2 has arrived, run popPlayer2Obj
+			gameService.addListener('onOpponentArrived', waitforplayerState.popPlayer2Obj);
 
-		// Start game countdown
-		gameService.addListener('onCountDownStart', waitforplayerState.playerFound);
+			// Start game countdown
+			gameService.addListener('onCountDownStart', waitforplayerState.playerFound);
 
-		// do some clean up
-		gameService.addListener('onLeavingCurrentState', function () {
+			// do some clean up
+			gameService.addListener('onLeavingCurrentState', function () {
 
-			gameService.removeListener('onOpponentArrived', waitforplayerState.popPlayer2Obj); // quit this listener
-			gameService.removeListener('onCountDownStart', waitforplayerState.playerFound); // quit this listener
+				gameService.removeListener('onOpponentArrived', waitforplayerState.popPlayer2Obj); // quit this listener
+				gameService.removeListener('onCountDownStart', waitforplayerState.playerFound); // quit this listener
 
-			console.log('[TestListener]: leaving waitforplayer state');
-		});
-
+				console.log('[TestListener]: leaving waitforplayer state');
+			});
 	},
 
 	// Populate Player 2 object
@@ -92,8 +107,8 @@ var waitforplayerState = {
 		
 		waitingPic.kill(); // delete waitingPic and replace it with P2 pic
 
-		player2Caps = player2Obj.name.toUpperCase();
-		player2Name.text = player2Caps; // change waiting text
+		//player2Caps = player2Obj.name.toUpperCase();
+		player2Name.text = player2Obj.name; // change waiting text
 
 		// load an asset outside of the preload function:
 		const loader = new Phaser.Loader(game)
@@ -105,13 +120,14 @@ var waitforplayerState = {
 		console.log('Opponent has arrived:', player2Obj);
 	},
 
-	// load is complete, put it in a sprite
+	// load is complete, put player 2 image in a sprite
 	loadComplete: function() {
 		// pop in P2 pic
-		player2Pic = game.add.sprite(game.world.centerX, 175, 'player2Pic');
-		player2Pic.height = 255;
-		player2Pic.width = 255;
+		player2Pic = game.add.sprite(game.world.centerX, 300, 'player2Pic');
+		player2Pic.height = 300;
+		player2Pic.width = 300;
 		player2Pic.anchor.set(0.5);
+		player2Pic.mask = player2PicMask;
 		console.log('Player 2 pic load completed');
 	},
 
@@ -131,7 +147,7 @@ var waitforplayerState = {
 		
 		game.time.events.loop(Phaser.Timer.SECOND * 1, waitforplayerState.startGame, this);
 		
-		waitingforplayerText.kill();
+		waitingforplayerText.kill(); // kill waiting text
 			
 		// Gameplay text
 		gameplayText = game.add.text(game.world.centerX, game.world.centerY-260, 'GAME WILL\nBEGIN IN', { font: 'bold 80px Arial', fill: '#000', align: 'center' });
@@ -145,7 +161,7 @@ var waitforplayerState = {
 	},
 	
 	update: function() {
-		waitingCircle.angle += 1;
+		waitingCircle.angle += 1; // spin waiting circle
 	},
 
 	// Call play state when countdown finishes

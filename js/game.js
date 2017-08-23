@@ -32,12 +32,14 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var countdownText; // text for var counter
 	var scoreText; // total score text
 	var waitingforplayerText; // text while waiting for Player 2
+	var setLoadingText; // loading percentage
 	
 	// Fonts
-	var playerNamesFont = { font: '70px Futura', fill: '#fff' };
-	var player2Font = { font: '44px Futura', fill: '#fff' };
-	var bodyFont = { font: '50px Helvetica', fill: '#fff', wordWrap: true, wordWrapWidth: 700, align: 'center' };
-	var tipsFont = { font: '46px Helvetica', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
+	var playerNamesFont = { font: 'bold 56px Trebuchet MS', fill: '#fff' };
+	var player2Font = { font: '44px Trebuchet MS', fill: '#fff' };
+	var bodyFont = { font: 'italic 46px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 700, align: 'center' };
+	var tipsFont = { font: '56px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
+	var toPlayFont = { font: 'bold 64px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
 	
 
 	// Sprites
@@ -48,9 +50,17 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var gameBoard; // sprite: game table
 	var gameBoardWait; // sprite: low opacity game table
 	var waitingCircle; // sprite: spins while waiting for player
-	var popeyesBG; // background image
 	var shoutOuts; // response feedback to player
 	var gameResults; // Winner/Loser graphic
+	
+	var popeyesBG; // background image
+	var toPlayCard; // card behind game tips
+	var startCravingButton; // button to begin game
+	var whiteLine; // white line separator
+	var player1PicStroke; // background setting for player pics
+	var player1PicMask; // mask to round off player pics
+	var player2PicStroke; // background setting for player pics
+	var player2PicMask; // mask to round off player pics
 
 	// Audio
 	var blaster;
