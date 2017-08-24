@@ -4,7 +4,16 @@ var bootState = {
 	
 	preload: function() {
 		// Load progress bar
-    	game.load.image('preLoadBar',  'assets/loading.png');
+//    	game.load.image('preLoadBar',  'assets/loading.png');
+		
+		// Load background image
+		game.load.image('popeyesBG', 'finalassets/popeyesCraveBG.jpg');
+		
+		// waiting circle shadow
+		game.load.image('waitingCircleShadow', 'finalassets/waitingCircleShadow.png');
+		
+		// waiting circle
+		game.load.image('waitingCircle', 'finalassets/waitingCircle.png');
 	},
 	
 	create: function() {

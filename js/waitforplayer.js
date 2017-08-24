@@ -21,6 +21,11 @@ var waitforplayerState = {
 		// add game table sprite
 		gameBoardWait = game.add.sprite(0, 0, 'gameBoardWait');
 		
+		// mute button
+		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
+		soundToggleButton.inputEnabled = true;
+		soundToggleButton.events.onInputDown.add(this.muteSound, this);
+		
 		// PLAYER 1
 		
 			// Player1 Pic Stroke
@@ -51,29 +56,33 @@ var waitforplayerState = {
 		// PLAYER 2
 		
 			// Player2 Pic Stroke
-			player2PicStroke = game.add.sprite(game.world.centerX, 300, 'playerPicStroke');
-			player2PicStroke.height = 400;
-			player2PicStroke.width = 400;
+			player2PicStroke = game.add.sprite(game.world.centerX, 225, 'playerPicStroke');
+			player2PicStroke.height = 300;
+			player2PicStroke.width = 300;
 			player2PicStroke.anchor.set(0.5);
 
 			// Waiting Pic
-			waitingPic = game.add.sprite(game.world.centerX, 300, 'waitingPic');
-			waitingPic.height = 300;
-			waitingPic.width = 300;
+			waitingPic = game.add.sprite(game.world.centerX, 225, 'waitingPic');
+			waitingPic.height = 225;
+			waitingPic.width = 225;
 			waitingPic.anchor.set(0.5);
 
 			// Player 2 mask
-			player2PicMask = game.add.graphics(game.world.centerX, 300);
+			player2PicMask = game.add.graphics(game.world.centerX, 225);
 			player2PicMask.anchor.set(0.5);
 			player2PicMask.beginFill(0xffffff);
-			player2PicMask.drawCircle(0, 0, 300);
+			player2PicMask.drawCircle(0, 0, 225);
 			waitingPic.mask = player2PicMask;
 
 			// Player 2 Name -- Initially set to OPPONENT
-			player2Name = game.add.text(0, 0, 'OPPONENT', playerNamesFont);
+			player2Name = game.add.text(0, 0, 'Opponent', playerNamesFont);
 			player2Name.anchor.set(0.5);
-			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, 0);
+			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, -10);
 		
+		
+		// Waiting Circle Shadow
+		waitingCircleShadow = game.add.sprite(game.world.centerX, game.world.centerY-135, 'waitingCircleShadow');
+		waitingCircleShadow.anchor.set(0.5);
 		
 		// Waiting Circle
 		waitingCircle = game.add.sprite(game.world.centerX, game.world.centerY-160, 'waitingCircle');
@@ -100,6 +109,16 @@ var waitforplayerState = {
 				console.log('[TestListener]: leaving waitforplayer state');
 			});
 	},
+	
+	muteSound: function() {
+		if (!this.game.sound.mute) {
+			game.sound.mute = true;
+			soundToggleButton.frame = 1;
+		} else {
+			game.sound.mute = false;
+			soundToggleButton.frame = 0;
+		}
+	},
 
 	// Populate Player 2 object
 	popPlayer2Obj: function(opponent) {
@@ -123,9 +142,9 @@ var waitforplayerState = {
 	// load is complete, put player 2 image in a sprite
 	loadComplete: function() {
 		// pop in P2 pic
-		player2Pic = game.add.sprite(game.world.centerX, 300, 'player2Pic');
-		player2Pic.height = 300;
-		player2Pic.width = 300;
+		player2Pic = game.add.sprite(game.world.centerX, 225, 'player2Pic');
+		player2Pic.height = 225;
+		player2Pic.width = 225;
 		player2Pic.anchor.set(0.5);
 		player2Pic.mask = player2PicMask;
 		console.log('Player 2 pic load completed');

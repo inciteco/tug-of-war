@@ -66,6 +66,33 @@
 				margin: 0 auto;
 */
 			}
+			canvas {
+			  -webkit-box-shadow: 2px 3px 7px 2px #333;  
+			  -moz-box-shadow:    2px 3px 7px 2px #333;  
+			  box-shadow:         2px 3px 7px 2px #333;  
+			/* #1 */
+/*
+			  border-left: 5px solid hsl(0, 0%, 40%);
+				border-right: 5px solid hsl(0, 0%, 40%);
+				border-bottom: 5px solid hsl(0, 0%, 40%);
+*/
+
+			  /* #2 */
+/*
+			  padding: 0 5px 5px;
+			  background: hsl(0, 0%, 20%);
+*/
+
+			  /* #3 */
+/*			  outline: 5px solid hsl(0, 0%, 60%);*/
+
+			  /* #4 AND INFINITY!!! (CSS3 only) */
+/*
+			  box-shadow:
+				  0 0 0 10px hsl(0, 0%, 80%),
+				  0 0 0 15px hsl(0, 0%, 90%);
+*/
+			}
 		</style>
 	</head>
 
@@ -73,7 +100,7 @@
 		<div id="main">
 			<div class="wrap">
 				<div id="primary">
-					<div id="popeye-game" role="main">
+					<div class="shadow" id="popeye-game" role="main">
 
 					</div><!-- #popeye-game -->
 				</div><!-- #primary -->

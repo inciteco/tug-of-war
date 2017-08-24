@@ -45,10 +45,11 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	// Sprites
 	var tapBubble; // sprite: the bubbles the player taps
 	var tapArea; // sprite: area where player taps
-	var preLoadBar; // sprite: progress loading bar
 	var bigBox; // sprite: bigBox
 	var gameBoard; // sprite: game table
 	var gameBoardWait; // sprite: low opacity game table
+	var soundToggleButton; // sprite: mute button
+	var waitingCircleShadow; // sprite: shadow behind waiting circle
 	var waitingCircle; // sprite: spins while waiting for player
 	var shoutOuts; // response feedback to player
 	var gameResults; // Winner/Loser graphic
@@ -63,14 +64,15 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var player2PicMask; // mask to round off player pics
 
 	// Audio
-	var blaster;
+	var tapHit;
 	var bgmusic;
-	var badTap;
-	var under500;
-	var over500;
+	var tapMiss;
+	var youLose;
+	var youWin;
 	var playerfoundSound;
 	var countdownSound;
 	var playgameSound;
+	var tenSecsLeft;
 
 	// Gameplay variables
 	var score; // player's total game score
@@ -84,17 +86,15 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var crossbarPos = gHeight*.365; // position of crossbar
 	var minBall = 280; // min tapBubble h+w
 	var maxBall = 360; // max tapBubble h+w
-	var randPosX = game.rnd.integerInRange(70, 1370); // rnd x pos for tapBubble appearance
-	var randPosY = game.rnd.integerInRange(1790, gHeight) // rnd y pos for tapBubble appearance
 	var randSizeXY = game.rnd.integerInRange(minBall, maxBall); // ball size for next tapBubble
 	var bounds; // coordinates of tapArea
-	var foodItems; // collision group
 	var randSprite; // instantiate pick a random sprite var
 	var scoreResponse = ["Pathetic!", "So Slow Bro", "Eh, Fine", "Very Nice", "So Good!", "Amazing!", "Incredi-Fast!", "You missed!"]; // array of tap responses
 	var scoreValues = [0, 1, 2, 5, 10, 20, 50, -5]; // array of tap score values
 	var baseY = 875; // used for scaling calculation, this is "0" Y
 	var diffY; // how far away from baseY are we
 	var scaleVal; // how much to scale by
+	var bigBoxInitScale = .85; // how big is the box
 	
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
 	var gameDuration = 45000; // duration of game

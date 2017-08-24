@@ -19,46 +19,51 @@ var playState = {
 		gameTimer.start(); // start timer
 
 		// AUDIO Declarations
-		blaster = game.add.audio('blaster');
-		bgMusic = game.add.audio('bgMusic');
-		badTap = game.add.audio('badTap');
+		tapHit = game.add.audio('tapHit');
+		bgMusic = game.add.audio('bgMusic', .5); // 2nd param is volume
+		tapMiss = game.add.audio('tapMiss');
+		tenSecsLeft = game.add.audio('tenSecsLeft');
 		
 		// add game table sprite
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
 		
+		// mute button
+		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
+		soundToggleButton.inputEnabled = true;
+		soundToggleButton.events.onInputDown.add(this.muteSound, this);
 		
 		// PLAYER 2
 		
 			// Player2 Pic Stroke
-			player2PicStroke = game.add.sprite(game.world.centerX, 300, 'playerPicStroke');
-			player2PicStroke.height = 400;
-			player2PicStroke.width = 400;
+			player2PicStroke = game.add.sprite(game.world.centerX, 225, 'playerPicStroke');
+			player2PicStroke.height = 300;
+			player2PicStroke.width = 300;
 			player2PicStroke.anchor.set(0.5);
 
 			// Player 2 Pic
-			player2Pic = game.add.sprite(game.world.centerX, 300, 'player2Pic');
-			player2Pic.height = 300;
-			player2Pic.width = 300;
+			player2Pic = game.add.sprite(game.world.centerX, 225, 'player2Pic');
+			player2Pic.height = 225;
+			player2Pic.width = 225;
 			player2Pic.anchor.set(0.5);
 
 			// Player 2 mask
-			player2PicMask = game.add.graphics(game.world.centerX, 300);
+			player2PicMask = game.add.graphics(game.world.centerX, 225);
 			player2PicMask.anchor.set(0.5);
 			player2PicMask.beginFill(0xffffff);
-			player2PicMask.drawCircle(0, 0, 300);
+			player2PicMask.drawCircle(0, 0, 225);
 			player2Pic.mask = player2PicMask;
 		
 			// Player 2 Name 
 			player2Name = game.add.text(0, 0, player2Obj.name, playerNamesFont);
 			player2Name.anchor.set(0.5);
-			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, 0);
+			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, -10);
 
 		// GAMEPLAY SPRITES
 		
 			// Set finger tap area for missed taps
 			tapArea = game.add.sprite(game.world.centerX, 1790, 'tapArea');
 			game.physics.enable(tapArea, Phaser.Physics.ARCADE);
-			tapArea.width = 1300;
+			tapArea.width = 1440;
 			tapArea.height = 620;
 			tapArea.anchor.set(0.5);
 			tapArea.alpha = 0;
@@ -79,6 +84,7 @@ var playState = {
 
 			// Set bigBox
 			bigBox = game.add.sprite(game.world.centerX, 875, 'bigBox');
+			bigBox.scale.setTo(bigBoxInitScale, bigBoxInitScale);
 			game.physics.enable(bigBox, Phaser.Physics.ARCADE);
 			bigBox.anchor.set(0.5);
 		
@@ -88,11 +94,12 @@ var playState = {
 			//scoreText = game.add.text(10, 10, 'Total score: 0', { fontSize: '32px', fill: '#000' });
 		
 			// Game timer countdown
-			gameTimerText = game.add.text(90, 1340, ':' + 45, {
-				font: "bold 110px Arial",
+			gameTimerText = game.add.text(gWidth-50, 45, ':' + 45, {
+				font: "bold 110px Trebuchet MS",
 				fill: "#fff",
 				align: "center"
 			});
+			gameTimerText.anchor.set(1, 0);
 
 		// ACTIONS, EVENTS, & GAMESERVICES
 		
@@ -151,16 +158,16 @@ var playState = {
 		// set scaling formula for big box
 		diffY = baseY-bigBox.position.y;
 		if(diffY > 0){
-			scaleVal = 1-(diffY/1400);
+			scaleVal = bigBoxInitScale-(diffY/1400);
 			bigBox.scale.setTo(scaleVal, scaleVal);
 		} else {
 			diffY = Math.abs(diffY);
-			scaleVal = 1+(diffY/2000);
+			scaleVal = bigBoxInitScale+(diffY/2000);
 			bigBox.scale.setTo(scaleVal, scaleVal);
 		}
 		
 		// If bigBox crosses threshold, end game
-		if(bigBox.position.y >= 1290 || bigBox.position.y <= 560) {
+		if(bigBox.position.y >= 1270 || bigBox.position.y <= 560) {
 			gameService.endGame();
 		}
 		
@@ -178,17 +185,32 @@ var playState = {
 		}
 	},
 	
+	muteSound: function() {
+		if (!this.game.sound.mute) {
+			game.sound.mute = true;
+			soundToggleButton.frame = 1;
+		} else {
+			game.sound.mute = false;
+			soundToggleButton.frame = 0;
+		}
+	},
+	
 	// Total game timer
 	updateGameCounter: function() {
 		gameCount = gameCount-1;
-		gameTimerText.text = ':' + gameCount;	
+		gameTimerText.text = ':' + gameCount;
+		
+		// if 10 seconds left, play ticks
+		if(gameCount <=10) {
+			tenSecsLeft.play();
+		}
 	},
 	
 	// create a random Popeye's item
 	createTapBubble: function() {
 		
 		// Set tap bubbles
-		randSprite = game.rnd.integerInRange(0, 8); // pick a random sprite
+		randSprite = game.rnd.integerInRange(0, 5); // pick a random sprite
 		tapBubble = game.add.sprite(bounds.randomX, bounds.randomY, 'tapBubble', randSprite);
 		game.physics.enable(tapBubble, Phaser.Physics.ARCADE);
 		tapBubble.body.collideWorldBounds = true; // keep bubbles within stage
@@ -229,7 +251,7 @@ var playState = {
 	missedBubble: function() {
 		
 		shoutOuts.kill(); // Destroy response text
-		badTap.play(); // play badTap sound effect
+		tapMiss.play(); // play badTap sound effect
 		p1Move = missOrNoTap; // update Player 1 move
 		tapMisses++; // update # of tapMisses
 		threeMisses++; // add to threeMisses flag
@@ -272,7 +294,7 @@ var playState = {
 		
 		shoutOuts.kill(); // Destroy response text
 		
-		blaster.play(); // Play bubble pop effect
+		tapHit.play(); // Play bubble pop effect
 		
 		// play tap effects
 		tapBubble.loadTexture('afterPulse', 0); // load pulse texture
@@ -339,21 +361,24 @@ var playState = {
 	
 	// function called to update response text
 	updateShoutOut: function(shoutOutSprite){
-		// Update Shoutouts
-		shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', shoutOutSprite);
-		shoutOuts.scale.setTo(.7,.7);
-		shoutOuts.anchor.set(0.5);
-		shoutOuts.visible = true;
+		
+		// Update Shoutouts if Big Box isn't covering them
+		if(bigBox.position.y <=1100) {
+			shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', shoutOutSprite);
+			shoutOuts.scale.setTo(.7,.7);
+			shoutOuts.anchor.set(0.5);
+			shoutOuts.visible = true;
 
-		game.add.tween(shoutOuts).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true); // Fade out response text	
+			game.add.tween(shoutOuts).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true); // Fade out response text	
+		}
 	},
 
 	render: function() {
-		game.debug.rectangle(bounds, '#ffffff', false);
-		game.debug.text("Player 1 Move: " + p1Move, 10, 100);
-    	game.debug.text("Player 2 Move: " + p2Move, 10, 130);
-		game.debug.text("bigBox Velocity: " + bigBox.body.velocity.y, 10, 160);
-    	game.debug.text("Box position: " + bigBox.position.y, 10, 190);
+//		game.debug.rectangle(bounds, '#ffffff', false);
+//		game.debug.text("Player 1 Move: " + p1Move, 10, 100);
+//    	game.debug.text("Player 2 Move: " + p2Move, 10, 130);
+//		game.debug.text("bigBox Velocity: " + bigBox.body.velocity.y, 10, 160);
+//    	game.debug.text("Box position: " + bigBox.position.y, 10, 990);
 
 	}
 }
