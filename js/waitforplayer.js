@@ -19,7 +19,7 @@ var waitforplayerState = {
 		playgameSound = game.add.audio('playgameSound');
 		
 		// add game table sprite
-		gameBoardWait = game.add.sprite(0, 0, 'gameBoardWait');
+		gameBoard = game.add.sprite(0, 0, 'gameBoard');
 		
 		// mute button
 		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
@@ -29,19 +29,19 @@ var waitforplayerState = {
 		// PLAYER 1
 		
 			// Player1 Pic Stroke
-			player1PicStroke = game.add.sprite(game.world.centerX, 1694, 'playerPicStroke');
+			player1PicStroke = game.add.sprite(game.world.centerX, 1740, 'playerPicStroke');
 			player1PicStroke.height = 400;
 			player1PicStroke.width = 400;
 			player1PicStroke.anchor.set(0.5);
 
 			// Player 1 Pic
-			player1Pic = game.add.sprite(game.world.centerX, 1694, 'player1Pic');
+			player1Pic = game.add.sprite(game.world.centerX, 1740, 'player1Pic');
 			player1Pic.height = 300;
 			player1Pic.width = 300;
 			player1Pic.anchor.set(0.5);
 
 			// Player 1 mask
-			playerPicMask = game.add.graphics(game.world.centerX, 1694);
+			playerPicMask = game.add.graphics(game.world.centerX, 1740);
 			playerPicMask.anchor.set(0.5);
 			playerPicMask.beginFill(0xffffff);
 			playerPicMask.drawCircle(0, 0, 300);
@@ -50,25 +50,26 @@ var waitforplayerState = {
 			// Player1 Name
 			//player1Caps = player1Obj.name.toUpperCase();
 			player1Name = game.add.text(0, 0, player1Obj.name, playerNamesFont);
+			player1Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player1Name.alignTo(player1PicStroke, Phaser.BOTTOM_CENTER);
 		
 		
 		// PLAYER 2
 		
 			// Player2 Pic Stroke
-			player2PicStroke = game.add.sprite(game.world.centerX, 225, 'playerPicStroke');
+			player2PicStroke = game.add.sprite(game.world.centerX, 140, 'playerPicStroke');
 			player2PicStroke.height = 300;
 			player2PicStroke.width = 300;
 			player2PicStroke.anchor.set(0.5);
 
 			// Waiting Pic
-			waitingPic = game.add.sprite(game.world.centerX, 225, 'waitingPic');
+			waitingPic = game.add.sprite(game.world.centerX, 140, 'waitingPic');
 			waitingPic.height = 225;
 			waitingPic.width = 225;
 			waitingPic.anchor.set(0.5);
 
 			// Player 2 mask
-			player2PicMask = game.add.graphics(game.world.centerX, 225);
+			player2PicMask = game.add.graphics(game.world.centerX, 140);
 			player2PicMask.anchor.set(0.5);
 			player2PicMask.beginFill(0xffffff);
 			player2PicMask.drawCircle(0, 0, 225);
@@ -76,8 +77,9 @@ var waitforplayerState = {
 
 			// Player 2 Name -- Initially set to OPPONENT
 			player2Name = game.add.text(0, 0, 'Opponent', playerNamesFont);
+			player2Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player2Name.anchor.set(0.5);
-			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, -10);
+			player2Name.alignTo(player2PicStroke, Phaser.BOTTOM_CENTER, 0, -10);
 		
 		
 		// Waiting Circle Shadow
@@ -92,6 +94,7 @@ var waitforplayerState = {
 		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'WAITING\nFOR LIVE\nPLAYER', { font: 'bold 110px Arial', fill: '#000', align: 'center' });
 		waitingforplayerText.anchor.set(0.5);
 
+		
 		// GAME SERVICES
 		
 			// Player 2 has arrived, run popPlayer2Obj
@@ -131,10 +134,18 @@ var waitforplayerState = {
 
 		// load an asset outside of the preload function:
 		const loader = new Phaser.Loader(game)
-		loader.image('player2Pic', player2Obj.image);
-		loader.onLoadComplete.addOnce(waitforplayerState.loadComplete);
 		
+		if(player2Obj.image) {
+			loader.image('player2Pic', player2Obj.image); // load FB pic
+		} else {
+			// Player 2 didn't login via FB, load avatar spritesheet instead
+			loader.spritesheet('player2Pic', 'finalassets/nonFBPlayerPics.png', 225, 225, 8);
+		}
+		
+		loader.onLoadComplete.addOnce(waitforplayerState.loadComplete);
+
 		loader.start(); // load the pic
+		
 
 		console.log('Opponent has arrived:', player2Obj);
 	},
@@ -142,7 +153,8 @@ var waitforplayerState = {
 	// load is complete, put player 2 image in a sprite
 	loadComplete: function() {
 		// pop in P2 pic
-		player2Pic = game.add.sprite(game.world.centerX, 225, 'player2Pic');
+		player2Pic = game.add.sprite(game.world.centerX, 140, 'player2Pic');
+		player2Pic.frame = game.rnd.integerInRange(0,7); // get a random avatar
 		player2Pic.height = 225;
 		player2Pic.width = 225;
 		player2Pic.anchor.set(0.5);
@@ -155,6 +167,7 @@ var waitforplayerState = {
 
 		waitingforplayerText.text = "PLAYER\nFOUND!"; // change waiting text
 		playerfoundSound.play(); // play sound effect
+		waitingCircle.angle = 0; // spin waiting circle
 		
 		// Countdown timer to start game
 		setTimeout(waitforplayerState.showCounter, 2000);

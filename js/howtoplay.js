@@ -51,7 +51,8 @@ var howtoplayState = {
 
 			// Player1 Name
 			//player1Caps = player1Obj.name.toUpperCase();
-			player1Name = game.add.text(0, 0, player1Obj.name, playerNamesFont);
+			player1Name = game.add.text(0, 0, player1Obj.name, playerHowFont);
+			player1Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player1Name.alignTo(player1PicStroke, Phaser.BOTTOM_CENTER);
 		
 		// "You have entered" Text

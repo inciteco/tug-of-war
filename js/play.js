@@ -35,19 +35,19 @@ var playState = {
 		// PLAYER 2
 		
 			// Player2 Pic Stroke
-			player2PicStroke = game.add.sprite(game.world.centerX, 225, 'playerPicStroke');
+			player2PicStroke = game.add.sprite(game.world.centerX, 140, 'playerPicStroke');
 			player2PicStroke.height = 300;
 			player2PicStroke.width = 300;
 			player2PicStroke.anchor.set(0.5);
 
 			// Player 2 Pic
-			player2Pic = game.add.sprite(game.world.centerX, 225, 'player2Pic');
+			player2Pic = game.add.sprite(game.world.centerX, 140, 'player2Pic');
 			player2Pic.height = 225;
 			player2Pic.width = 225;
 			player2Pic.anchor.set(0.5);
 
 			// Player 2 mask
-			player2PicMask = game.add.graphics(game.world.centerX, 225);
+			player2PicMask = game.add.graphics(game.world.centerX, 140);
 			player2PicMask.anchor.set(0.5);
 			player2PicMask.beginFill(0xffffff);
 			player2PicMask.drawCircle(0, 0, 225);
@@ -55,29 +55,29 @@ var playState = {
 		
 			// Player 2 Name 
 			player2Name = game.add.text(0, 0, player2Obj.name, playerNamesFont);
-			player2Name.anchor.set(0.5);
-			player2Name.alignTo(player2PicStroke, Phaser.TOP_CENTER, 0, -10);
+			player2Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
+			player2Name.alignTo(player2PicStroke, Phaser.BOTTOM_CENTER, 0, -10);
 
 		// GAMEPLAY SPRITES
 		
 			// Set finger tap area for missed taps
-			tapArea = game.add.sprite(game.world.centerX, 1790, 'tapArea');
+			tapArea = game.add.sprite(game.world.centerX, 1812, 'tapArea');
 			game.physics.enable(tapArea, Phaser.Physics.ARCADE);
 			tapArea.width = 1440;
-			tapArea.height = 620;
+			tapArea.height = 575;
 			tapArea.anchor.set(0.5);
 			tapArea.alpha = 0;
 			tapArea.inputEnabled = true;
 
 			// Initialize Shoutouts
-			shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', 0);
+			shoutOuts = game.add.sprite(game.world.centerX, 1430, 'shoutOuts', 0);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);
 			shoutOuts.visible = false;
 
 			// Set game boundaries
-			bounds = new Phaser.Rectangle(70, 1480, 1300, 540);
-			game.physics.arcade.setBounds(70, 1480, 1300, 540);
+			bounds = new Phaser.Rectangle(70, 1525, 1300, 540);
+			game.physics.arcade.setBounds(70, 1525, 1300, 540);
 
 			// create a bubble
 			this.createTapBubble();
@@ -94,12 +94,15 @@ var playState = {
 			//scoreText = game.add.text(10, 10, 'Total score: 0', { fontSize: '32px', fill: '#000' });
 		
 			// Game timer countdown
-			gameTimerText = game.add.text(gWidth-50, 45, ':' + 45, {
+			gameTimerText = game.add.text(gWidth-50, 40, ':' + 45, {
 				font: "bold 110px Trebuchet MS",
 				fill: "#fff",
 				align: "center"
 			});
 			gameTimerText.anchor.set(1, 0);
+		
+			timeLeftText = game.add.text(0, 0, 'TIME LEFT', timeLeftFont);
+			timeLeftText.alignTo(gameTimerText, Phaser.BOTTOM_CENTER, 0, -10);
 
 		// ACTIONS, EVENTS, & GAMESERVICES
 		
@@ -167,7 +170,7 @@ var playState = {
 		}
 		
 		// If bigBox crosses threshold, end game
-		if(bigBox.position.y >= 1270 || bigBox.position.y <= 560) {
+		if(bigBox.position.y >= 1345 || bigBox.position.y <= 545) {
 			gameService.endGame();
 		}
 		
@@ -210,7 +213,7 @@ var playState = {
 	createTapBubble: function() {
 		
 		// Set tap bubbles
-		randSprite = game.rnd.integerInRange(0, 5); // pick a random sprite
+		randSprite = game.rnd.integerInRange(0, 8); // pick a random sprite
 		tapBubble = game.add.sprite(bounds.randomX, bounds.randomY, 'tapBubble', randSprite);
 		game.physics.enable(tapBubble, Phaser.Physics.ARCADE);
 		tapBubble.body.collideWorldBounds = true; // keep bubbles within stage
@@ -256,7 +259,7 @@ var playState = {
 		tapMisses++; // update # of tapMisses
 		threeMisses++; // add to threeMisses flag
 		bigBox.body.velocity.y += p1Move; // update bigBox velocity
-		tapArea.alpha = .4; // brings up alpha error flash
+		tapArea.alpha = .6; // brings up alpha error flash
 		setTimeout('tapArea.alpha = 0', 100); // turn off error
 		
 		// Update Total Score and Text
@@ -363,8 +366,8 @@ var playState = {
 	updateShoutOut: function(shoutOutSprite){
 		
 		// Update Shoutouts if Big Box isn't covering them
-		if(bigBox.position.y <=1100) {
-			shoutOuts = game.add.sprite(game.world.centerX, 1385, 'shoutOuts', shoutOutSprite);
+		if(bigBox.position.y <=1145) {
+			shoutOuts = game.add.sprite(game.world.centerX, 1430, 'shoutOuts', shoutOutSprite);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);
 			shoutOuts.visible = true;
@@ -374,7 +377,7 @@ var playState = {
 	},
 
 	render: function() {
-//		game.debug.rectangle(bounds, '#ffffff', false);
+	//	game.debug.rectangle(bounds, '#000', false);
 //		game.debug.text("Player 1 Move: " + p1Move, 10, 100);
 //    	game.debug.text("Player 2 Move: " + p2Move, 10, 130);
 //		game.debug.text("bigBox Velocity: " + bigBox.body.velocity.y, 10, 160);

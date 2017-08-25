@@ -33,13 +33,15 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var scoreText; // total score text
 	var waitingforplayerText; // text while waiting for Player 2
 	var setLoadingText; // loading percentage
+	var timeLeftText; // for "time left"
 	
 	// Fonts
-	var playerNamesFont = { font: 'bold 56px Trebuchet MS', fill: '#fff' };
-	var player2Font = { font: '44px Trebuchet MS', fill: '#fff' };
+	var playerNamesFont = { font: 'bold 60px Trebuchet MS', fill: '#F58426' };
+	var playerHowFont = { font: 'bold 60px Trebuchet MS', fill: '#fff' };
 	var bodyFont = { font: 'italic 46px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 700, align: 'center' };
 	var tipsFont = { font: '56px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
 	var toPlayFont = { font: 'bold 64px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
+	var timeLeftFont = { font: ' 36px Trebuchet MS', fill: '#fff'};
 	
 
 	// Sprites

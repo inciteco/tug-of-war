@@ -27,7 +27,7 @@ var loadState = {
 		game.load.image('startCravingButton', 'finalassets/startCravingButton.png');
 		game.load.image('whiteLine', 'finalassets/whiteLine.png');
 		game.load.image('playerPicStroke', 'finalassets/playerPicStroke.png');
-		game.load.spritesheet('tapBubble', 'finalassets/popeyesItemsSheet.png', 500, 500, 6);
+		game.load.spritesheet('tapBubble', 'finalassets/popeyesItemsSheet.png', 500, 500, 9);
 		game.load.spritesheet('afterPulse', 'finalassets/afterPulse.png', 400, 400, 7);
 		game.load.image('gameWon', 'finalassets/winSplash.png');
 		game.load.image('gameLost', 'finalassets/loseSplash.png');
@@ -36,14 +36,14 @@ var loadState = {
 		game.load.spritesheet('soundToggleButton', 'finalassets/soundToggleButton.png', 98, 98, 2);
 		game.load.spritesheet('nonFBPlayerPics', 'finalassets/nonFBPlayerPics.png', 225, 225, 8);
 		game.load.image('bigBox', 'finalassets/bigBox.png');
+		game.load.image('gameBoard', 'finalassets/gameTable.png');
 		
 		
 		
-		game.load.image('gameBoard', 'testingAssets/gameBoard.jpg');
-		game.load.image('gameBoardWait', 'testingAssets/gameBoardWait.jpg');
+		//game.load.image('gameBoardWait', 'testingAssets/gameBoardWait.jpg');
 		
 		
-		game.load.spritesheet('shoutOuts', 'testingAssets/shoutouts.png', 500, 200, 10);
+		game.load.spritesheet('shoutOuts', 'finalassets/shoutouts.png', 500, 200, 10);
 		
 	
 		// Load audio assets
