@@ -14,7 +14,15 @@ var dHeightAdj = dHeight-dHeight*.09; // give a little room at the bottom on des
 // Initialize game
 var game; // instantiate variable
 
-game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
+game = new Phaser.Game(
+	gWidth,
+	gHeight,
+	Phaser.CANVAS, 	// TODO: test w/ Phaser.AUTO?
+	'popeye-game',
+	null,						//
+	true,						//
+	true						// antialias
+);
 
 // Global game variables
 
@@ -27,14 +35,14 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var gameTimer; // full game timer
 	var gameCount = 45; // game length
 	var gameTimerText; // game timer text
-	
+
 	// Text
 	var countdownText; // text for var counter
 	var scoreText; // total score text
 	var waitingforplayerText; // text while waiting for Player 2
 	var setLoadingText; // loading percentage
 	var timeLeftText; // for "time left"
-	
+
 	// Fonts
 	var playerNamesFont = { font: 'bold 60px Trebuchet MS', fill: '#F58426' };
 	var playerHowFont = { font: 'bold 60px Trebuchet MS', fill: '#fff' };
@@ -42,7 +50,7 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var tipsFont = { font: '56px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
 	var toPlayFont = { font: 'bold 64px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
 	var timeLeftFont = { font: ' 36px Trebuchet MS', fill: '#fff'};
-	
+
 
 	// Sprites
 	var tapBubble; // sprite: the bubbles the player taps
@@ -55,7 +63,7 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var waitingCircle; // sprite: spins while waiting for player
 	var shoutOuts; // response feedback to player
 	var gameResults; // Winner/Loser graphic
-	
+
 	var popeyesBG; // background image
 	var toPlayCard; // card behind game tips
 	var startCravingButton; // button to begin game
@@ -97,7 +105,7 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var diffY; // how far away from baseY are we
 	var scaleVal; // how much to scale by
 	var bigBoxInitScale = .85; // how big is the box
-	
+
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
 	var gameDuration = 45000; // duration of game
 	var endGameTimeout; // game duration object
@@ -115,9 +123,9 @@ game = new Phaser.Game(gWidth, gHeight, Phaser.CANVAS, 'popeye-game');
 	var player2Name; // text: Player 2 name
 	var player2Caps; // text: for uppercase names
 	var p2Move; // integer sent to server to move game box
-	
+
 	var waitingPic; // waiting for player pic
-	
+
 
 // Add game states
 game.state.add('boot', bootState);
@@ -128,4 +136,12 @@ game.state.add('play', playState);
 game.state.add('win', winState);
 
 // call boot state
-game.state.start('boot');
+if (gameService.getPlayer()) {
+	startBootState();
+} else {
+	gameService.addListener('onPlayerReady', startBootState);
+}
+
+function startBootState() {
+	game.state.start('boot');
+}

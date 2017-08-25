@@ -1,26 +1,26 @@
 // Win.js
 
 var winState = {
-	
+
 	create: function() {
-		
+
 		// Audio Declarations
 		youLose = game.add.audio('youLose');
 		youWin = game.add.audio('youWin');
-		
-		
+
+
 		var splash;
-		
+
 		// add game table sprite
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
-		
+
 		// mute button
 		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
 		soundToggleButton.inputEnabled = true;
 		soundToggleButton.events.onInputDown.add(this.muteSound, this);
-		
+
 		if(gameWinner == player1Obj.name){
-			
+
 			// Player1 Pic Stroke
 			player1PicStroke = game.add.sprite(game.world.centerX, 1740, 'playerPicStroke');
 			player1PicStroke.height = 400;
@@ -45,13 +45,13 @@ var winState = {
 			player1Name = game.add.text(0, 0, player1Obj.name, playerNamesFont);
 			player1Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player1Name.alignTo(player1PicStroke, Phaser.BOTTOM_CENTER);
-			
+
 			youWin.play();
 			splash = 'gameWon';
 			setTimeout(winState.callShare, 10000);
-			
+
 		} else {
-			
+
 			// Player2 Pic Stroke
 			player2PicStroke = game.add.sprite(game.world.centerX, 140, 'playerPicStroke');
 			player2PicStroke.height = 300;
@@ -70,32 +70,32 @@ var winState = {
 			player2PicMask.beginFill(0xffffff);
 			player2PicMask.drawCircle(0, 0, 225);
 			player2Pic.mask = player2PicMask;
-		
-			// Player 2 Name 
+
+			// Player 2 Name
 			player2Name = game.add.text(0, 0, player2Obj.name, playerNamesFont);
 			player2Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player2Name.alignTo(player2PicStroke, Phaser.BOTTOM_CENTER, 0, -10);
-			
+
 			youLose.play();
 			splash = 'gameLost';
 			setTimeout(winState.callShare, 7000);
 		}
-		
+
 		// Game Results
 		gameResults = game.add.sprite(game.world.centerX, 875, splash);
 		gameResults.anchor.set(0.5, 0.5);
-		
+
 //		var continueButton = game.add.sprite(game.world.centerX, 1300, 'continueButton');
 //		continueButton.anchor.set(0.5);
 //		continueButton.inputEnabled = true;
 //		continueButton.events.onInputDown.add(this.callShare, this);
-		
+
 		// do some clean up
 		gameService.addListener('onLeavingCurrentState', function () {
-			console.log('[TestListener]: leaving win state');
+			console.log('[WinState]: leaving win state');
 		});
 	},
-	
+
 	muteSound: function() {
 		if (!this.game.sound.mute) {
 			game.sound.mute = true;
@@ -105,10 +105,10 @@ var winState = {
 			soundToggleButton.frame = 0;
 		}
 	},
-	
+
 	// Call share state
 	callShare: function() {
-		window.location = "share.html";
+		//window.location = "share.html";
 		//game.state.start('share');
 	},
 };

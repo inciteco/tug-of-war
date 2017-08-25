@@ -5,15 +5,20 @@
 		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
 		<meta name="viewport" content="user-scalable=no,  initial-scale=1,  maximum-scale=1,  width=device-width" />
 		<title>Popeye's Game</title>
-	
+
 		<!-- Load js libraries and styles -->
 		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    	<link rel="stylesheet" href="css/jquery-ui.min.css">
-    	<link rel="stylesheet" href="css/fonts.css">
-    	<link rel="stylesheet" href="css/style.css">
-    	
+    <script type="text/javascript" src="js/lib/firebase.js"></script>
+    <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
+		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
+		<script type="text/javascript" src="js/GameService.js"></script>
+
+  	<link rel="stylesheet" href="css/jquery-ui.min.css">
+  	<link rel="stylesheet" href="css/fonts.css">
+  	<link rel="stylesheet" href="css/style.css">
+
     	<script>
 			$.validator.setDefaults({
 				submitHandler: function() {
@@ -22,11 +27,11 @@
 			});
 
 			$().ready(function() {
-				
+
 				$('#submitForm').on("click", function () {
 					$('#signupForm').submit();
 				});
-				
+
 				// validate signup form on keyup and submit
 				$("#signupForm").validate({
 					rules: {
@@ -77,12 +82,12 @@
 					<div id="register">
 						Log in to play and enter for a chance to win Popeyes for a year
 					</div>
-					
+
 					<!-- Facebook Login -->
 					<div><img src="finalassets/facebookButton.png" /></div>
-					
+
 					<div id="orText">&mdash; OR &mdash;</div>
-					
+
 					<!-- E-mail login -->
 					<div id="formWrapper">
 						<fieldset>
@@ -91,7 +96,7 @@
 								<label for="lastname" generated="true" class="error"></label>
 								<input id="firstname" name="firstname" placeholder="First Name" type="text" title="firstname">
 
-								
+
 								<input id="lastname" name="lastname" placeholder="Last Name" type="text" title="lastname">
 
 								<label for="email" generated="true" class="error"></label>
@@ -117,12 +122,12 @@
 					<div id="legalText">
 						Complete all required fields to register. By registering you are comfirming that you understand and agree to the <a  id="rulesOpener">Official Rules</a> & <a id="privacyOpener">Privacy Policy</a>.
 					</div>
-					
+
 					<!-- Rules modal -->
 					<div id="officialRules" title="OFFICIAL RULES">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet nisi nisl. Aliquam quam leo, posuere nec dui eget, vehicula tristique lectus. Integer ac nulla quis nisi consectetur suscipit. Morbi eu quam quis risus volutpat ornare. Aenean sagittis laoreet justo ac euismod. Nam ut euismod odio, vitae pulvinar urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus fringilla cursus elit vitae euismod. Vestibulum gravida tempus metus, eu ullamcorper dolor pulvinar vel. Nullam tristique, sapien a scelerisque hendrerit, leo nunc auctor sapien, in eleifend odio felis quis risus. Praesent venenatis ligula non diam lacinia imperdiet. Morbi a leo sit amet augue lacinia cursus.
 					</div>
-					
+
 					<!-- Privacy modal -->
 					<div id="privacyPolicy" title="PRIVACY POLICY">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet nisi nisl. Aliquam quam leo, posuere nec dui eget, vehicula tristique lectus. Integer ac nulla quis nisi consectetur suscipit. Morbi eu quam quis risus volutpat ornare. Aenean sagittis laoreet justo ac euismod. Nam ut euismod odio, vitae pulvinar urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus fringilla cursus elit vitae euismod. Vestibulum gravida tempus metus, eu ullamcorper dolor pulvinar vel. Nullam tristique, sapien a scelerisque hendrerit, leo nunc auctor sapien, in eleifend odio felis quis risus. Praesent venenatis ligula non diam lacinia imperdiet. Morbi a leo sit amet augue lacinia cursus.
@@ -136,7 +141,7 @@
 						position: { my: "center bottom", at: "top", of: "#legalText" },
 						//show: { effect: "drop", direction: "down" }
 					});
-						
+
 					$( "#privacyPolicy" ).dialog({
 						autoOpen: false,
 						draggable: false,
@@ -144,16 +149,16 @@
 						position: { my: "center bottom", at: "top", of: "#legalText" },
 						//show: { effect: "drop", direction: "down" }
 					});
-					
-					// call this to Rules modal	
+
+					// call this to Rules modal
 					$( "#rulesOpener" ).click(function() {
 					  $( "#officialRules" ).dialog( "open" );
 					});
-						
-					// call this to Privacy modal	
+
+					// call this to Privacy modal
 					$( "#privacyOpener" ).click(function() {
 					  $( "#privacyPolicy" ).dialog( "open" );
-					});	
+					});
 					</script>
 				</div><!-- #primary -->
 			</div><!-- .wrap -->
