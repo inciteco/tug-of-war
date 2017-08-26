@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "http-server ./public/",
+    "deploy": "firebase deploy",
     "ngrok": "ngrok http 8080 -subdomain=popeyes-tug-o-war.ngrok.io",
     "compress": "imagemin src/assets/images/* --out-dir=public/assets/images"
   },
