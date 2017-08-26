@@ -20,6 +20,7 @@ function GameService (enableLogging) {
   // constants
   this.COUNTDOWN_SECONDS = 10;
   this.GAMEPLAY_SECONDS = 60;
+  this.WINNING_SCORE_THRESHOLD = 100;
 
   // shared state
   this.state = this.defaultState = {
@@ -181,10 +182,13 @@ function GameService (enableLogging) {
     this.checkForOpponentArrived(game);
     this.checkIfStartScheduled(game);
     this.setScore(game);
+    this.checkScoreThresholdReached(game);
   }
 
   this.setScore = function (game) {
-    // TODO: reject if game over?
+    if (!game.player_1_score || !game.player_2_score) {
+      return;
+    }
 
     const playingAsPlayer1 = this.state.player_is_host;
 
@@ -213,6 +217,18 @@ function GameService (enableLogging) {
     }
 
     this.emit('onScoreChanged', this.state.score);
+  }
+
+  this.checkScoreThresholdReached = function (game) {
+    if (isNaN(this.state.score)) {
+      return;
+    }
+
+    if (Math.abs(this.state.score) < this.WINNING_SCORE_THRESHOLD) {
+      return;
+    }
+
+    this.endGame();
   }
 
   this.checkForOpponentArrived = function (game) {

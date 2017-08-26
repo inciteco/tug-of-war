@@ -29,6 +29,10 @@ gameService.signOut()
 - [x] make sure touch is working on login on mobile
 - [x] compress image and audio assets
 - [x] add logout
+- [x] determine winner by greater score
+- [x] determine winner during tie
+- [x] win when score > threshold
+- [ ] ensure gameService timer durations are used in Phaser
 - [ ] add loading state to login while async auth-login attempts
 - [ ] add loading state while processing login (takes a few moments)
 - [ ] use browserify/webpack to minify and obfuscate source code
