@@ -175,7 +175,7 @@ input[type="checkbox"]
 		width: 24px;
 		height: 25px;
 		vertical-align: middle;
-		background:url(../finalassets/checkboxes.png) left top no-repeat;
+		background:url(../assets/finalassets/checkboxes.png) left top no-repeat;
 		cursor: pointer;
 		border: 0;
 		border-style: none;
@@ -190,7 +190,7 @@ input[type="checkbox"]:checked
 		width: 24px;
 		height: 25px;
 		vertical-align: middle;
-		background:url(../finalassets/checkboxes.png) -26px top no-repeat;
+		background:url(../assets/finalassets/checkboxes.png) -26px top no-repeat;
 		cursor: pointer;
 		border: 0;
 		border-style: none;

@@ -6,14 +6,14 @@
 		<title>Popeye's Game</title>
 
 		<!-- Load js libraries for game service -->
-		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-
-		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
     <script type="text/javascript" src="js/lib/firebase.js"></script>
-		<script type="text/javascript" src="js/GameService.js"></script>
+		<script type="text/javascript" src="js/lib/phaser.min.js"></script>
+		<script type="text/javascript" src="js/services/GameService.js"></script>
 
 		<script type="text/javascript">
 
@@ -37,13 +37,12 @@
 		</script>
 
 		<!-- Load game states -->
-		<script type="text/javascript" src="js/phaser.min.js"></script>
-		<script type="text/javascript" src="js/boot.js"></script>
-		<script type="text/javascript" src="js/load.js"></script>
-		<script type="text/javascript" src="js/howtoplay.js"></script>
-		<script type="text/javascript" src="js/waitforplayer.js"></script>
-		<script type="text/javascript" src="js/play.js"></script>
-		<script type="text/javascript" src="js/win.js"></script>
+		<script type="text/javascript" src="js/game-states/boot.js"></script>
+		<script type="text/javascript" src="js/game-states/load.js"></script>
+		<script type="text/javascript" src="js/game-states/howtoplay.js"></script>
+		<script type="text/javascript" src="js/game-states/waitforplayer.js"></script>
+		<script type="text/javascript" src="js/game-states/play.js"></script>
+		<script type="text/javascript" src="js/game-states/win.js"></script>
 		<script type="text/javascript" src="js/game.js"></script>
 
 		<style>

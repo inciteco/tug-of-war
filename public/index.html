@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<title>Popeye's Game</title>
 
 		<!-- Load js libraries and styles -->
-		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/firebase.js"></script>
     <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
-		<script type="text/javascript" src="js/GameService.js"></script>
+		<script type="text/javascript" src="js/services/GameService.js"></script>
 
 		<script type="text/javascript">
 			console.log(GameService);
@@ -95,7 +94,7 @@
 		</script>
 		<style>
 			body {
-				background: url("finalassets/popeyesCraveBG.jpg") no-repeat center top;
+				background: url("assets/finalassets/popeyesCraveBG.jpg") no-repeat center top;
 			}
 		</style>
 	</head>
@@ -104,14 +103,14 @@
 		<div id="main">
 			<div class="wrap">
 				<div id="primary">
-					<img src="finalassets/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
+					<img src="assets/finalassets/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
 					<div id="register">
 						Log in to play and enter for a chance to win Popeyes for a year
 					</div>
 
 					<!-- Facebook Login -->
 					<div id="facebookLogin">
-						<img src="finalassets/facebookButton.png" />
+						<img src="assets/finalassets/facebookButton.png" />
 					</div>
 
 					<div id="orText">&mdash; OR &mdash;</div>
@@ -143,7 +142,7 @@
 										<label for="newsletter">Yes, I would like to receive future emails from Popeye's&reg; about special offers and promotions. (Optional)</label>
 									</div>
 								</div>
-								<div id="submitButton"><img id="submitForm" src="finalassets/submitButton.png"></div>
+								<div id="submitButton"><img id="submitForm" src="assets/finalassets/submitButton.png"></div>
 							</form>
 						</fieldset>
 					</div><!-- #formWrapper -->

@@ -7,13 +7,13 @@ var bootState = {
 //    	game.load.image('preLoadBar',  'assets/loading.png');
 
 		// Load background image
-		game.load.image('popeyesBG', 'finalassets/popeyesCraveBG.jpg');
+		game.load.image('popeyesBG', 'assets/finalassets/popeyesCraveBG.jpg');
 
 		// waiting circle shadow
-		game.load.image('waitingCircleShadow', 'finalassets/waitingCircleShadow.png');
+		game.load.image('waitingCircleShadow', 'assets/finalassets/waitingCircleShadow.png');
 
 		// waiting circle
-		game.load.image('waitingCircle', 'finalassets/waitingCircle.png');
+		game.load.image('waitingCircle', 'assets/finalassets/waitingCircle.png');
 	},
 
 	create: function() {
