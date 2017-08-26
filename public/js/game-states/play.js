@@ -10,7 +10,9 @@ var playState = {
 		// Initialize game variables
 		score = 0; // Player 1 total score
 		timerVal = .9; // initial seconds interval for bubble appearance
-		gameCount = 45 // duration of game
+
+		// TODO: to account for latency, we can use deltas from gameService
+		gameCount = gameService.GAMEPLAY_SECONDS // duration of game
 		threeMisses = 0; // initial threeMisses variable
 
 		// start game timer
@@ -94,7 +96,7 @@ var playState = {
 			//scoreText = game.add.text(10, 10, 'Total score: 0', { fontSize: '32px', fill: '#000' });
 
 			// Game timer countdown
-			gameTimerText = game.add.text(gWidth-50, 40, ':' + 45, {
+			gameTimerText = game.add.text(gWidth-50, 40, ':' + gameCount, {
 				font: "bold 110px Trebuchet MS",
 				fill: "#fff",
 				align: "center"
@@ -144,8 +146,10 @@ var playState = {
 			window.tug = tug;
 
 			// Game play has started, run this stuff
-			gameService.addListener('onGameplayStart', function () {
+			gameService.addListener('onGameplayStart', function (secondsRemaining) {
 				console.log('[PlayState]: onGameplayStart');
+
+				gameCount = Math.floor(secondsRemaining);
 			});
 
 			// When player1Obj moves, do this stuff

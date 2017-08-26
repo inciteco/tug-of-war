@@ -254,7 +254,7 @@ function GameService (enableLogging) {
       !game.game_winner_was_host;
 
     this.log('game has ended! playerWon:', playerWon);
-    
+
     this.onGameplayEnd(playerWon);
 
     return true;
@@ -594,17 +594,17 @@ function GameService (enableLogging) {
     // calculate this to account for latency
     const now = new Date();
     const ends = new Date(Date.parse(this.state.game_end_time));
-    const diff = (ends.getTime() - now.getTime()) / 1000;
+    const secondsRemaining = (ends.getTime() - now.getTime()) / 1000;
 
-    this.log('game end scheduled for', diff, 'seconds from now');
+    this.log('game end scheduled for', secondsRemaining, 'seconds from now');
 
     clearTimeout(this.state.gameplayEndTimeout);
     this.state.gameplayEndTimeout = setTimeout(
       _.bind(this.endGame, this),
-      diff * 1000);
+      secondsRemaining * 1000);
 
     // emit
-    this.emit('onGameplayStart');
+    this.emit('onGameplayStart', secondsRemaining);
   }
 
   // gets called whenever opponent move is synced from db

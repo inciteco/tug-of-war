@@ -50,7 +50,7 @@ gameService.signOut()
 - [x] compress image assets
 - [ ] swap png assets for jpg where appropriate
 - [ ] compress audio assets
-- [ ] ensure gameService timer durations are used in Phaser
+- [x] ensure gameService timer durations are used in Phaser
 - [ ] add loading state to login while async auth-login attempts
 - [ ] add loading state while processing login (takes a few moments)
 - [ ] use browserify/webpack to minify and obfuscate source code
