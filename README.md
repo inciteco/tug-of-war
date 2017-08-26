@@ -8,6 +8,14 @@ cd tug-of-war && npm install
 npm start
 ```
 
+## deploy
+
+```
+npm install -g firebase-tools
+firebase init
+firebase deploy
+```
+
 ## notes
 
 You can logout via the developer console with:
