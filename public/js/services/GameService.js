@@ -179,6 +179,11 @@ function GameService (enableLogging) {
       return;
     }
 
+    if (this.checkGameEnded(game)) {
+      this.log('game has ended!');
+      return;
+    }
+
     this.checkForOpponentArrived(game);
     this.checkIfStartScheduled(game);
     this.setScore(game);
@@ -220,6 +225,14 @@ function GameService (enableLogging) {
   }
 
   this.checkScoreThresholdReached = function (game) {
+    if (game.game_ended) {
+      return;
+    }
+
+    if (!this.state.player_is_host) {
+      return;
+    }
+
     if (isNaN(this.state.score)) {
       return;
     }
@@ -229,6 +242,22 @@ function GameService (enableLogging) {
     }
 
     this.endGame();
+  }
+
+  this.checkGameEnded = function (game) {
+    if (!game.game_ended) {
+      return;
+    }
+
+    const playerWon = this.state.player_is_host ?
+      game.game_winner_was_host:
+      !game.game_winner_was_host;
+
+    this.log('game has ended! playerWon:', playerWon);
+    
+    this.onGameplayEnd(playerWon);
+
+    return true;
   }
 
   this.checkForOpponentArrived = function (game) {
@@ -466,7 +495,16 @@ function GameService (enableLogging) {
 
     const playerWon = tieGame ? playerMovedLast : playerWonByHigherScore;
 
-    this.onGameplayEnd(playerWon);
+    const nowts = new Date().toISOString();
+    this.state.gameSession.update({
+      finalScore: finalScore,
+      game_ended: true,
+      game_ended_at: nowts,
+      game_winner: playerWon ? this.state.player.key : this.state.opponent.key,
+      game_winner_was_host: playerWon
+    }).then(_.bind(function () {
+      this.log('game conclusion saved!');
+    }, this))
   }
 
   this.onConnectionError = function (error) {
