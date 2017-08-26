@@ -108,7 +108,7 @@ var winState = {
 
 	// Call share state
 	callShare: function() {
-		//window.location = "share.html";
-		game.state.start('share');
+		window.location = "share.html";
+		//game.state.start('share');
 	},
 };

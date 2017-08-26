@@ -58,4 +58,5 @@ gameService.signOut()
 - [ ] play with AI after 30 seconds of waiting
 - [ ] store 1 entry per day per player
 - [ ] reporting feature to dump data
+- [ ] use a phaser state vs share.html to speed up replay
 - [ ] what else?
