@@ -21,6 +21,9 @@ gameService.signOut()
 - [ ] add loading state to login while async auth-login attempts
 - [ ] add loading state while processing login (takes a few moments)
 - [ ] add logout?
-- [ ] use webpack to minify and obfuscate sourcecode
+- [ ] use browserify/webpack to minify and obfuscate source code
 - [ ] add cloud functions validations to mitigate cheaters
+- [ ] play with AI after 30 seconds of waiting
+- [ ] store 1 entry per day per player
+- [ ] reporting feature to dump data
 - [ ] what else?
