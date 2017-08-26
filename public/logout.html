@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<title>Popeye's Game</title>
+
+		<!-- Load js libraries and styles -->
+    <script type="text/javascript" src="js/lib/firebase.js"></script>
+    <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
+		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
+		<script type="text/javascript" src="js/services/GameService.js"></script>
+
+		<script type="text/javascript">
+			var gameService = new GameService(true);
+			gameService.signOut();
+      document.location = '/';
+		</script>
+  </head>
+  <body>
+	</body>
+</html>

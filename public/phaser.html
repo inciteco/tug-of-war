@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<title>Popeye's Game</title>
+
+		<!-- Load js libraries for game service -->
+		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
+		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
+    <script type="text/javascript" src="js/lib/firebase.js"></script>
+		<script type="text/javascript" src="js/lib/phaser.min.js"></script>
+		<script type="text/javascript" src="js/services/GameService.js"></script>
+
+		<script type="text/javascript">
+
+			// create game service
+			const logging = true;
+			const gameService = new GameService(logging);
+			gameService.addListener('onPlayerReady', function (player) {
+				if (!player) {
+					// redirect to login
+					document.location = "/";
+				}
+			})
+			window.gameService = gameService;
+
+			// TODO: find another way to handle resizes since
+			// refreshing will likely interrupt a game?
+
+			// refresh page if browser is resized
+			// window.onresize = function(){ location.reload(); }
+
+		</script>
+
+		<!-- Load game states -->
+		<script type="text/javascript" src="js/game-states/boot.js"></script>
+		<script type="text/javascript" src="js/game-states/load.js"></script>
+		<script type="text/javascript" src="js/game-states/howtoplay.js"></script>
+		<script type="text/javascript" src="js/game-states/waitforplayer.js"></script>
+		<script type="text/javascript" src="js/game-states/play.js"></script>
+		<script type="text/javascript" src="js/game-states/win.js"></script>
+		<script type="text/javascript" src="js/game.js"></script>
+
+		<style>
+			* {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				margin-top: 0;
+			}
+
+			html,
+			body,
+			div{
+				margin: 0;
+				padding: 0;
+			}
+
+			#main, body {
+				background: #f56506;
+			}
+
+			#primary{
+/*
+				max-width: 650px;
+				margin: 0 auto;
+*/
+			}
+			canvas {
+			  -webkit-box-shadow: 2px 3px 7px 2px #333;
+			  -moz-box-shadow:    2px 3px 7px 2px #333;
+			  box-shadow:         2px 3px 7px 2px #333;
+			/* #1 */
+/*
+			  border-left: 5px solid hsl(0, 0%, 40%);
+				border-right: 5px solid hsl(0, 0%, 40%);
+				border-bottom: 5px solid hsl(0, 0%, 40%);
+*/
+
+			  /* #2 */
+/*
+			  padding: 0 5px 5px;
+			  background: hsl(0, 0%, 20%);
+*/
+
+			  /* #3 */
+/*			  outline: 5px solid hsl(0, 0%, 60%);*/
+
+			  /* #4 AND INFINITY!!! (CSS3 only) */
+/*
+			  box-shadow:
+				  0 0 0 10px hsl(0, 0%, 80%),
+				  0 0 0 15px hsl(0, 0%, 90%);
+*/
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main">
+			<div class="wrap">
+				<div id="primary">
+					<div class="shadow" id="popeye-game" role="main">
+
+					</div><!-- #popeye-game -->
+				</div><!-- #primary -->
+			</div><!-- .wrap -->
+		</div><!-- #main -->
+	</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<title>Popeye's Game</title>
+
+		<!-- Load js libraries and styles -->
+		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/lib/firebase.js"></script>
+    <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
+		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
+		<script type="text/javascript" src="js/services/GameService.js"></script>
+
+		<script type="text/javascript">
+			console.log(GameService);
+
+			var gameService = new GameService(true);
+			gameService.addListener('onPlayerReady', function (player) {
+				console.log('is ready?', player);
+
+				if (!player) {
+					console.log('player not ready');
+					return
+				}
+
+				document.location = "/phaser.html";
+			})
+			window.gameService = gameService;
+		</script>
+
+  	<link rel="stylesheet" href="css/jquery-ui.min.css">
+  	<link rel="stylesheet" href="css/fonts.css">
+  	<link rel="stylesheet" href="css/style.css">
+
+    	<script>
+			// AB: removed in lieu of the gameService onPlayerReady call above
+      // $.validator.setDefaults({
+			// 	submitHandler: function() {
+			// 		//window.location = "phaser.html";
+			// 	}
+			// });
+
+			$().ready(function() {
+
+				$('#facebookLogin').on("click", function () {
+					gameService.signInWithFacebook();
+				});
+
+				$('#submitForm').on("click", function () {
+					const email = $('#email').val();
+					const first = $('#firstname').val();
+					const last = $('#lastname').val();
+
+					gameService.signInWithEmail(email, first, last);
+				});
+
+				// validate signup form on keyup and submit
+				$("#signupForm").validate({
+					rules: {
+						firstname: {
+							minlength: 2,
+							maxlength: 255,
+							required: true
+						},
+						lastname: {
+							minlength: 2,
+							maxlength: 255,
+							required: true
+						},
+						email: {
+							required: true,
+							email: true
+						}
+					},
+					messages: {
+						firstname: {
+							required: "Please enter your firstname",
+							minlength: "Your firstname must be at least 2 characters"
+						},
+						lastname: {
+							required: "Please enter your lastname",
+							minlength: "Your lastname must be at least 2 characters"
+						},
+						email: {
+							required: "Please enter your email",
+							email: "Your email must be valid"
+						}
+					}
+				});
+			});
+		</script>
+		<style>
+			body {
+				background: url("assets/images/popeyesCraveBG.jpg") no-repeat center top;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main">
+			<div class="wrap">
+				<div id="primary">
+					<img src="assets/images/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
+					<div id="register">
+						Log in to play and enter for a chance to win Popeyes for a year
+					</div>
+
+					<!-- Facebook Login -->
+					<div id="facebookLogin">
+						<img src="assets/images/facebookButton.png" />
+					</div>
+
+					<div id="orText">&mdash; OR &mdash;</div>
+
+					<!-- E-mail login -->
+					<div id="formWrapper">
+						<fieldset>
+							<form class="cmxform" id="signupForm" method="get" action>
+								<label for="firstname" generated="true" class="error"></label>
+								<label for="lastname" generated="true" class="error"></label>
+								<input id="firstname" name="firstname" placeholder="First Name" type="text" title="firstname">
+
+
+								<input id="lastname" name="lastname" placeholder="Last Name" type="text" title="lastname">
+
+								<label for="email" generated="true" class="error"></label>
+								<input id="email" name="email" placeholder="E-mail" type="email" title="email">
+
+								<div class="checkbox-wrapper">
+									<input type="checkbox" class="checkbox" id="eightteen" name="eightteen" checked title="eightteen">
+									<div id="18text" class="checkboxText">
+										<label for="eightteen">Yes, I am 18 or over.</label>
+									</div>
+								</div>
+
+								<div class="checkbox-wrapper">
+									<input type="checkbox" class="checkbox" id="newsletter" name="newsletter" checked title="newsletter">
+									<div id="newsletterText" class="checkboxText">
+										<label for="newsletter">Yes, I would like to receive future emails from Popeye's&reg; about special offers and promotions. (Optional)</label>
+									</div>
+								</div>
+								<div id="submitButton"><img id="submitForm" src="assets/images/submitButton.png"></div>
+							</form>
+						</fieldset>
+					</div><!-- #formWrapper -->
+					<div id="legalText">
+						Complete all required fields to register. By registering you are comfirming that you understand and agree to the <a  id="rulesOpener">Official Rules</a> & <a id="privacyOpener">Privacy Policy</a>.
+					</div>
+
+					<!-- Rules modal -->
+					<div id="officialRules" title="OFFICIAL RULES">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet nisi nisl. Aliquam quam leo, posuere nec dui eget, vehicula tristique lectus. Integer ac nulla quis nisi consectetur suscipit. Morbi eu quam quis risus volutpat ornare. Aenean sagittis laoreet justo ac euismod. Nam ut euismod odio, vitae pulvinar urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus fringilla cursus elit vitae euismod. Vestibulum gravida tempus metus, eu ullamcorper dolor pulvinar vel. Nullam tristique, sapien a scelerisque hendrerit, leo nunc auctor sapien, in eleifend odio felis quis risus. Praesent venenatis ligula non diam lacinia imperdiet. Morbi a leo sit amet augue lacinia cursus.
+					</div>
+
+					<!-- Privacy modal -->
+					<div id="privacyPolicy" title="PRIVACY POLICY">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet nisi nisl. Aliquam quam leo, posuere nec dui eget, vehicula tristique lectus. Integer ac nulla quis nisi consectetur suscipit. Morbi eu quam quis risus volutpat ornare. Aenean sagittis laoreet justo ac euismod. Nam ut euismod odio, vitae pulvinar urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus fringilla cursus elit vitae euismod. Vestibulum gravida tempus metus, eu ullamcorper dolor pulvinar vel. Nullam tristique, sapien a scelerisque hendrerit, leo nunc auctor sapien, in eleifend odio felis quis risus. Praesent venenatis ligula non diam lacinia imperdiet. Morbi a leo sit amet augue lacinia cursus.
+					</div>
+					<script>
+					// options for modals
+					$( "#officialRules" ).dialog({
+						autoOpen: false,
+						draggable: false,
+						modal: true,
+						position: { my: "center bottom", at: "top", of: "#legalText" },
+						//show: { effect: "drop", direction: "down" }
+					});
+
+					$( "#privacyPolicy" ).dialog({
+						autoOpen: false,
+						draggable: false,
+						modal: true,
+						position: { my: "center bottom", at: "top", of: "#legalText" },
+						//show: { effect: "drop", direction: "down" }
+					});
+
+					// call this to Rules modal
+					$( "#rulesOpener" ).click(function() {
+					  $( "#officialRules" ).dialog( "open" );
+					});
+
+					// call this to Privacy modal
+					$( "#privacyOpener" ).click(function() {
+					  $( "#privacyPolicy" ).dialog( "open" );
+					});
+					</script>
+				</div><!-- #primary -->
+			</div><!-- .wrap -->
+		</div><!-- #main -->
+	</body>
+</html>
