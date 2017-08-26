@@ -2,11 +2,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="user-scalable=no,  initial-scale=1,  maximum-scale=1,  width=device-width" />
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 		<title>Popeye's Game</title>
 
 		<!-- Load js libraries for game service -->
 		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
 		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
@@ -19,8 +20,13 @@
 			// create game service
 			const logging = true;
 			const gameService = new GameService(logging);
+			gameService.addListener('onPlayerReady', function (player) {
+				if (!player) {
+					// redirect to login
+					document.location = "/";
+				}
+			})
 			window.gameService = gameService;
-
 
 			// TODO: find another way to handle resizes since
 			// refreshing will likely interrupt a game?
