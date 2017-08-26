@@ -12,12 +12,12 @@ npm start
 
 You can logout via the developer console with:
 ```
-gameService.logout()
+gameService.signOut()
 ```
 
 ## todos
 
-- [ ] make sure touch is working on login on mobile 
+- [ ] make sure touch is working on login on mobile
 - [ ] add loading state to login while async auth-login attempts
 - [ ] add loading state while processing login (takes a few moments)
 - [ ] add logout?
