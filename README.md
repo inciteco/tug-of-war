@@ -1,5 +1,10 @@
 # Popeye's Tug O' War
 
+Links:
+- [repo](https://github.com/inciteco/tug-of-war)
+- [play now](https://popeyes-tug-o-war.firebaseapp.com)
+- [firebase app](https://console.firebase.google.com/u/1/project/popeyes-tug-o-war)
+
 ## Quick start
 
 ```sh
