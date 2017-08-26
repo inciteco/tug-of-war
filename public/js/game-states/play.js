@@ -178,12 +178,9 @@ var playState = {
 				gameTimer.stop(false); // stop and reset the game timer
 				//bigBox.body.velocity.y = 0; // stop the bigBox
 
-				// Find out where bigBox box is to determine winner
-				//if(bigBox.position.y > crossbarPos) {
-				//	gameWinner = player1Obj.name;
-				//	} else {
-				//	gameWinner = player2Obj.name;
-				//}
+
+        // true means this user wins, false means lose
+				gameWinner = userWon;
 
 				game.state.start('win'); // call win state
 

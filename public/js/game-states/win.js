@@ -19,7 +19,7 @@ var winState = {
 		soundToggleButton.inputEnabled = true;
 		soundToggleButton.events.onInputDown.add(this.muteSound, this);
 
-		if(gameWinner == player1Obj.name){
+		if (gameWinner){
 
 			// Player1 Pic Stroke
 			player1PicStroke = game.add.sprite(game.world.centerX, 1740, 'playerPicStroke');
