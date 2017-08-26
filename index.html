@@ -15,21 +15,47 @@
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
 		<script type="text/javascript" src="js/GameService.js"></script>
 
+		<script type="text/javascript">
+			console.log(GameService);
+
+			var gameService = new GameService(true);
+			gameService.addListener('onPlayerReady', function (player) {
+				console.log('is ready?', player);
+
+				if (!player) {
+					console.log('player not ready');
+					return
+				}
+
+				document.location = "/phaser.html";
+			})
+			window.gameService = gameService;
+		</script>
+
   	<link rel="stylesheet" href="css/jquery-ui.min.css">
   	<link rel="stylesheet" href="css/fonts.css">
   	<link rel="stylesheet" href="css/style.css">
 
     	<script>
-			$.validator.setDefaults({
-				submitHandler: function() {
-					window.location = "phaser.html";
-				}
-			});
+			// AB: removed in lieu of the gameService onPlayerReady call above
+      // $.validator.setDefaults({
+			// 	submitHandler: function() {
+			// 		//window.location = "phaser.html";
+			// 	}
+			// });
 
 			$().ready(function() {
 
+				$('#facebookLogin').on("click", function () {
+					gameService.signInWithFacebook();
+				});
+
 				$('#submitForm').on("click", function () {
-					$('#signupForm').submit();
+					const email = $('#email').val();
+					const first = $('#firstname').val();
+					const last = $('#lastname').val();
+
+					gameService.signInWithEmail(email, first, last);
 				});
 
 				// validate signup form on keyup and submit
@@ -84,7 +110,9 @@
 					</div>
 
 					<!-- Facebook Login -->
-					<div><img src="finalassets/facebookButton.png" /></div>
+					<div id="facebookLogin">
+						<img src="finalassets/facebookButton.png" />
+					</div>
 
 					<div id="orText">&mdash; OR &mdash;</div>
 

@@ -53,8 +53,62 @@ function GameService (enableLogging) {
     }
   }
 
+  this.signInWithEmail = function (email, firstName, lastName) {
+    this.log('signIn', email, firstName, lastName);
+
+    const auth = firebase.auth();
+    const password = 'password';
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(_.bind(function(error) {
+        this.log('success signing in with email', email);
+        // TODO:
+        // - update profile's DisplayName
+        // - then emit for a redirect?
+      }, this))
+      .catch(_.bind(function(error) {
+        if (error.code === "auth/user-not-found") {
+          this.log('user doesn\'t exist yet! creating...');
+
+          auth.createUserWithEmailAndPassword(email, password)
+            .then(_.bind(function(player) {
+              this.log('success signing up with email', player);
+              this.log('updating profile...');
+
+              player.updateProfile({
+                displayName: firstName + ' ' + lastName,
+                photoURL:   'http://via.placeholder.com/200x200/00C/fff/?text='+firstName
+              }).then(_.bind(function() {
+                this.log('success updating profile!');
+                this.onPlayerReady(player);
+              }, this)).catch(_.bind(function(error) {
+                this.log('something went wrong while updating profile!');
+              }), this);
+            }, this))
+            .catch(_.bind(function(error) {
+              this.log('error signing up with email', error);
+            }, this));
+        } else {
+          this.log('error signing in with email', error);
+        }
+      }, this));
+  }
+
+  this.signInWithFacebook = function (email, firstName, lastName) {
+    this.log('signInFacebook', email, firstName, lastName);
+
+    var provider = new firebase.auth.FacebookAuthProvider();
+    provider.addScope('user_birthday');
+
+    firebase.auth().signInWithRedirect(provider);
+  }
+
   this.authStateChanged = function (user) {
     if (user) {
+      if (!user.displayName) {
+        this.log('no displayName set, aborting!');
+        return;
+      }
       this.setPlayer({
         key: user.uid,
         image: user.photoURL,
