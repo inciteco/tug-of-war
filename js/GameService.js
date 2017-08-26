@@ -103,6 +103,11 @@ function GameService (enableLogging) {
     firebase.auth().signInWithRedirect(provider);
   }
 
+  this.signOut = function () {
+    this.log('signOut');
+    firebase.auth().signOut();
+  }
+
   this.authStateChanged = function (user) {
     if (user) {
       if (!user.displayName) {
