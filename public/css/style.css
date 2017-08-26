@@ -104,7 +104,7 @@ fieldset {
 #popeye-game {
     width: 99vw;
     height: 99vh;
-    margin: 0 auto;	
+    margin: 0 auto;
 }
 
 a {
@@ -136,7 +136,7 @@ a {
 	vertical-align: top;
 }
 
-input[type="text"], input[type="email"] {	
+input[type="text"], input[type="email"] {
 	height: 30px;
 	font-size: 18px;
 	margin-bottom: 8px;
@@ -146,7 +146,7 @@ input[type="text"], input[type="email"] {
 	padding-left: 1px;
 	outline: none;
 	color: #fff;
-	
+
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	border-radius: 0;
@@ -165,17 +165,17 @@ input[type="submit"] {
 	outline: 0;
 
 	font-weight: bold;
-	font-size: 18px;		
+	font-size: 18px;
 	letter-spacing: 4px;
 }
 
-input[type="checkbox"] 
+input[type="checkbox"]
 	{
 		display: inline-block;
 		width: 24px;
 		height: 25px;
 		vertical-align: middle;
-		background:url(../assets/finalassets/checkboxes.png) left top no-repeat;
+		background:url(../assets/images/checkboxes.png) left top no-repeat;
 		cursor: pointer;
 		border: 0;
 		border-style: none;
@@ -190,7 +190,7 @@ input[type="checkbox"]:checked
 		width: 24px;
 		height: 25px;
 		vertical-align: middle;
-		background:url(../assets/finalassets/checkboxes.png) -26px top no-repeat;
+		background:url(../assets/images/checkboxes.png) -26px top no-repeat;
 		cursor: pointer;
 		border: 0;
 		border-style: none;
@@ -238,14 +238,14 @@ input[type="checkbox"]:checked
 	margin: 40px auto 0px;
 }
 
-::-webkit-input-placeholder 
+::-webkit-input-placeholder
 {
 	color: #fff;
 	font-style: italic;
 	font-weight: 400;
 }
 
-:-moz-placeholder  
+:-moz-placeholder
 {
 	color: #fff;
 	font-style: italic;
@@ -259,8 +259,8 @@ input[type="checkbox"]:checked
 	font-weight: 400;
 }
 
-:-ms-input-placeholder 
-{  
+:-ms-input-placeholder
+{
 	color: #fff;
 	font-style: italic;
 	font-weight: 400;
@@ -281,5 +281,3 @@ input[type="checkbox"]:checked
 	font-size: .8em;
 	font-style: italic;
 }
-
-

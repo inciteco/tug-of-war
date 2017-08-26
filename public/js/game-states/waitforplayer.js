@@ -139,7 +139,7 @@ var waitforplayerState = {
 			loader.image('player2Pic', player2Obj.image); // load FB pic
 		} else {
 			// Player 2 didn't login via FB, load avatar spritesheet instead
-			loader.spritesheet('player2Pic', 'assets/finalassets/nonFBPlayerPics.png', 225, 225, 8);
+			loader.spritesheet('player2Pic', 'assets/images/nonFBPlayerPics.png', 225, 225, 8);
 		}
 
 		loader.onLoadComplete.addOnce(waitforplayerState.loadComplete);
