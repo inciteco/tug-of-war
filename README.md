@@ -31,8 +31,6 @@ npm run compress
 npm run deploy
 ```
 
-> You'll need firebase cli tools: `npm install -g firebase-tools`
-
 ## other notes
 
 You can logout via the developer console with:
