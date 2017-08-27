@@ -38,31 +38,36 @@ You can logout via the developer console with:
 gameService.signOut()
 ```
 
-## todos
+## Todos
 
-- [x] configure firebase deploy
-- [x] make sure touch is working on login on mobile
+The following items are still in the works!
+
+### Front-end stuff (mostly Brett)
+- [x] ensure touch is working on login on mobile
+- [x] ensure gameService timer durations are used in Phaser
 - [x] add logout
+- [x] compress image assets
+- [ ] compress audio assets
+- [ ] swap png assets for jpg where appropriate
+- [ ] add loading state while processing login (takes a few moments)
+- [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
+- [ ] use browserify/webpack to minify and obfuscate source code (AB)
+- [ ] play with AI after 30 seconds of waiting (AB)
+- [ ] use a phaser state vs share.html to speed up replay
+
+### Multiplayer GameServices stuff (AB)
+- [x] configure firebase deploy
 - [x] determine winner by greater score
 - [x] determine winner during tie
 - [x] win when score > threshold
-- [x] compress image assets
-- [ ] swap png assets for jpg where appropriate
-- [ ] compress audio assets
-- [x] ensure gameService timer durations are used in Phaser
-- [ ] add loading state to login while async auth-login attempts
-- [ ] add loading state while processing login (takes a few moments)
-- [ ] use browserify/webpack to minify and obfuscate source code
 - [ ] add cloud functions validations to mitigate cheaters
 - [ ] use [bolt](https://github.com/firebase/bolt/blob/master/docs/language.md) to enforce database ACL
 - [ ] use [validation rules](https://firebase.google.com/docs/database/security/) to:
 -- [ ] limit changes in score
 -- [ ] enforce start/end times
 -- [ ] enforce participants?
-- [ ] play with AI after 30 seconds of waiting
 - [ ] store 1 entry per day per player
 - [ ] reporting feature to dump data
-- [ ] use a phaser state vs share.html to speed up replay
 - [ ] what else?
 
 ## found bugs!
