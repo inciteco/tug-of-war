@@ -37,6 +37,7 @@ var loadState = {
 		game.load.spritesheet('nonFBPlayerPics', 'assets/images/nonFBPlayerPics.png', 225, 225, 8);
 		game.load.image('bigBox', 'assets/images/bigBox.png');
 		game.load.image('gameBoard', 'assets/images/gameTable.png');
+		game.load.spritesheet('confetti', 'assets/images/confettisheet.jpg', 8, 8);
 		
 		
 		

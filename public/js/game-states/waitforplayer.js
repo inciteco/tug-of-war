@@ -10,8 +10,10 @@ var waitforplayerState = {
 
 	create: function() {
 
-		// Set play canvas background color
-		game.stage.backgroundColor = '#000';
+		// Set play canvas background
+		popeyesBG = game.add.sprite(0, 0, 'popeyesBG');
+		popeyesBG.height = gHeight;
+		popeyesBG.width = gWidth;
 
 		// AUDIO Declarations
 		playerfoundSound = game.add.audio('playerfoundSound');
@@ -127,7 +129,7 @@ var waitforplayerState = {
 	popPlayer2Obj: function(opponent) {
 		player2Obj = opponent; // reassign object to global variable
 
-		waitingPic.kill(); // delete waitingPic and replace it with P2 pic
+		waitingPic.kill(); // delete waitingPic and replace it with P2 pic ?? move
 
 		//player2Caps = player2Obj.name.toUpperCase();
 		player2Name.text = player2Obj.name; // change waiting text
@@ -186,7 +188,7 @@ var waitforplayerState = {
 		gameplayText.anchor.set(0.5);
 
 		// Countdown text
-		countdownText = game.add.text(game.world.centerX, game.world.centerY-40, counter, { font: 'bold 220px Arial', fill: '#000' });
+		countdownText = game.add.text(game.world.centerX, game.world.centerY-40, counter, { font: 'bold 220px Arial', fill: '#C41230' });
 		countdownText.anchor.set(0.5);
 
 		countdownSound.play(); // play sound effect first tick

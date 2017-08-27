@@ -4,8 +4,10 @@ var playState = {
 
 	create: function() {
 
-		// Set play canvas background color
-		game.stage.backgroundColor = '#000';
+		// Set play canvas background
+		popeyesBG = game.add.sprite(0, 0, 'popeyesBG');
+		popeyesBG.height = gHeight;
+		popeyesBG.width = gWidth;
 
 		// Initialize game variables
 		score = 0; // Player 1 total score

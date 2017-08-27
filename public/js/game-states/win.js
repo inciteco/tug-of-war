@@ -3,6 +3,11 @@
 var winState = {
 
 	create: function() {
+		
+		// Set play canvas background
+		popeyesBG = game.add.sprite(0, 0, 'popeyesBG');
+		popeyesBG.height = gHeight;
+		popeyesBG.width = gWidth;
 
 		// Audio Declarations
 		youLose = game.add.audio('youLose');
@@ -48,6 +53,19 @@ var winState = {
 
 			youWin.play();
 			splash = 'gameWon';
+			
+			// throw confetti
+			var emitter = game.add.emitter(game.world.centerX, 0, 400);
+			emitter.width = game.world.width;
+			emitter.makeParticles('confetti', [0,1,2,3,4], 1200, false, false);
+			emitter.minParticleScale = 1;
+			emitter.maxParticleScale = 2.5;
+			emitter.setYSpeed(10, 100);
+			emitter.setXSpeed(-5, 5);
+			emitter.minRotation = -100;
+			emitter.maxRotation = 100;
+			emitter.start(false, 0, 5, 0);
+
 			setTimeout(winState.callShare, 10000);
 
 		} else {
