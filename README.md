@@ -28,10 +28,10 @@ npm run compress
 ## Deploying
 
 ```
-npm install -g firebase-tools
-firebase init
-firebase deploy
+npm run deploy
 ```
+
+> You'll need firebase cli tools: `npm install -g firebase-tools`
 
 ## other notes
 
