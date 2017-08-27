@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/inciteco/tug-of-war#readme",
   "devDependencies": {
+    "firebase-bolt": "^0.8.2",
+    "firebase-tools": "^3.9.2",
     "http-server": "^0.10.0"
   }
 }
