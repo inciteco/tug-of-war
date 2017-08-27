@@ -3,6 +3,7 @@
 Links:
 - [repo](https://github.com/inciteco/tug-of-war)
 - [play now](https://popeyes-tug-o-war.firebaseapp.com)
+- [facebook app](https://developers.facebook.com/apps/472656139771979/dashboard/)
 - [database](https://console.firebase.google.com/u/0/project/popeyes-tug-o-war/database/data)
 
 ## Quick start
