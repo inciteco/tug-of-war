@@ -65,9 +65,9 @@ The following items are still in the works!
 - [ ] add cloud functions validations to mitigate cheaters
 - [ ] use [bolt](https://github.com/firebase/bolt/blob/master/docs/language.md) to enforce database ACL
 - [ ] use [validation rules](https://firebase.google.com/docs/database/security/) to:
--- [ ] limit changes in score
--- [ ] enforce start/end times
--- [ ] enforce participants?
+ - [ ] limit changes in score
+ - [ ] enforce start/end times
+ - [ ] enforce participants?
 - [ ] store 1 entry per day per player
 - [ ] reporting feature to dump data
 - [ ] what else?
