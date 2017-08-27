@@ -54,6 +54,8 @@ The following items are still in the works!
 - [ ] use browserify/webpack to minify and obfuscate source code (AB)
 - [ ] play with AI after 30 seconds of waiting (AB)
 - [ ] use a phaser state vs share.html to speed up replay
+- [ ] show big box in position at endgame (AB)
+- [ ] adjust threshold positions (AB)
 
 ### Multiplayer GameServices stuff (AB)
 - [x] configure firebase deploy
