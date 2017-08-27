@@ -60,3 +60,7 @@ gameService.signOut()
 - [ ] reporting feature to dump data
 - [ ] use a phaser state vs share.html to speed up replay
 - [ ] what else?
+
+## found bugs!
+- [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
+- [ ] Facebook login not (always) working in safari
