@@ -1,6 +1,14 @@
 @charset "UTF-8";
 /* CSS Document */
 
+@font-face {
+  font-family: 'UTTriumph-Regular';
+  src: url('UTTriumph-Regular.eot?#iefix') format('embedded-opentype'),  url('UTTriumph-Regular.otf')  format('opentype'),
+	     url('UTTriumph-Regular.woff') format('woff'), url('UTTriumph-Regular.ttf')  format('truetype'), url('UTTriumph-Regular.svg#UTTriumph-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;

@@ -75,6 +75,7 @@ game = new Phaser.Game(
 
 	// Audio
 	var tapHit;
+	var tapHitCoke;
 	var bgmusic;
 	var tapMiss;
 	var youLose;
