@@ -71,6 +71,8 @@ The following items are still in the works!
   - [ ] enforce participants?
   - [ ] store 1 entry per day per player
 - [ ] reporting feature to dump data
+- [ ] send proper asset when non FB user logs in
+- [ ] send proper object info when bot player is used
 - [ ] what else?
 
 ## found bugs!
