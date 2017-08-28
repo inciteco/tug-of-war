@@ -3,8 +3,6 @@
 var bootState = {
 
 	preload: function() {
-		// Load progress bar
-//    	game.load.image('preLoadBar',  'assets/loading.png');
 
 		// Load background image
 		game.load.image('popeyesBG', 'assets/images/popeyesCraveBG.jpg');

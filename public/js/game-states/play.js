@@ -24,6 +24,7 @@ var playState = {
 
 		// AUDIO Declarations
 		tapHit = game.add.audio('tapHit');
+		tapHitCoke = game.add.audio('tapHitCoke');
 		bgMusic = game.add.audio('bgMusic', .5); // 2nd param is volume
 		tapMiss = game.add.audio('tapMiss');
 		tenSecsLeft = game.add.audio('tenSecsLeft');
@@ -65,16 +66,16 @@ var playState = {
 		// GAMEPLAY SPRITES
 
 			// Set finger tap area for missed taps
-			tapArea = game.add.sprite(game.world.centerX, 1812, 'tapArea');
+			tapArea = game.add.sprite(game.world.centerX, 1809, 'tapArea');
 			game.physics.enable(tapArea, Phaser.Physics.ARCADE);
 			tapArea.width = 1440;
-			tapArea.height = 575;
+			tapArea.height = 578;
 			tapArea.anchor.set(0.5);
 			tapArea.alpha = 0;
 			tapArea.inputEnabled = true;
 
 			// Initialize Shoutouts
-			shoutOuts = game.add.sprite(game.world.centerX, 1430, 'shoutOuts', 0);
+			shoutOuts = game.add.sprite(game.world.centerX, 1425, 'shoutOuts', 0);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);
 			shoutOuts.visible = false;
@@ -129,7 +130,7 @@ var playState = {
 				console.log('tug', score);
 
 				const maxScore = 100;
-				const centerPoint = 875;
+				const centerPoint = 860;
 				const maxDistFromCenter = 600;
 
 				game.tweens.removeFrom(bigBox);
@@ -216,20 +217,9 @@ var playState = {
 
 		// If user isn't tapping, give shoutOut and penalize
 		this.notTapping();
-
-		// throttle velocity
-		/* AB: disabled, only callbacks should change velocity!
-		switch (true) {
-			case (bigBox.body.velocity.y >= 40):
-				bigBox.body.velocity.y += -20;
-				break;
-			case (bigBox.body.velocity.y <= -40):
-				bigBox.body.velocity.y += 20;
-				break;
-		}
-		*/
 	},
 
+	// sound toggle
 	muteSound: function() {
 		if (!this.game.sound.mute) {
 			game.sound.mute = true;
@@ -344,8 +334,12 @@ var playState = {
 
 		shoutOuts.kill(); // Destroy response text
 
-		tapHit.play(); // Play bubble pop effect
-
+		if(randSprite == 6) {
+			tapHitCoke.play(); // Play Coke effect
+		} else {
+			tapHit.play(); // Play bubble pop effect
+		}
+		
 		// play tap effects
 		tapBubble.loadTexture('afterPulse', 0); // load pulse texture
 		tapBubble.animations.add('tapped'); // add animation

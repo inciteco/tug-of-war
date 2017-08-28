@@ -93,7 +93,7 @@ var waitforplayerState = {
 		waitingCircle.anchor.set(0.5);
 
 		// Waiting For Player text
-		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'WAITING\nFOR LIVE\nPLAYER', { font: 'bold 110px Arial', fill: '#000', align: 'center' });
+		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'Waiting for\nlive player', { font: '120px UTTriumph-Regular', fill: '#F58426', align: 'center' });
 		waitingforplayerText.anchor.set(0.5);
 
 
@@ -167,7 +167,7 @@ var waitforplayerState = {
 	// Show player found text for 2 seconds
 	playerFound: function() {
 
-		waitingforplayerText.text = "PLAYER\nFOUND!"; // change waiting text
+		waitingforplayerText.text = "Player\nFound!"; // change waiting text
 		playerfoundSound.play(); // play sound effect
 		waitingCircle.angle = 0; // spin waiting circle
 
@@ -184,11 +184,11 @@ var waitforplayerState = {
 		waitingforplayerText.kill(); // kill waiting text
 
 		// Gameplay text
-		gameplayText = game.add.text(game.world.centerX, game.world.centerY-260, 'GAME WILL\nBEGIN IN', { font: 'bold 80px Arial', fill: '#000', align: 'center' });
+		gameplayText = game.add.text(game.world.centerX, game.world.centerY-320, ' Game Will \n Begin In ', { font: '90px UTTriumph-Regular', fill: '#C41230', align: 'center' });
 		gameplayText.anchor.set(0.5);
 
 		// Countdown text
-		countdownText = game.add.text(game.world.centerX, game.world.centerY-40, counter, { font: 'bold 220px Arial', fill: '#C41230' });
+		countdownText = game.add.text(game.world.centerX, game.world.centerY-40, counter, { font: '360px UTTriumph-Regular', fill: '#C41230' });
 		countdownText.anchor.set(0.5);
 
 		countdownSound.play(); // play sound effect first tick
@@ -201,11 +201,11 @@ var waitforplayerState = {
 	// Call play state when countdown finishes
 	startGame: function() {
 		counter = counter-1;
-		countdownText.text = counter;
+		countdownText.text = ' '+counter+' ';
 		countdownSound.play(); // play sound effect
 		if(counter == 0) {
 			countdownSound.stop(); // kill counter sound
-			playgameSound.play() // play sound effect
+			playgameSound.play(); // play sound effect
 			game.state.start('play');
 		}
 	},
