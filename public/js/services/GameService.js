@@ -23,11 +23,12 @@ function GameService (enableLogging) {
   this.GAMEPLAY_SECONDS = 60;
   this.WINNING_SCORE_THRESHOLD = 100;
   this.STALE_GAME_TIMEOUT = 90;
+  this.STATIC_PATH = 'assets/images/';
 
   // bot opponent
   this.BOT_NAME = 'Annie';
   this.BOT_KEY = '-annie-bot-';
-  this.BOT_IMAGE = 'assets/images/botAnnie.png';
+  this.BOT_IMAGE = this.STATIC_PATH + 'botAnnie.png';
 
   // shared state
   this.state = this.defaultState = {
@@ -83,9 +84,12 @@ function GameService (enableLogging) {
               this.log('success signing up with email', player);
               this.log('updating profile...');
 
+              const photoURL = this.getRandomAvatar();
+              this.log('getRandomAvatar', photoURL);
+
               player.updateProfile({
                 displayName: firstName + ' ' + lastName,
-                photoURL:   'http://via.placeholder.com/200x200/00C/fff/?text='+firstName
+                photoURL: photoURL
               }).then(_.bind(function() {
                 this.log('success updating profile!');
                 this.onPlayerReady(player);
@@ -100,6 +104,16 @@ function GameService (enableLogging) {
           this.log('error signing in with email', error);
         }
       }, this));
+  }
+
+  this.getRandomAvatar = function () {
+    const randomNumber = 1 + Math.round(Math.random() * 7);
+    const paddedRandomNumber = String(randomNumber).padStart(2, "0");
+    const randomAvatar = 'nonFBPlayerPics_'+paddedRandomNumber+'.png';
+
+    this.log('random avatar', randomAvatar);
+
+    return this.STATIC_PATH + randomAvatar;
   }
 
   this.signInWithFacebook = function (email, firstName, lastName) {
