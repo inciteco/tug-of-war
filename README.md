@@ -14,6 +14,15 @@ cd tug-of-war && npm install
 npm start
 ```
 
+### Dev Scripts
+
+There's a few dev scripts to help automate things, to use these you'll want to install these dependencies:
+
+```sh
+npm i -g imagemin
+npm i -g wav2ogg
+```
+
 ## Compressing assets
 
 There is a script to compress all source images in the `src/assets/images` folder into the `public/assets/images`. The initial pass reduced our load from 77mb to 10mb.
@@ -52,7 +61,7 @@ The following items are still in the works!
 - [x] style loading state while processing login (takes a few moments)
 - [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
 - [ ] use browserify/webpack to minify and obfuscate source code (AB)
-- [ ] play with AI after 30 seconds of waiting (AB)
+- [ ] play with AI after 10 seconds of waiting (AB)
 - [x] use a phaser state vs share.html to speed up replay
 - [x] show big box in position at endgame (AB)
 - [ ] adjust threshold positions (AB)
@@ -80,5 +89,5 @@ The following items are still in the works!
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
 - [ ] Facebook login not (always) working in safari
-- [ ] First few moves don't always seem to register (visually)
+- [ ] First few moves (sometimes none of them) don't always seem to register (visually)
 - [ ] Play Again button takes user back to waitforplayer, but it doesn't ever link you to another player. Just waits...
