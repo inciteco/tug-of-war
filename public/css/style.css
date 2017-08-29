@@ -180,7 +180,7 @@ input[type="submit"] {
 input[type="checkbox"]
 	{
 		display: inline-block;
-		width: 24px;
+		width: 25px;
 		height: 25px;
 		vertical-align: middle;
 		background:url(../assets/images/checkboxes.png) left top no-repeat;
@@ -195,10 +195,10 @@ input[type="checkbox"]
 input[type="checkbox"]:checked
 	{
 		display: inline-block;
-		width: 24px;
+		width: 25px;
 		height: 25px;
 		vertical-align: middle;
-		background:url(../assets/images/checkboxes.png) -26px top no-repeat;
+		background:url(../assets/images/checkboxes.png) -25px top no-repeat;
 		cursor: pointer;
 		border: 0;
 		border-style: none;

@@ -24,7 +24,7 @@ var waitforplayerState = {
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
 
 		// mute button
-		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
+		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', muteVal);
 		soundToggleButton.inputEnabled = true;
 		soundToggleButton.events.onInputDown.add(this.muteSound, this);
 
@@ -98,6 +98,11 @@ var waitforplayerState = {
 
 
 		// GAME SERVICES
+		
+			// Check for previously set Mute
+			if(muteVal == 1) {
+				game.sound.mute = true;
+			}
 
 			// Player 2 has arrived, run popPlayer2Obj
 			gameService.addListener('onOpponentArrived', waitforplayerState.popPlayer2Obj);
@@ -118,9 +123,11 @@ var waitforplayerState = {
 	muteSound: function() {
 		if (!this.game.sound.mute) {
 			game.sound.mute = true;
+			muteVal = 1;
 			soundToggleButton.frame = 1;
 		} else {
 			game.sound.mute = false;
+			muteVal = 0;
 			soundToggleButton.frame = 0;
 		}
 	},

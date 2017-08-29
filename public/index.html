@@ -14,23 +14,6 @@
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
 		<script type="text/javascript" src="js/services/GameService.js"></script>
 
-		<script type="text/javascript">
-			console.log(GameService);
-
-			var gameService = new GameService(true);
-			gameService.addListener('onPlayerReady', function (player) {
-				console.log('is ready?', player);
-
-				if (!player) {
-					console.log('player not ready');
-					return
-				}
-
-				document.location = "/phaser.html";
-			})
-			window.gameService = gameService;
-		</script>
-
   	<link rel="stylesheet" href="css/jquery-ui.min.css">
   	<link rel="stylesheet" href="css/style.css">
 
@@ -99,7 +82,11 @@
 	</head>
 
 	<body>
-		<div id="main">
+		
+		<div id="loading" style="display:block;">
+			Loading...
+		</div>
+		<div id="main" style="display:none;">
 			<div class="wrap">
 				<div id="primary">
 					<img src="assets/images/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
@@ -188,6 +175,34 @@
 					</script>
 				</div><!-- #primary -->
 			</div><!-- .wrap -->
+		
 		</div><!-- #main -->
+		
+		
+	
+		<script type="text/javascript">
+			console.log(GameService);
+
+			var gameService = new GameService(true);
+			gameService.addListener('onPlayerReady', function (player) {
+				console.log('is ready?', player);
+
+				if (!player) {
+					console.log('player not ready');
+					
+					const loadingEl = document.getElementById('loading');
+					loadingEl.style.display = "none";
+					
+					const mainEl = document.getElementById('main');
+					mainEl.style.display = "block";
+					
+					return;
+				}
+
+				document.location = "/phaser.html";
+			})
+			window.gameService = gameService;
+		</script>
+		
 	</body>
 </html>

@@ -12,17 +12,29 @@ var winState = {
 		// Audio Declarations
 		youLose = game.add.audio('youLose');
 		youWin = game.add.audio('youWin');
-
+		
+		
 
 		var splash;
 
 		// add game table sprite
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
-
+		
+		// Set bigBox
+		bigBox = game.add.sprite(game.world.centerX, finalBigBoxPosition, 'bigBox');
+		bigBox.scale.setTo(scaleVal, scaleVal);
+		//game.physics.enable(bigBox, Phaser.Physics.ARCADE);
+		bigBox.anchor.set(0.5);
+		
 		// mute button
-		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
+		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', muteVal);
 		soundToggleButton.inputEnabled = true;
 		soundToggleButton.events.onInputDown.add(this.muteSound, this);
+		
+		// Check for previously set Mute
+		if(muteVal == 1) {
+			game.sound.mute = true;
+		}
 
 		if (gameWinner){
 
@@ -103,11 +115,6 @@ var winState = {
 		gameResults = game.add.sprite(game.world.centerX, 875, splash);
 		gameResults.anchor.set(0.5, 0.5);
 
-//		var continueButton = game.add.sprite(game.world.centerX, 1300, 'continueButton');
-//		continueButton.anchor.set(0.5);
-//		continueButton.inputEnabled = true;
-//		continueButton.events.onInputDown.add(this.callShare, this);
-
 		// do some clean up
 		gameService.addListener('onLeavingCurrentState', function () {
 			console.log('[WinState]: leaving win state');
@@ -117,16 +124,18 @@ var winState = {
 	muteSound: function() {
 		if (!this.game.sound.mute) {
 			game.sound.mute = true;
+			muteVal = 1;
 			soundToggleButton.frame = 1;
 		} else {
 			game.sound.mute = false;
+			muteVal = 0;
 			soundToggleButton.frame = 0;
 		}
 	},
 
 	// Call share state
 	callShare: function() {
-		window.location = "share.html";
-		//game.state.start('share');
+		//window.location = "share.html";
+		game.state.start('share');
 	},
 };

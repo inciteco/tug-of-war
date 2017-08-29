@@ -20,6 +20,9 @@ var loadState = {
 	
 		// Load graphic assets
 		game.load.image('toPlayCard', 'assets/images/toPlayCard.png');
+		game.load.image('fbShareButton', 'assets/images/shareOnFacebook.png');
+		game.load.image('playAgainButton', 'assets/images/playAgain.png');
+		game.load.image('craveoffLogo', 'assets/images/popeyesCraveLogo.png');
 		game.load.image('startCravingButton', 'assets/images/startCravingButton.png');
 		game.load.image('whiteLine', 'assets/images/whiteLine.png');
 		game.load.image('playerPicStroke', 'assets/images/playerPicStroke.png');
@@ -36,6 +39,9 @@ var loadState = {
 		game.load.spritesheet('confetti', 'assets/images/confettisheet.jpg', 8, 8);
 		game.load.spritesheet('shoutOuts', 'assets/images/shoutouts.png', 500, 200, 10);
 		
+		// Load video assets
+    	game.load.video('craveVid', 'assets/Popeyesvid.mp4');
+		
 	
 		// Load audio assets
 		game.load.audio('tapHit', 'assets/sounds/tapHit.wav');
@@ -47,10 +53,14 @@ var loadState = {
 		game.load.audio('playerfoundSound', 'assets/sounds/playerFind.wav');
 		game.load.audio('countdownSound', 'assets/sounds/321_cntdn.wav');
 		game.load.audio('tenSecsLeft', 'assets/sounds/10s_cntdn.wav');
-		game.load.audio('playgameSound', 'assets/sounds/GO_cntdn.wav');	
+		game.load.audio('playgameSound', 'assets/sounds/GO_cntdn.wav');
+		
+		// Gameplay text
+		gameplayText = game.add.text(game.world.centerX, game.world.centerY-360, '', { font: '100px UTTriumph-Regular', fill: '#F58426' });
+		gameplayText.anchor.set(0.5, 0.5);
 		
 		// Show loading progress
-		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-100, '', { font: '320px UTTriumph-Regular', fill: '#F58426' });
+		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-100, '', { font: '280px UTTriumph-Regular', fill: '#F58426' });
 		setLoadingText.anchor.set(0.5, 0.5);
 	},
 	
@@ -59,15 +69,13 @@ var loadState = {
 		// update loading text percent
 		setLoadingText.text = game.load.progress+'%';
 		if(game.load.progress > 96) {
-			setLoadingText.text = 'Load Complete';
+			gameplayText.text = ' Complete! ';
+			setLoadingText.text = '100%';
 		}
 	},
 	
 	create: function() {
-		// Gameplay text
-		gameplayText = game.add.text(game.world.centerX, game.world.centerY-360, ' Loading ', { font: '100px UTTriumph-Regular', fill: '#F58426' });
-		gameplayText.anchor.set(0.5, 0.5);
-		
+		gameplayText.text = ' Loading ';
 		game.state.start("howtoplay");
 	},
 };

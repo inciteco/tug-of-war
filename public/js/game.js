@@ -42,6 +42,7 @@ game = new Phaser.Game(
 	var waitingforplayerText; // text while waiting for Player 2
 	var setLoadingText; // loading percentage
 	var timeLeftText; // for "time left"
+	var gameplayText; // for loading screen
 
 	// Fonts
 	var playerNamesFont = { font: 'bold 60px Trebuchet MS', fill: '#F58426' };
@@ -65,6 +66,7 @@ game = new Phaser.Game(
 	var gameResults; // Winner/Loser graphic
 
 	var popeyesBG; // background image
+	var craveoffLogo; // campaign logo
 	var toPlayCard; // card behind game tips
 	var startCravingButton; // button to begin game
 	var whiteLine; // white line separator
@@ -72,6 +74,8 @@ game = new Phaser.Game(
 	var player1PicMask; // mask to round off player pics
 	var player2PicStroke; // background setting for player pics
 	var player2PicMask; // mask to round off player pics
+	var fbShareButton; // fb share button
+	var playAgainButton; // play again button
 
 	// Audio
 	var tapHit;
@@ -84,6 +88,10 @@ game = new Phaser.Game(
 	var countdownSound;
 	var playgameSound;
 	var tenSecsLeft;
+	var muteVal = 0; // for carryover between states
+
+	// Video
+	var craveVid;
 
 	// Gameplay variables
 	var score; // player's total game score
@@ -102,7 +110,7 @@ game = new Phaser.Game(
 	var randSprite; // instantiate pick a random sprite var
 	var scoreResponse = ["Pathetic!", "So Slow Bro", "Eh, Fine", "Very Nice", "So Good!", "Amazing!", "Incredi-Fast!", "You missed!"]; // array of tap responses
 	var scoreValues = [0, 1, 2, 5, 10, 20, 50, -5]; // array of tap score values
-	var baseY = 875; // used for scaling calculation, this is "0" Y
+	var baseY = 860; // used for scaling calculation, this is "0" Y
 	var diffY; // how far away from baseY are we
 	var scaleVal; // how much to scale by
 	var bigBoxInitScale = .85; // how big is the box
@@ -110,6 +118,8 @@ game = new Phaser.Game(
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
 	var gameDuration = 45000; // duration of game
 	var endGameTimeout; // game duration object
+	var finalBigBoxPosition; // position of BigBox at game end
+	var finalBigBoxScale; // scale of BigBox at game end
 	var gameWinner; // name of game winner
 
 	// Player data
@@ -135,6 +145,7 @@ game.state.add('howtoplay', howtoplayState);
 game.state.add('waitforplayer', waitforplayerState);
 game.state.add('play', playState);
 game.state.add('win', winState);
+game.state.add('share', shareState);
 
 // call boot state
 if (gameService.getPlayer()) {

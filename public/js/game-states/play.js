@@ -33,7 +33,7 @@ var playState = {
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
 
 		// mute button
-		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', 0);
+		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', muteVal);
 		soundToggleButton.inputEnabled = true;
 		soundToggleButton.events.onInputDown.add(this.muteSound, this);
 
@@ -110,6 +110,11 @@ var playState = {
 			timeLeftText.alignTo(gameTimerText, Phaser.BOTTOM_CENTER, 0, -10);
 
 		// ACTIONS, EVENTS, & GAMESERVICES
+		
+			// Check for previously set Mute
+			if(muteVal == 1) {
+				game.sound.mute = true;
+			}
 
 			// Start the background music
 			bgMusic.play();
@@ -183,6 +188,8 @@ var playState = {
 
 				bgMusic.stop(); // Stop background music
 				gameTimer.stop(false); // stop and reset the game timer
+				finalBigBoxPosition = bigBox.position.y; // for next game state
+				finalBigBoxScale = scaleVal; // for next game state
 				//bigBox.body.velocity.y = 0; // stop the bigBox
 
 
@@ -223,9 +230,11 @@ var playState = {
 	muteSound: function() {
 		if (!this.game.sound.mute) {
 			game.sound.mute = true;
+			muteVal = 1;
 			soundToggleButton.frame = 1;
 		} else {
 			game.sound.mute = false;
+			muteVal = 0;
 			soundToggleButton.frame = 0;
 		}
 	},
