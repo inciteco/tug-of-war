@@ -21,6 +21,7 @@ function GameService (enableLogging) {
   this.COUNTDOWN_SECONDS = 10;
   this.GAMEPLAY_SECONDS = 60;
   this.WINNING_SCORE_THRESHOLD = 100;
+  this.STALE_GAME_TIMEOUT = 90;
 
   // shared state
   this.state = this.defaultState = {
@@ -191,8 +192,8 @@ function GameService (enableLogging) {
   }
 
   this.setScore = function (game) {
-	    
-    if (Math.abs(game.player_1_score)==0 && 
+
+    if (Math.abs(game.player_1_score)==0 &&
 		Math.abs(game.player_2_score)==0) {
       this.log('no score found yet');
 	  return;
@@ -359,12 +360,30 @@ function GameService (enableLogging) {
             const game_key = gameRef.key;
             const game = gameRef.val();
 
-            if (game.player_2) {
-              this.log('most recent game already has a player, starting one instead...');
+            // no third-wheels allowed
+            // TODO: do this after iterating a few options for a match?
+            const gameNeedsOpponent = game.player_2 == null;
+            if (!gameNeedsOpponent) {
+              this.log('most recent game already has a player!');
+              this.log('starting a new new game instead...');
+
               this.createNewGame();
               return;
             }
 
+            // don't join a stale game
+            const now = new Date();
+            const gameAge = now.getTime() - Date.parse(game.player_1_joined_at)
+            const secondsSinceGameStarted = gameAge / 1000;
+            if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT) {
+              this.log('game is stale!');
+              this.log('starting a new new game instead...');
+
+              this.createNewGame();
+              return;
+            }
+
+            // must be good if we got here, let's join it
             const gameId = doc_id + game_key;
             this.joinExistingGame(gameId);
           }, this)
