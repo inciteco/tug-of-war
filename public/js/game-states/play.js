@@ -75,7 +75,7 @@ var playState = {
 			tapArea.inputEnabled = true;
 
 			// Initialize Shoutouts
-			shoutOuts = game.add.sprite(game.world.centerX, 1425, 'shoutOuts', 0);
+			shoutOuts = game.add.sprite(game.world.centerX, 1422, 'shoutOuts', 0);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);
 			shoutOuts.visible = false;
@@ -418,7 +418,7 @@ var playState = {
 
 		// Update Shoutouts if Big Box isn't covering them
 		if(bigBox.position.y <=1145) {
-			shoutOuts = game.add.sprite(game.world.centerX, 1430, 'shoutOuts', shoutOutSprite);
+			shoutOuts = game.add.sprite(game.world.centerX, 1422, 'shoutOuts', shoutOutSprite);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);
 			shoutOuts.visible = true;

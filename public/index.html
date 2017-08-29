@@ -9,13 +9,13 @@
 		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/lib/firebase.js"></script>
-    <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
+    	<script type="text/javascript" src="js/lib/firebase.js"></script>
+    	<script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
 		<script type="text/javascript" src="js/services/GameService.js"></script>
 
-  	<link rel="stylesheet" href="css/jquery-ui.min.css">
-  	<link rel="stylesheet" href="css/style.css">
+  		<link rel="stylesheet" href="css/jquery-ui.min.css">
+  		<link rel="stylesheet" href="css/style.css">
 
     	<script>
 			// AB: removed in lieu of the gameService onPlayerReady call above
@@ -75,16 +75,44 @@
 			});
 		</script>
 		<style>
-			body {
-				background: url("assets/images/nonGameBG.png") no-repeat center top;
+			@font-face {
+				font-family: 'UTTriumph-Regular';
+				src: url('css/fonts/UTTriumph-Regular.eot?#iefix') format('embedded-opentype'),
+					url('css/fonts/UTTriumph-Regular.otf')  format('opentype'),
+					url('css/fonts/UTTriumph-Regular.woff') format('woff'),
+					url('css/fonts/UTTriumph-Regular.ttf')  format('truetype'),
+					url('css/fonts/UTTriumph-Regular.svg#UTTriumph-Regular') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+			html {
+				background: url("assets/images/nonGameBG.png") no-repeat center center fixed; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
+			
+			#loading {
+				display:block;
+				font-family: 'UTTriumph-Regular' !important;
+				color: #fff;
+				font-size: 80px;
+				text-align: center;
+				line-height: 200px;
+				margin: 0 auto;
+				margin-top: -100px;
+				position: absolute;
+				top: 50%;
+				width: 100%;
 			}
 		</style>
 	</head>
 
 	<body>
 		
-		<div id="loading" style="display:block;">
-			Loading...
+		<div id="loading">
+			Connecting...
 		</div>
 		<div id="main" style="display:none;">
 			<div class="wrap">
