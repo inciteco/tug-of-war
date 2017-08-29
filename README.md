@@ -14,6 +14,15 @@ cd tug-of-war && npm install
 npm start
 ```
 
+### Dev Scripts
+
+There's a few dev scripts to help automate things, to use these you'll want to install these dependencies:
+
+```sh
+npm i -g imagemin
+npm i -g wav2ogg
+```
+
 ## Compressing assets
 
 There is a script to compress all source images in the `src/assets/images` folder into the `public/assets/images`. The initial pass reduced our load from 77mb to 10mb.
