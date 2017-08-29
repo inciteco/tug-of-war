@@ -140,14 +140,14 @@ var playState = {
 
 				game.tweens.removeFrom(bigBox);
 				var tugTween = game.add.tween(bigBox);
-		    tugTween.to(
-					{
-						y: centerPoint + (score/maxScore * maxDistFromCenter)
-					},
-					500,
-					Phaser.Easing.Exponential.Out
-				);
-		    tugTween.start();
+				tugTween.to(
+						{
+							y: centerPoint + (score/maxScore * maxDistFromCenter)
+						},
+						500,
+						Phaser.Easing.Exponential.Out
+					);
+				tugTween.start();
 			}
 
 			// TODO: remove:

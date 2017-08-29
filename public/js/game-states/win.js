@@ -15,7 +15,7 @@ var winState = {
 		
 		
 
-		var splash;
+		var splash; // sprite of win/loss message
 
 		// add game table sprite
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
