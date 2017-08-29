@@ -49,11 +49,11 @@ The following items are still in the works!
 - [x] compress image assets
 - [ ] compress audio assets
 - [ ] swap png assets for jpg where appropriate
-- [ ] add loading state while processing login (takes a few moments)
+- [ ] style loading state while processing login (takes a few moments)
 - [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
 - [ ] use browserify/webpack to minify and obfuscate source code (AB)
 - [ ] play with AI after 30 seconds of waiting (AB)
-- [ ] use a phaser state vs share.html to speed up replay
+- [x] use a phaser state vs share.html to speed up replay
 - [ ] show big box in position at endgame (AB)
 - [ ] adjust threshold positions (AB)
 
@@ -63,16 +63,21 @@ The following items are still in the works!
 - [x] determine winner during tie
 - [x] win when score > threshold
 - [ ] add cloud functions validations to mitigate cheaters
-- [ ] use [bolt](https://github.com/firebase/bolt/blob/master/docs/language.md) to enforce database ACL
-- [ ] use [validation rules](https://firebase.google.com/docs/database/security/) to:
-  - [ ] limit changes in score
-  - [ ] enforce start/end times
-  - [ ] only allow read if <2 participants?
-  - [ ] enforce participants?
-  - [ ] store 1 entry per day per player
+  - [ ] use [bolt](https://github.com/firebase/bolt/blob/master/docs/language.md) to enforce database ACL
+  - [ ] use [validation rules](https://firebase.google.com/docs/database/security/) to:
+    - [ ] limit changes in score
+    - [ ] enforce start/end times
+    - [ ] only allow read if <2 participants?
+    - [ ] enforce participants?
+    - [ ] store 1 entry per day per player
 - [ ] reporting feature to dump data
+- [ ] send proper asset when non FB user logs in
+- [ ] send proper object info when bot player is used
+- [ ] enable FB share button on share.js
 - [ ] what else?
 
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
 - [ ] Facebook login not (always) working in safari
+- [ ] First few moves don't always seem to register (visually)
+- [ ] Play Again button takes user back to waitforplayer, but it doesn't ever link you to another player. Just waits...
