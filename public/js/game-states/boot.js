@@ -12,6 +12,9 @@ var bootState = {
 
 		// waiting circle
 		game.load.image('waitingCircle', 'assets/images/waitingCircle.png');
+		
+		// loading label
+		game.load.image('loadingLabel', 'assets/images/loadingLabel.png');
 	},
 
 	create: function() {

@@ -62,6 +62,7 @@ game = new Phaser.Game(
 	var soundToggleButton; // sprite: mute button
 	var waitingCircleShadow; // sprite: shadow behind waiting circle
 	var waitingCircle; // sprite: spins while waiting for player
+	var loadingLabel; // sprite: shows while assets load
 	var shoutOuts; // response feedback to player
 	var gameResults; // Winner/Loser graphic
 

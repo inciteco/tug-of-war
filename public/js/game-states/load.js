@@ -17,6 +17,10 @@ var loadState = {
 		// Waiting Circle
 		waitingCircle = game.add.sprite(game.world.centerX, game.world.centerY-160, 'waitingCircle');
 		waitingCircle.anchor.set(0.5);
+		
+		// Loading Label
+		loadingLabel = game.add.sprite(game.world.centerX, game.world.centerY-320, 'loadingLabel');
+		loadingLabel.anchor.set(0.5);
 	
 		// Load graphic assets
 		game.load.image('toPlayCard', 'assets/images/toPlayCard.png');
@@ -56,11 +60,11 @@ var loadState = {
 		game.load.audio('playgameSound', ['assets/sounds/GO_cntdn.mp3','assets/sounds/GO_cntdn.ogg']);
 		
 		// Gameplay text
-		gameplayText = game.add.text(game.world.centerX, game.world.centerY-360, '', { font: '100px UTTriumph-Regular', fill: '#F58426' });
-		gameplayText.anchor.set(0.5, 0.5);
+//		gameplayText = game.add.text(game.world.centerX, game.world.centerY-360, '', { font: '100px UTTriumph-Regular', fill: '#F58426' });
+//		gameplayText.anchor.set(0.5, 0.5);
 		
 		// Show loading progress
-		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-100, '', { font: '280px UTTriumph-Regular', fill: '#F58426' });
+		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-100, ' ', { font: '280px UTTriumph-Regular', fill: '#F58426' });
 		setLoadingText.anchor.set(0.5, 0.5);
 	},
 	
@@ -70,8 +74,8 @@ var loadState = {
 		// update loading text percent
 		setLoadingText.text = game.load.progress+'%';
 		if(game.load.progress > 96) {
-			gameplayText.text = ' Complete! ';
-			setLoadingText.text = '100%';
+			//gameplayText.text = ' Complete! ';
+			//setLoadingText.text = '100%';
 		}
 	},
 	
