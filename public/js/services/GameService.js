@@ -18,10 +18,16 @@ firebase.initializeApp({
 function GameService (enableLogging) {
 
   // constants
+  this.MAX_LIVE_PLAYER_WAIT_SECONDS = 1;
   this.COUNTDOWN_SECONDS = 10;
   this.GAMEPLAY_SECONDS = 60;
   this.WINNING_SCORE_THRESHOLD = 100;
   this.STALE_GAME_TIMEOUT = 90;
+
+  // bot opponent
+  this.BOT_NAME = 'Annie';
+  this.BOT_KEY = '-annie-bot-';
+  this.BOT_IMAGE = 'assets/images/botAnnie.png';
 
   // shared state
   this.state = this.defaultState = {
@@ -138,6 +144,10 @@ function GameService (enableLogging) {
     this.log('setOpponent', opponent);
     this.state.opponent = opponent;
 
+    if (opponent.key == this.BOT_KEY) {
+      this.state.opponent_simulated = true;
+    }
+
     // notify
     this.onOpponentArrived(opponent);
 
@@ -150,8 +160,8 @@ function GameService (enableLogging) {
     return this.state.player;
   }
 
-  this.startGameSession = function(gameDoc) {
-    this.log('startGameSession', gameDoc);
+  this.startGameSession = function(gameSessionDoc) {
+    this.log('startGameSession', gameSessionDoc);
 
     // TODO: more graceful transition?
     if (this.state.gameSession) {
@@ -160,9 +170,9 @@ function GameService (enableLogging) {
     }
 
     // start listening
-    gameDoc.on('value', _.bind(this.gameUpdate, this));
+    gameSessionDoc.on('value', _.bind(this.gameUpdate, this));
 
-    this.state.gameSession = gameDoc;
+    this.state.gameSession = gameSessionDoc;
     this.emit('onGameSessionStarted', this.state.gameSession);
 
     // warn the user before leaving while playing
@@ -194,9 +204,9 @@ function GameService (enableLogging) {
   this.setScore = function (game) {
 
     if (Math.abs(game.player_1_score)==0 &&
-		Math.abs(game.player_2_score)==0) {
+    	  Math.abs(game.player_2_score)==0) {
       this.log('no score found yet');
-	  return;
+	    return;
     }
 
     const playingAsPlayer1 = this.state.player_is_host;
@@ -415,42 +425,51 @@ function GameService (enableLogging) {
 
     const now_ts = new Date().toISOString();
     const doc_id = 'games/' + now_ts.split('T')[0] + '/';
-    const gameDoc = this.database.ref(doc_id).push();
+    const gameSessionDoc = this.database.ref(doc_id).push();
 
-    gameDoc.set({
+    gameSessionDoc.set({
       player_1: this.state.player,
       player_1_score: 0,
       player_1_joined_at: now_ts
     }).then(_.bind(function () {
-      this.log('createNewGame done! game.key:', gameDoc.key);
+      this.log('createNewGame done! game.key:', gameSessionDoc.key);
     }, this))
 
     // set this before first gameUpdate
     this.state.player_is_host = true;
 
+    setTimeout(_.bind(function () {
+        console.log('done waiting for a live player');
+        this.log('switching to simulated opponent');
+        this.switchToSimulatedOpponent();
+      }, this),
+      this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
+
     // start game updates
-    this.startGameSession(gameDoc);
+    this.startGameSession(gameSessionDoc);
   }
 
-  // When we're ready for another player to join, call this
-  this.findMockOpponent = function (forceFailure) {
-    if (forceFailure) {
-      // request cannot be made (assume connection problems, show try again button, etc...)
-      return false;
-    }
+  // fill the player_2 slot with a simulated player
+  this.switchToSimulatedOpponent = function () {
 
     // for now make a fake opponent
-    const mockOpponent = {
-      image: 'http://via.placeholder.com/200x200/C00/fff/?text=player',
-      name: 'opponent'
+    const simulatedOpponent = {
+      key: this.BOT_KEY,
+      image: this.BOT_IMAGE,
+      name: this.BOT_NAME,
     }
 
-    // for now call it after 3 seconds
-    setTimeout(
-      _.bind(this.setOpponent, this),
-      3000, mockOpponent);
+    const now_ts = new Date().toISOString();
+    this.state.gameSession.update({
+      player_2: simulatedOpponent,
+      player_2_score: 0,
+      player_2_joined_at: now_ts
+    }).then(_.bind(function () {
+      this.log('switched game simulated on firebase');
+    }, this));
 
-    // request has been made, a user should arrive shortly
+    // request has been made, once the server aknowledges,
+    // we will start the game via the standard watchers.
     return true;
   }
 
@@ -460,14 +479,32 @@ function GameService (enableLogging) {
 
   // temp
   this.simulateOpponentMove = function () {
-    const randomMove = Math.round(Math.random() * 30);
+    const playingAsPlayer1 = this.state.player_is_host;
+    const randomMove = Math.round(Math.random() * 15);
+    const update = {};
 
-    // TODO: simulate over network??
-    this.onOpponentMove(randomMove);
+    // opponent moves should be for opposite player!
+    if (!playingAsPlayer1) {
+      this.state.player_1_score += randomMove;
+      update.player_1_score = this.state.player_1_score;
+      update.last_to_move = 1;
+    } else {
+      this.state.player_2_score += randomMove;
+      update.player_2_score = this.state.player_2_score;
+      update.last_to_move = 2;
+    }
+
+    this.state.gameSession.update(update)
+      .then(_.bind(function () {
+        this.log('simulated move synced');
+      }, this))
   }
 
   this.makeMove = function (move) {
     this.log('sending my move to the server:', move);
+
+    // only use positive integers
+    move = Math.round(Math.abs(move));
 
     const now = new Date();
     const ends = new Date(Date.parse(this.state.game_end_time));
@@ -517,11 +554,11 @@ function GameService (enableLogging) {
 
     const playerWon = tieGame ? playerMovedLast : playerWonByHigherScore;
 
-    const nowts = new Date().toISOString();
+    const now_ts = new Date().toISOString();
     this.state.gameSession.update({
       finalScore: finalScore,
       game_ended: true,
-      game_ended_at: nowts,
+      game_ended_at: now_ts,
       game_winner: playerWon ? this.state.player.key : this.state.opponent.key,
       game_winner_was_host: playerWon
     }).then(_.bind(function () {
