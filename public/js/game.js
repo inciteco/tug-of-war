@@ -33,7 +33,7 @@ game = new Phaser.Game(
 	var nowTime; // the exact time a tapBubble is created
 	var tapTime; // the exact time a tapBubble is tapped/destroyed
 	var gameTimer; // full game timer
-	var gameCount = 45; // game length
+	var gameCount; // game length
 	var gameTimerText; // game timer text
 
 	// Text
@@ -116,7 +116,6 @@ game = new Phaser.Game(
 	var bigBoxInitScale = .75; // how big is the box
 
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
-	var gameDuration = 45000; // duration of game
 	var endGameTimeout; // game duration object
 	var finalBigBoxPosition; // position of BigBox at game end
 	var finalBigBoxScale; // scale of BigBox at game end
