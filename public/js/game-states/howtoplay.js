@@ -72,7 +72,7 @@ var howtoplayState = {
 			whiteLine.anchor.set(0.5);
 
 			// How To Play text
-			var howtoplayText = game.add.text(220, 1080, '1) Tap, tap, tap the Popeyes item as\nfast as you can.\n\n2) The quicker you tap, the stronger\nyour craving for the Big Box.\n\n3) Player to pull Big Box into their\ncrave zone (or closest to it) will prevail.', tipsFont);
+			var howtoplayText = game.add.text(220, 1080, '1) Tap, tap, tap the Popeye\'s item as\nfast as you can.\n\n2) The quicker you tap, the stronger\nyour craving for the Big Box.\n\n3) Player to pull Big Box into their\ncrave zone (or closest to it) will prevail.', tipsFont);
 			howtoplayText.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 		
 		
