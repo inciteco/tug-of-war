@@ -113,7 +113,7 @@ game = new Phaser.Game(
 	var baseY = 860; // used for scaling calculation, this is "0" Y
 	var diffY; // how far away from baseY are we
 	var scaleVal; // how much to scale by
-	var bigBoxInitScale = .85; // how big is the box
+	var bigBoxInitScale = .75; // how big is the box
 
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
 	var gameDuration = 45000; // duration of game
