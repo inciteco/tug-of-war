@@ -216,12 +216,12 @@ input[type="checkbox"]:checked
 
 .checkboxText
 {
-	width: 85%;
-	margin-left: 10px;
-	display: inline-block;
+	width: 80%;
+	margin-left: 5px;
 	text-align: left;
 	color: #fff;
 	vertical-align: text-top;
+	display: inline-block;
 }
 
 #firstname {
