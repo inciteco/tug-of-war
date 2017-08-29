@@ -8,17 +8,35 @@ var shareState = {
 		popeyesBG = game.add.sprite(0, 0, 'popeyesBG');
 		popeyesBG.height = gHeight;
 		popeyesBG.width = gWidth;
-		//game.stage.backgroundColor = '#F58426';
+		
+		// Set logo
+		craveoffLogo = game.add.sprite(game.world.centerX, 160, 'craveoffLogo');
+		craveoffLogo.scale.setTo(.8, .8);
+		craveoffLogo.anchor.set(0.5);
+		
+		// set the video
+    	craveVid = game.add.video('craveVid');
+		craveVid.play(true);
+		craveVid.addToWorld(game.world.centerX, 700, 0.5, 0.5);
+		
+		// share on FB button
+		fbShareButton = game.add.sprite(game.world.centerX, 1300, 'fbShareButton');
+		fbShareButton.anchor.set(0.5);
+		fbShareButton.inputEnabled = true;
+		fbShareButton.events.onInputDown.add(this.playAgain, this);
+		
+		
 		
 		// User clicks this to start game
-		var restartGameButton = game.add.sprite(100, 1300, 'restartGameButton');
-		restartGameButton.anchor.set(0.5);
-		restartGameButton.inputEnabled = true;
-		restartGameButton.events.onInputDown.add(this.playAgain, this);
+		playAgainButton = game.add.sprite(game.world.centerX, 1600, 'playAgainButton');
+		playAgainButton.anchor.set(0.5);
+		playAgainButton.inputEnabled = true;
+		playAgainButton.events.onInputDown.add(this.playAgain, this);
 	},
 	
 	// Call waitforplayer state
 	playAgain: function() {
-			game.state.start('waitforplayer');
+			craveVid.stop();	
+			game.state.start('howtoplay');
 	},
 };
