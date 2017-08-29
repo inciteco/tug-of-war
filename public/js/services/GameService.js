@@ -19,10 +19,10 @@ function GameService (enableLogging) {
 
   // constants
   this.MAX_LIVE_PLAYER_WAIT_SECONDS = 10;
+  this.STALE_GAME_TIMEOUT_SECONDS = 90;
   this.COUNTDOWN_SECONDS = 10;
   this.GAMEPLAY_SECONDS = 60;
   this.WINNING_SCORE_THRESHOLD = 100;
-  this.STALE_GAME_TIMEOUT = 90;
   this.STATIC_PATH = 'assets/images/';
 
   // bot opponent
@@ -276,8 +276,13 @@ function GameService (enableLogging) {
     this.endGame();
   }
 
+  this.hasGameEnded = function () {
+    game = this.state.lastSnapshot;
+    return game && game.game_ended;
+  }
+
   this.checkGameEnded = function (game) {
-    if (!game.game_ended) {
+    if (!this.hasGameEnded()) {
       return;
     }
 
@@ -360,7 +365,10 @@ function GameService (enableLogging) {
     // TODO: find a better way to ensure player exists
     if (!this.state.player) {
       this.log('findOpponent rescheduled without player');
-      setTimeout(_.bind(this.findOpponent, this), 2000);
+
+      clearTimeout(this.state.findOpponentTimeout);
+      this.state.findOpponentTimeout = setTimeout(
+        _.bind(this.findOpponent, this), 2000);
       return;
     }
 
@@ -405,7 +413,7 @@ function GameService (enableLogging) {
             const gameAge = now.getTime() - startedAt.getTime();
             const secondsSinceGameStarted = gameAge / 1000;
 
-            if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT) {
+            if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT_SECONDS) {
               this.log('game is stale!', game);
               this.log('starting a new new game instead...');
 
@@ -463,11 +471,13 @@ function GameService (enableLogging) {
 
     if (this.BOT_ENABLED) {
       // schedule simulated opponent check
-      setTimeout(_.bind(function () {
+      clearTimeout(this.state.switchToSimulatedOpponentTimeout);
+      const timeoutId = setTimeout(_.bind(function () {
           console.log('done waiting for a live player');
           this.switchToSimulatedOpponent();
         }, this),
         this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
+      this.state.switchToSimulatedOpponentTimeout = timeoutId;
     }
   }
 
@@ -504,8 +514,12 @@ function GameService (enableLogging) {
     return this.state.opponent
   }
 
-  // temp
   this.simulateOpponentMove = function () {
+    if (this.hasGameEnded()) {
+      this.log('move aborted, game is over');
+      return;
+    }
+
     const playingAsPlayer1 = this.state.player_is_host;
     const randomMove = Math.round(Math.random() * this.BOT_MOVE_MAX);
     const update = {};
@@ -529,6 +543,11 @@ function GameService (enableLogging) {
 
   this.makeMove = function (move) {
     this.log('sending my move to the server:', move);
+
+    if (this.hasGameEnded()) {
+      this.log('move aborted, game is over');
+      return;
+    }
 
     // only use integers
     move = Math.round(move);
@@ -657,7 +676,8 @@ function GameService (enableLogging) {
     // schedule the start of the game
     clearTimeout(this.state.onGameplayStartTimeout);
     this.state.onGameplayStartTimeout = setTimeout(
-      _.bind(this.onGameplayStart, this), secondsUntilStart * 1000);
+      _.bind(this.onGameplayStart, this),
+      secondsUntilStart * 1000);
 
     // emit
     this.emit('onCountDownStart', {secondsUntilStart: secondsUntilStart});
@@ -734,7 +754,9 @@ function GameService (enableLogging) {
 
     // stop timers
     clearInterval(this.state.simulateOpponentMoveInterval);
+    clearTimeout(this.state.switchToSimulatedOpponentTimeout);
     clearTimeout(this.state.gameplayEndTimeout);
+    clearTimeout(this.state.findOpponentTimeout);
 
     // reset state
     this.state = Object.assign({}, this.defaultState);
