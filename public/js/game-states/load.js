@@ -44,16 +44,16 @@ var loadState = {
 		
 	
 		// Load audio assets
-		game.load.audio('tapHit', 'assets/sounds/tapHit.wav');
-		game.load.audio('tapHitCoke', 'assets/sounds/tapHitCoke.wav');
-		game.load.audio('bgMusic', 'assets/sounds/bgMusic.wav');
-		game.load.audio('tapMiss', 'assets/sounds/tapMiss.wav');
-		game.load.audio('youLose', 'assets/sounds/youLose.wav');
-		game.load.audio('youWin', 'assets/sounds/youWin.wav');
-		game.load.audio('playerfoundSound', 'assets/sounds/playerFind.wav');
-		game.load.audio('countdownSound', 'assets/sounds/321_cntdn.wav');
-		game.load.audio('tenSecsLeft', 'assets/sounds/10s_cntdn.wav');
-		game.load.audio('playgameSound', 'assets/sounds/GO_cntdn.wav');
+		game.load.audio('tapHit', ['assets/sounds/tapHit.mp3', 'assets/sounds/tapHit.ogg']);
+		game.load.audio('tapHitCoke', ['assets/sounds/tapHitCoke.mp3','assets/sounds/tapHitCoke.ogg']);
+		game.load.audio('bgMusic', ['assets/sounds/bgMusic.mp3','assets/sounds/bgMusic.ogg']);
+		game.load.audio('tapMiss', ['assets/sounds/tapMiss.mp3','assets/sounds/tapMiss.ogg']);
+		game.load.audio('youLose', ['assets/sounds/youLose.mp3','assets/sounds/youLose.ogg']);
+		game.load.audio('youWin', ['assets/sounds/youWin.mp3','assets/sounds/youWin.ogg']);
+		game.load.audio('playerfoundSound', ['assets/sounds/playerFind.mp3','assets/sounds/playerFind.ogg']);
+		game.load.audio('countdownSound', ['assets/sounds/321_cntdn.mp3','assets/sounds/321_cntdn.ogg']);
+		game.load.audio('tenSecsLeft', ['assets/sounds/10s_cntdn.mp3','assets/sounds/10s_cntdn.ogg']);
+		game.load.audio('playgameSound', ['assets/sounds/GO_cntdn.mp3','assets/sounds/GO_cntdn.ogg']);
 		
 		// Gameplay text
 		gameplayText = game.add.text(game.world.centerX, game.world.centerY-360, '', { font: '100px UTTriumph-Regular', fill: '#F58426' });
@@ -64,7 +64,8 @@ var loadState = {
 		setLoadingText.anchor.set(0.5, 0.5);
 	},
 	
-	loadUpdate: function() {     
+	loadUpdate: function() {   
+		
 		waitingCircle.angle += 1; // spin waiting circle
 		// update loading text percent
 		setLoadingText.text = game.load.progress+'%';
@@ -75,7 +76,6 @@ var loadState = {
 	},
 	
 	create: function() {
-		gameplayText.text = ' Loading ';
 		game.state.start("howtoplay");
 	},
 };
