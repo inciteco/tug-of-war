@@ -26,7 +26,7 @@ function GameService (enableLogging) {
   this.STATIC_PATH = 'assets/images/';
 
   // bot opponent
-  this.BOT_ENABLED = false;
+  this.BOT_ENABLED = true;
   this.BOT_NAME = 'Annie';
   this.BOT_KEY = '-annie-bot-';
   this.BOT_IMAGE = this.STATIC_PATH + 'botAnnie.png';
