@@ -18,9 +18,12 @@ npm start
 
 There's a few dev scripts to help automate things, to use these you'll want to install these dependencies:
 
+Installing *(on Mac OS X)*:
 ```sh
-npm i -g imagemin
-npm i -g wav2ogg
+brew update
+brew install ffmpeg
+brew install lame
+brew install --with-libvorbis --with-lame sox
 ```
 
 ## Compressing assets
