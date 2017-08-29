@@ -26,6 +26,7 @@ function GameService (enableLogging) {
   this.STATIC_PATH = 'assets/images/';
 
   // bot opponent
+  this.BOT_ENABLED = false;
   this.BOT_NAME = 'Annie';
   this.BOT_KEY = '-annie-bot-';
   this.BOT_IMAGE = this.STATIC_PATH + 'botAnnie.png';
@@ -399,10 +400,12 @@ function GameService (enableLogging) {
 
             // don't join a stale game
             const now = new Date();
-            const gameAge = now.getTime() - Date.parse(game.player_1_joined_at)
+            const startedAt = new Date(Date.parse(game.player_1_joined_at));
+            const gameAge = now.getTime() - startedAt.getTime();
             const secondsSinceGameStarted = gameAge / 1000;
+
             if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT) {
-              this.log('game is stale!');
+              this.log('game is stale!', game);
               this.log('starting a new new game instead...');
 
               this.createNewGame();
@@ -454,19 +457,26 @@ function GameService (enableLogging) {
     // set this before first gameUpdate
     this.state.player_is_host = true;
 
-    setTimeout(_.bind(function () {
-        console.log('done waiting for a live player');
-        this.log('switching to simulated opponent');
-        this.switchToSimulatedOpponent();
-      }, this),
-      this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
-
     // start game updates
     this.startGameSession(gameSessionDoc);
+
+    if (this.BOT_ENABLED) {
+      // schedule simulated opponent check
+      setTimeout(_.bind(function () {
+          console.log('done waiting for a live player');
+          this.switchToSimulatedOpponent();
+        }, this),
+        this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
+    }
   }
 
   // fill the player_2 slot with a simulated player
   this.switchToSimulatedOpponent = function () {
+    const waitingForOpponent = !this.state.opponent;
+    if (!waitingForOpponent)
+      return;
+
+    this.log('switching to simulated opponent');
 
     // for now make a fake opponent
     const simulatedOpponent = {
@@ -481,7 +491,7 @@ function GameService (enableLogging) {
       player_2_score: 0,
       player_2_joined_at: now_ts
     }).then(_.bind(function () {
-      this.log('switched game simulated on firebase');
+      this.log('done switched the game to simulated!');
     }, this));
 
     // request has been made, once the server aknowledges,
