@@ -248,6 +248,11 @@ var playState = {
 		if(gameCount <=10) {
 			tenSecsLeft.play();
 		}
+		
+		// temp fix for -1 bug
+		if(gameCount == 0) {
+			gameTimerText.text = ':0';
+		}
 	},
 
 	// create a random Popeye's item
@@ -343,7 +348,7 @@ var playState = {
 
 		shoutOuts.kill(); // Destroy response text
 
-		if(randSprite == 6) {
+		if(randSprite == 3) {
 			tapHitCoke.play(); // Play Coke effect
 		} else {
 			tapHit.play(); // Play bubble pop effect
