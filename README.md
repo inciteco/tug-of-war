@@ -50,6 +50,10 @@ You can logout via the developer console with:
 gameService.signOut()
 ```
 
+*localStorage corruption?*
+If you get weird caching things after updating js files, try running this in the chrome dev tools console while on the page:
+`localStorage.clear()`
+
 ## Todos
 
 The following items are still in the works!
