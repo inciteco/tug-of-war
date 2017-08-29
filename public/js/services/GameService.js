@@ -34,7 +34,7 @@ function GameService (enableLogging) {
   this.BOT_MOVE_SECONDS_BETWEEN_MOVES = 1;
 
   // shared state
-  this.state = this.defaultState = {
+  this.defaultState = {
     gameplayEndTimeout: null,
     gameplayStartTimeout: null,
     simulateOpponentMoveInterval: null,
@@ -47,8 +47,9 @@ function GameService (enableLogging) {
     player_1_score: 0,
     player_2_score: 0,
     score: 0,
-    gameDoc: null
+    gameSession: null
   }
+  this.state = Object.assign({}, this.defaultState);
 
   // init!
   this.init = function () {
@@ -736,7 +737,7 @@ function GameService (enableLogging) {
     clearTimeout(this.state.gameplayEndTimeout);
 
     // reset state
-    Object.assign(this.state, this.defaultState);
+    this.state = Object.assign({}, this.defaultState);
 
     // reinitialize
     this.init();
