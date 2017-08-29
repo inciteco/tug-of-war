@@ -529,8 +529,8 @@ function GameService (enableLogging) {
   this.makeMove = function (move) {
     this.log('sending my move to the server:', move);
 
-    // only use positive integers
-    move = Math.round(Math.abs(move));
+    // only use integers
+    move = Math.round(move);
 
     const now = new Date();
     const ends = new Date(Date.parse(this.state.game_end_time));
