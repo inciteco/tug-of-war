@@ -29,6 +29,8 @@ function GameService (enableLogging) {
   this.BOT_NAME = 'Annie';
   this.BOT_KEY = '-annie-bot-';
   this.BOT_IMAGE = this.STATIC_PATH + 'botAnnie.png';
+  this.BOT_MOVE_MAX = 7;
+  this.BOT_MOVE_SECONDS_BETWEEN_MOVES = 1;
 
   // shared state
   this.state = this.defaultState = {
@@ -494,7 +496,7 @@ function GameService (enableLogging) {
   // temp
   this.simulateOpponentMove = function () {
     const playingAsPlayer1 = this.state.player_is_host;
-    const randomMove = Math.round(Math.random() * 15);
+    const randomMove = Math.round(Math.random() * this.BOT_MOVE_MAX);
     const update = {};
 
     // opponent moves should be for opposite player!
@@ -660,7 +662,8 @@ function GameService (enableLogging) {
       // start simulating remote player
       clearInterval(this.state.simulateOpponentMoveInterval);
       this.state.simulateOpponentMoveInterval = setInterval(
-        _.bind(this.simulateOpponentMove, this), 500);
+        _.bind(this.simulateOpponentMove, this),
+        this.BOT_MOVE_SECONDS_BETWEEN_MOVES * 1000);
     }
 
     // schedule the end of play
