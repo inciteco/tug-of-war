@@ -18,7 +18,7 @@ firebase.initializeApp({
 function GameService (enableLogging) {
 
   // constants
-  this.MAX_LIVE_PLAYER_WAIT_SECONDS = 1;
+  this.MAX_LIVE_PLAYER_WAIT_SECONDS = 10;
   this.COUNTDOWN_SECONDS = 10;
   this.GAMEPLAY_SECONDS = 60;
   this.WINNING_SCORE_THRESHOLD = 100;
