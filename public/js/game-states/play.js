@@ -254,7 +254,7 @@ var playState = {
 	createTapBubble: function() {
 
 		// Set tap bubbles
-		randSprite = game.rnd.integerInRange(0, 8); // pick a random sprite
+		randSprite = game.rnd.integerInRange(0, 5); // pick a random sprite
 		tapBubble = game.add.sprite(bounds.randomX, bounds.randomY, 'tapBubble', randSprite);
 		game.physics.enable(tapBubble, Phaser.Physics.ARCADE);
 		tapBubble.body.collideWorldBounds = true; // keep bubbles within stage

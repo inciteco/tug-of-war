@@ -26,7 +26,7 @@ var loadState = {
 		game.load.image('startCravingButton', 'assets/images/startCravingButton.png');
 		game.load.image('whiteLine', 'assets/images/whiteLine.png');
 		game.load.image('playerPicStroke', 'assets/images/playerPicStroke.png');
-		game.load.spritesheet('tapBubble', 'assets/images/popeyesItemsSheet.png', 500, 500, 9);
+		game.load.spritesheet('tapBubble', 'assets/images/popeyesItemsSheet.png', 500, 500, 6);
 		game.load.spritesheet('afterPulse', 'assets/images/afterPulse.png', 400, 400, 7);
 		game.load.image('gameWon', 'assets/images/winSplash.png');
 		game.load.image('gameLost', 'assets/images/loseSplash.png');
