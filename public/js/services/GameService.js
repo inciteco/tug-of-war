@@ -191,8 +191,11 @@ function GameService (enableLogging) {
   }
 
   this.setScore = function (game) {
-    if (!game.player_1_score || !game.player_2_score) {
-      return;
+	    
+    if (Math.abs(game.player_1_score)==0 && 
+		Math.abs(game.player_2_score)==0) {
+      this.log('no score found yet');
+	  return;
     }
 
     const playingAsPlayer1 = this.state.player_is_host;
