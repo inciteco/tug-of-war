@@ -49,13 +49,14 @@ The following items are still in the works!
 - [x] compress image assets
 - [ ] compress audio assets
 - [ ] swap png assets for jpg where appropriate
-- [ ] style loading state while processing login (takes a few moments)
+- [x] style loading state while processing login (takes a few moments)
 - [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
 - [ ] use browserify/webpack to minify and obfuscate source code (AB)
 - [ ] play with AI after 30 seconds of waiting (AB)
 - [x] use a phaser state vs share.html to speed up replay
-- [ ] show big box in position at endgame (AB)
+- [x] show big box in position at endgame (AB)
 - [ ] adjust threshold positions (AB)
+- [ ] add video player controls
 
 ### Multiplayer GameServices stuff (AB)
 - [x] configure firebase deploy
@@ -74,7 +75,7 @@ The following items are still in the works!
 - [ ] send proper asset when non FB user logs in
 - [ ] send proper object info when bot player is used
 - [ ] enable FB share button on share.js
-- [ ] what else?
+- [ ] gather checkbox data
 
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
