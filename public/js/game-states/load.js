@@ -26,6 +26,7 @@ var loadState = {
 		game.load.image('toPlayCard', 'assets/images/toPlayCard.png');
 		game.load.image('fbShareButton', 'assets/images/shareOnFacebook.png');
 		game.load.image('playAgainButton', 'assets/images/playAgain.png');
+		game.load.image('tryAgainButton', 'assets/images/tryAgainButton.png');
 		game.load.image('craveoffLogo', 'assets/images/popeyesCraveLogo.png');
 		game.load.image('startCravingButton', 'assets/images/startCravingButton.png');
 		game.load.image('whiteLine', 'assets/images/whiteLine.png');

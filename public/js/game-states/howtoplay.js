@@ -75,8 +75,16 @@ var howtoplayState = {
 			var howtoplayText = game.add.text(220, 1080, '1) Tap, tap, tap the Popeye\'s item as\nfast as you can.\n\n2) The quicker you tap, the stronger\nyour craving for the Big Box.\n\n3) Player to pull Big Box into their\ncrave zone (or closest to it) will prevail.', tipsFont);
 			howtoplayText.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 		
+	// User clicks this to start game
+		tryAgainButton = game.add.sprite(game.world.centerX, 1600, 'tryAgainButton');
+		tryAgainButton.anchor.set(0.5);
+		tryAgainButton.inputEnabled = true;
+		tryAgainButton.events.onInputDown.add(this.tryAgain, this);	
 		
-		
+	},
+	// Call play state
+	tryAgain: function() {	
+			game.state.start('connecterror');
 	},
 	
 	// Call play state

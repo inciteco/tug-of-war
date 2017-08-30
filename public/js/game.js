@@ -77,6 +77,7 @@ game = new Phaser.Game(
 	var player2PicMask; // mask to round off player pics
 	var fbShareButton; // fb share button
 	var playAgainButton; // play again button
+	var tryAgainButton; // for connection error
 
 	// Audio
 	var tapHit;
@@ -146,6 +147,7 @@ game.state.add('waitforplayer', waitforplayerState);
 game.state.add('play', playState);
 game.state.add('win', winState);
 game.state.add('share', shareState);
+game.state.add('connecterror', connecterrorState);
 
 // call boot state
 if (gameService.getPlayer()) {
