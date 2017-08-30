@@ -282,7 +282,7 @@ function GameService (enableLogging) {
   }
 
   this.checkGameEnded = function (game) {
-    if (!this.hasGameEnded()) {
+    if (!game.game_ended) {
       return;
     }
 
