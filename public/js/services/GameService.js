@@ -407,19 +407,19 @@ function GameService (enableLogging) {
               return;
             }
 
-            // don't join a stale game
-            const now = new Date();
-            const startedAt = new Date(Date.parse(game.player_1_joined_at));
-            const gameAge = now.getTime() - startedAt.getTime();
-            const secondsSinceGameStarted = gameAge / 1000;
-
-            if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT_SECONDS) {
-              this.log('game is stale!', game);
-              this.log('starting a new new game instead...');
-
-              this.createNewGame();
-              return;
-            }
+            // // don't join a stale game
+            // const now = new Date();
+            // const startedAt = new Date(Date.parse(game.player_1_joined_at));
+            // const gameAge = now.getTime() - startedAt.getTime();
+            // const secondsSinceGameStarted = gameAge / 1000;
+            //
+            // if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT_SECONDS) {
+            //   this.log('game is stale!', game);
+            //   this.log('starting a new new game instead...');
+            //
+            //   this.createNewGame();
+            //   return;
+            // }
 
             // must be good if we got here, let's join it
             const gameId = doc_id + game_key;
@@ -472,11 +472,11 @@ function GameService (enableLogging) {
     if (this.BOT_ENABLED) {
       // schedule simulated opponent check
       clearTimeout(this.state.switchToSimulatedOpponentTimeout);
-      const timeoutId = setTimeout(_.bind(function () {
-          console.log('done waiting for a live player');
-          this.switchToSimulatedOpponent();
-        }, this),
+
+      const timeoutId = setTimeout(
+        _.bind(this.switchToSimulatedOpponent, this),
         this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
+
       this.state.switchToSimulatedOpponentTimeout = timeoutId;
     }
   }
