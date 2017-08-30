@@ -296,7 +296,7 @@ function GameService (enableLogging) {
 
     this.state.gameSessionSnapshot = game;
 
-    const playerWon = this.state.game_winner == this.state.player.key;
+    const playerWon = game.game_winner == this.state.player.key;
     this.log('game has ended! playerWon:', playerWon);
 
     this.clearAllTimers();
