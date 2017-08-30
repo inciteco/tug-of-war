@@ -281,6 +281,11 @@ function GameService (enableLogging) {
       return;
     }
 
+    if (this.hasGameBeenEnded()) {
+      this.log('game was already ended');
+      return;
+    }
+
     const playerWon = this.state.player_is_host ?
       game.game_winner_was_host:
       !game.game_winner_was_host;
