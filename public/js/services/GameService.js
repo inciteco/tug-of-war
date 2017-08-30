@@ -20,8 +20,8 @@ function GameService (enableLogging) {
   // constants
   this.MAX_LIVE_PLAYER_WAIT_SECONDS = 10;
   this.STALE_GAME_TIMEOUT_SECONDS = 90;
-  this.COUNTDOWN_SECONDS = 10;
-  this.GAMEPLAY_SECONDS = 60;
+  this.COUNTDOWN_SECONDS = 5;
+  this.GAMEPLAY_SECONDS = 45;
   this.WINNING_SCORE_THRESHOLD = 100;
   this.STATIC_PATH = 'assets/images/';
 
@@ -56,6 +56,10 @@ function GameService (enableLogging) {
     this.log('init')
 
     this.database = firebase.database();
+
+    // TODO: make sure this isn't called too quickly?!
+    // ensure a fresh emitter for each session
+    this.emitter = new EventEmitter();
 
     // wait for async player auth
     if (firebase.auth().currentUser) {
@@ -151,10 +155,7 @@ function GameService (enableLogging) {
   }
 
   this.setPlayer = function(player) {
-    this.log('setPlayer', player);
-
     this.state.player = player;
-
     this.onPlayerReady(player);
   }
 
@@ -188,7 +189,7 @@ function GameService (enableLogging) {
     }
 
     // start listening
-    gameSessionDoc.on('value', _.bind(this.gameUpdate, this));
+    gameSessionDoc.on('value', this.boundGameUpdate);
 
     this.state.gameSession = gameSessionDoc;
     this.emit('onGameSessionStarted', this.state.gameSession);
@@ -197,11 +198,15 @@ function GameService (enableLogging) {
     window.onbeforeunload = function() { return true; }
   }
 
+  this.endGameSession = function() {
+    this.log('endGameSession');
+    this.state.gameSession.off('value', this.boundGameUpdate);
+  }
+
   this.gameUpdate = function (game) {
     this.log('gameUpdate', game.val());
 
     game = game.val();
-    this.state.lastSnapshot = game;
 
     if (!game) {
       this.log('game does not exist!');
@@ -209,7 +214,7 @@ function GameService (enableLogging) {
     }
 
     if (this.checkGameEnded(game)) {
-      this.log('game has ended!');
+      this.log('game has ended, aborting updates!');
       return;
     }
 
@@ -217,13 +222,16 @@ function GameService (enableLogging) {
     this.checkIfStartScheduled(game);
     this.setScore(game);
     this.checkScoreThresholdReached(game);
+
+    this.state.lastSnapshot = game;
   }
+  this.boundGameUpdate = _.bind(this.gameUpdate, this);
 
   this.setScore = function (game) {
 
     if (Math.abs(game.player_1_score)==0 &&
     	  Math.abs(game.player_2_score)==0) {
-      this.log('no score found yet');
+      this.log('no scores found yet');
 	    return;
     }
 
@@ -283,8 +291,10 @@ function GameService (enableLogging) {
 
     if (this.hasGameBeenEnded()) {
       this.log('game was already ended');
-      return;
+      return true;
     }
+
+    this.state.lastSnapshot = game;
 
     const playerWon = this.state.player_is_host ?
       game.game_winner_was_host:
@@ -292,7 +302,9 @@ function GameService (enableLogging) {
 
     this.log('game has ended! playerWon:', playerWon);
 
+    this.clearAllTimers();
     this.onGameplayEnd(playerWon);
+    this.endGameSession();
 
     return true;
   }
@@ -339,8 +351,6 @@ function GameService (enableLogging) {
     const diff = (starts.getTime() - now.getTime()) / 1000;
     this.startCountdown(diff);
   }
-
-  this.emitter = new EventEmitter();
 
   this.addListener = function (event, callback) {
     this.emitter.addListener(event, callback);
@@ -514,10 +524,21 @@ function GameService (enableLogging) {
     return this.state.opponent
   }
 
-  this.getSecondsRemainingInCurrentGame = function () {
-    // if not started return 0
-    // if ended return 0
-    // return secondsRemaining
+  this.getSecondsRemaining = function () {
+    if (!this.state.game_end_time) {
+      this.log('no end time scheduled yet!');
+      return this.GAMEPLAY_SECONDS;
+    }
+
+    if (this.hasGameBeenEnded()) {
+      return 0;
+    }
+
+    const now = new Date();
+    const ends = new Date(Date.parse(this.state.game_end_time));
+    const secondsRemaining = (ends.getTime() - now.getTime()) / 1000;
+
+    return secondsRemaining;
   }
 
   this.hasGameBeenEnded = function () {
@@ -551,6 +572,8 @@ function GameService (enableLogging) {
       update.last_to_move = 2;
     }
 
+    debugger
+
     this.state.gameSession.update(update)
       .then(_.bind(function () {
         this.log('simulated move synced');
@@ -568,15 +591,12 @@ function GameService (enableLogging) {
     // only use integers
     move = Math.round(move);
 
-    const now = new Date();
-    const ends = new Date(Date.parse(this.state.game_end_time));
-    const diff = (ends.getTime() - now.getTime()) / 1000;
-
-    if (diff < 0) {
+    const secondsRemaining = this.getSecondsRemaining();
+    if (secondsRemaining < 0) {
       this.log('move aborted, game should be over');
       return;
     } else {
-      this.log('move allowed', diff, 'seconds remaining');
+      this.log('move allowed', secondsRemaining, 'seconds remaining');
     }
 
     const playingAsPlayer1 = this.state.player_is_host;
@@ -601,6 +621,9 @@ function GameService (enableLogging) {
   this.endGame = function () {
     this.log('endGame called');
 
+    // clear scheduled call
+    clearTimeout(this.state.gameplayEndTimeout);
+
     const playingAsPlayer1 = this.state.player_is_host;
     const finalGameState = this.state.lastSnapshot;
     const finalScore = playingAsPlayer1 ?
@@ -609,12 +632,21 @@ function GameService (enableLogging) {
 
     const playerWonByHigherScore = finalScore > 0;
     const tieGame = finalScore==0;
+    let playerMovedLast = false;
     if (tieGame) {
-      playerMovedLast = (playingAsPlayer1 && finalGameState.last_to_move==1)
+      playerMovedLast =
+           (playingAsPlayer1 && finalGameState.last_to_move==1)
        || (!playingAsPlayer1 && finalGameState.last_to_move==2)
     }
 
     const playerWon = tieGame ? playerMovedLast : playerWonByHigherScore;
+
+    this.log('final game state:');
+    this.log('- finalScore?:', finalScore);
+    this.log('- tie?:', tieGame);
+    this.log('- playingAsPlayer1?:', playingAsPlayer1);
+    this.log('- finalGameState.last_to_move?:', finalGameState.last_to_move);
+    this.log('- playerWon?:', playerWon);
 
     const now_ts = new Date().toISOString();
     this.state.gameSession.update({
@@ -713,11 +745,9 @@ function GameService (enableLogging) {
         this.BOT_MOVE_SECONDS_BETWEEN_MOVES * 1000);
     }
 
-    // schedule the end of play
-    // calculate this to account for latency
-    const now = new Date();
-    const ends = new Date(Date.parse(this.state.game_end_time));
-    const secondsRemaining = (ends.getTime() - now.getTime()) / 1000;
+    // set a timer to fire at the scheduled end of play
+    // TODO:  account for latency
+    const secondsRemaining = this.getSecondsRemaining();
 
     this.log('game end scheduled for', secondsRemaining, 'seconds from now');
 
@@ -750,9 +780,6 @@ function GameService (enableLogging) {
     // let client cleanup state
     this.onLeavingCurrentState();
 
-    // cleanup
-    this.reset();
-
     this.log('user should be taken to results screen');
 
     // emit
@@ -765,14 +792,20 @@ function GameService (enableLogging) {
     this.emit('onLeavingCurrentState');
   }
 
-  this.reset = function () {
-    this.log('resetting...');
+  this.clearAllTimers = function () {
+    this.log('clearAllTimers');
 
-    // stop timers
     clearInterval(this.state.simulateOpponentMoveInterval);
     clearTimeout(this.state.switchToSimulatedOpponentTimeout);
     clearTimeout(this.state.gameplayEndTimeout);
     clearTimeout(this.state.findOpponentTimeout);
+  }
+
+  this.reset = function () {
+    this.log('resetting...');
+
+    // stop timers
+    this.clearAllTimers();
 
     // reset state
     this.state = Object.assign({}, this.defaultState);

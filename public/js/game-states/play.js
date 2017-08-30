@@ -132,7 +132,7 @@ var playState = {
 
 
 			function tug (score) {
-				console.log('tug', score);
+				console.log('[PlayState]: tug', score);
 
 				const maxScore = 100;
 				const centerPoint = 860;
@@ -320,10 +320,6 @@ var playState = {
 			gameService.makeMove(p1Move); // Send P1 move to server
 
 			tapWarnings++; // update # of warnings
-
-			console.log('game', game);
-			console.log('game.time', game.time);
-			console.log('game.time.now', game.time.now);
 
 			tapTime = game.time.now; // reset time since warning
 		}
