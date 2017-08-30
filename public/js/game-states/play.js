@@ -223,8 +223,10 @@ var playState = {
 
 	// Total game timer
 	updateGameCounter: function() {
-		gameCount = gameCount-1;
-		gameTimerText.text = ':' + gameCount;
+
+		// use the gameservice as a point of authority for time left
+		gameCount = Math.floor(gameService.getSecondsRemaining());
+		gameTimerText.text = ':' + String(gameCount).padStart(2, '0');
 
 		// if 10 seconds left, play ticks
 		if(gameCount <=10) {
