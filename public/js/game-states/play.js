@@ -110,7 +110,7 @@ var playState = {
 			timeLeftText.alignTo(gameTimerText, Phaser.BOTTOM_CENTER, 0, -10);
 
 		// ACTIONS, EVENTS, & GAMESERVICES
-		
+
 			// Check for previously set Mute
 			if(muteVal == 1) {
 				game.sound.mute = true;
@@ -123,6 +123,10 @@ var playState = {
 			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);
 
 			// Get current time for very first tapBubble
+      console.log(this);
+      console.log(this.time);
+      console.log(this.time.now);
+
 			nowTime = this.time.now;
 			tapTime = nowTime; //initialize tapTime for notTapping function
 
@@ -160,28 +164,10 @@ var playState = {
 				gameCount = Math.floor(secondsRemaining);
 			});
 
-			// When player1Obj moves, do this stuff
-			gameService.addListener('onPlayerMove', function (move) {
-				console.log('[PlayState]: player moved:', move);
-
-				// update P2 move
-				//p1Move = move;
-				//tug();
-				//bigBox.body.velocity.y += p1Move; // adjust bigBox velocity
-			});
-
-			// When opponent moves, do this stuff
-			gameService.addListener('onOpponentMove', function (move) {
-				console.log('[PlayState]: opponent moved:', move);
-
-				// update P2 move
-				//p2Move = move;
-				//bigBox.body.velocity.y += p2Move; // adjust bigBox velocity
-			});
-
-			gameService.addListener('onScoreChanged', function (score) {
-				tug(score);
-			})
+			gameService.addListener('onScoreChanged',
+				function (score) {
+					tug(score);
+				})
 
 			// When game is over, do this stuff
 			gameService.addListener('onGameplayEnd', function (userWon) {
@@ -248,7 +234,7 @@ var playState = {
 		if(gameCount <=10) {
 			tenSecsLeft.play();
 		}
-		
+
 		// temp fix for -1 bug
 		if(gameCount == 0) {
 			gameTimerText.text = ':0';
@@ -337,6 +323,10 @@ var playState = {
 
 			tapWarnings++; // update # of warnings
 
+			console.log('game', game);
+			console.log('game.time', game.time);
+			console.log('game.time.now', game.time.now);
+
 			tapTime = game.time.now; // reset time since warning
 		}
 	},
@@ -353,7 +343,7 @@ var playState = {
 		} else {
 			tapHit.play(); // Play bubble pop effect
 		}
-		
+
 		// play tap effects
 		tapBubble.loadTexture('afterPulse', 0); // load pulse texture
 		tapBubble.animations.add('tapped'); // add animation

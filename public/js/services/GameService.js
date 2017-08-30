@@ -276,11 +276,6 @@ function GameService (enableLogging) {
     this.endGame();
   }
 
-  this.hasGameEnded = function () {
-    game = this.state.lastSnapshot;
-    return game && game.game_ended;
-  }
-
   this.checkGameEnded = function (game) {
     if (!game.game_ended) {
       return;
@@ -514,9 +509,25 @@ function GameService (enableLogging) {
     return this.state.opponent
   }
 
+  this.getSecondsRemainingInCurrentGame = function () {
+    // if not started return 0
+    // if ended return 0
+    // return secondsRemaining
+  }
+
+  this.hasGameBeenEnded = function () {
+    const lastSnapshot = this.state.lastSnapshot;
+
+    if (!lastSnapshot) {
+      return true;
+    }
+
+    return lastSnapshot.game_ended == true;
+  }
+
   this.simulateOpponentMove = function () {
-    if (this.hasGameEnded()) {
-      this.log('move aborted, game is over');
+    if (this.hasGameBeenEnded()) {
+      this.log('move aborted! game has been ended');
       return;
     }
 
@@ -544,8 +555,8 @@ function GameService (enableLogging) {
   this.makeMove = function (move) {
     this.log('sending my move to the server:', move);
 
-    if (this.hasGameEnded()) {
-      this.log('move aborted, game is over');
+    if (this.hasGameBeenEnded()) {
+      this.log('move aborted! game has been ended');
       return;
     }
 
