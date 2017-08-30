@@ -296,10 +296,7 @@ function GameService (enableLogging) {
 
     this.state.gameSessionSnapshot = game;
 
-    const playerWon = this.state.player_is_host ?
-      game.game_winner_was_host:
-      !game.game_winner_was_host;
-
+    const playerWon = this.state.game_winner == this.state.player.key;
     this.log('game has ended! playerWon:', playerWon);
 
     this.clearAllTimers();
