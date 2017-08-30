@@ -223,7 +223,7 @@ function GameService (enableLogging) {
     this.setScore(game);
     this.checkScoreThresholdReached(game);
 
-    this.state.lastSnapshot = game;
+    this.state.gameSessionSnapshot = game;
   }
   this.boundGameUpdate = _.bind(this.gameUpdate, this);
 
@@ -294,7 +294,7 @@ function GameService (enableLogging) {
       return true;
     }
 
-    this.state.lastSnapshot = game;
+    this.state.gameSessionSnapshot = game;
 
     const playerWon = this.state.player_is_host ?
       game.game_winner_was_host:
@@ -542,13 +542,13 @@ function GameService (enableLogging) {
   }
 
   this.hasGameBeenEnded = function () {
-    const lastSnapshot = this.state.lastSnapshot;
+    const gameSessionSnapshot = this.state.gameSessionSnapshot;
 
-    if (!lastSnapshot) {
+    if (!gameSessionSnapshot) {
       return true;
     }
 
-    return lastSnapshot.game_ended == true;
+    return gameSessionSnapshot.game_ended == true;
   }
 
   this.simulateOpponentMove = function () {
@@ -571,8 +571,6 @@ function GameService (enableLogging) {
       update.player_2_score = this.state.player_2_score;
       update.last_to_move = 2;
     }
-
-    debugger
 
     this.state.gameSession.update(update)
       .then(_.bind(function () {
@@ -625,7 +623,7 @@ function GameService (enableLogging) {
     clearTimeout(this.state.gameplayEndTimeout);
 
     const playingAsPlayer1 = this.state.player_is_host;
-    const finalGameState = this.state.lastSnapshot;
+    const finalGameState = this.state.gameSessionSnapshot;
     const finalScore = playingAsPlayer1 ?
       finalGameState.player_1_score - finalGameState.player_2_score:
       finalGameState.player_2_score - finalGameState.player_1_score;
