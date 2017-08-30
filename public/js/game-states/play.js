@@ -123,11 +123,7 @@ var playState = {
 			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);
 
 			// Get current time for very first tapBubble
-      console.log(this);
-      console.log(this.time);
-      console.log(this.time.now);
-
-			nowTime = this.time.now;
+      nowTime = this.time.now;
 			tapTime = nowTime; //initialize tapTime for notTapping function
 
 			// Listen for missed taps
