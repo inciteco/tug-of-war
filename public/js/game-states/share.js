@@ -8,6 +8,16 @@ var shareState = {
 		popeyesBG = game.add.sprite(0, 0, 'popeyesBG');
 		popeyesBG.height = gHeight;
 		popeyesBG.width = gWidth;
+		
+		// mute button
+		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', muteVal);
+		soundToggleButton.inputEnabled = true;
+		soundToggleButton.events.onInputDown.add(this.muteSound, this);
+		
+		// Check for previously set Mute
+		if(muteVal == 1) {
+			game.sound.mute = true;
+		}
 
 		// Set logo
 		craveoffLogo = game.add.sprite(game.world.centerX, 160, 'craveoffLogo');
@@ -32,6 +42,18 @@ var shareState = {
 		playAgainButton.anchor.set(0.5);
 		playAgainButton.inputEnabled = true;
 		playAgainButton.events.onInputDown.add(this.playAgain, this);
+	},
+	
+	muteSound: function() {
+		if (!this.game.sound.mute) {
+			game.sound.mute = true;
+			muteVal = 1;
+			soundToggleButton.frame = 1;
+		} else {
+			game.sound.mute = false;
+			muteVal = 0;
+			soundToggleButton.frame = 0;
+		}
 	},
 
 	// Call waitforplayer state

@@ -170,9 +170,6 @@ var playState = {
 
 				bgMusic.stop(); // Stop background music
 				gameTimer.stop(false); // stop and reset the game timer
-				finalBigBoxPosition = bigBox.position.y; // for next game state
-				finalBigBoxScale = scaleVal; // for next game state
-				//bigBox.body.velocity.y = 0; // stop the bigBox
 
 
         // true means this user wins, false means lose
@@ -406,7 +403,7 @@ var playState = {
 	updateShoutOut: function(shoutOutSprite){
 
 		// Update Shoutouts if Big Box isn't covering them
-		if(bigBox.position.y <=1145) {
+		if(bigBox.position.y <=1100) {
 			shoutOuts = game.add.sprite(game.world.centerX, 1422, 'shoutOuts', shoutOutSprite);
 			shoutOuts.scale.setTo(.7,.7);
 			shoutOuts.anchor.set(0.5);

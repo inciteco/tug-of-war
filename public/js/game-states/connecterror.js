@@ -14,14 +14,14 @@ var connecterrorState = {
 		craveoffLogo.scale.setTo(.8, .8);
 		craveoffLogo.anchor.set(0.5);
 		
-		// Show loading progress
-		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-300, 'Something went wrong!\nCheck your connection and try again.', { font: 'bold 64px Arial', fill: '#fff', align: 'center' });
-		setLoadingText.anchor.set(0.5, 0.5);
+		// Set logo
+		somethingWrongWindow = game.add.sprite(game.world.centerX, game.world.centerY-300, 'somethingWrongWindow');
+		somethingWrongWindow.anchor.set(0.5);
 		
 		
 		
 		// User clicks this to start game
-		tryAgainButton = game.add.sprite(game.world.centerX, 1000, 'tryAgainButton');
+		tryAgainButton = game.add.sprite(game.world.centerX, 1070, 'tryAgainButton');
 		tryAgainButton.anchor.set(0.5);
 		tryAgainButton.inputEnabled = true;
 		tryAgainButton.events.onInputDown.add(this.tryAgain, this);

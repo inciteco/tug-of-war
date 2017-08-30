@@ -65,6 +65,7 @@ game = new Phaser.Game(
 	var loadingLabel; // sprite: shows while assets load
 	var shoutOuts; // response feedback to player
 	var gameResults; // Winner/Loser graphic
+	var somethingThingWrongWindow; // window for connection error
 
 	var popeyesBG; // background image
 	var craveoffLogo; // campaign logo
@@ -119,8 +120,6 @@ game = new Phaser.Game(
 
 	var simulateRemotePlayerMoveInterval; // temp variable for P2 moves
 	var endGameTimeout; // game duration object
-	var finalBigBoxPosition; // position of BigBox at game end
-	var finalBigBoxScale; // scale of BigBox at game end
 	var gameWinner; // name of game winner
 
 	// Player data

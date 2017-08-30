@@ -20,12 +20,6 @@ var winState = {
 		// add game table sprite
 		gameBoard = game.add.sprite(0, 0, 'gameBoard');
 		
-		// Set bigBox
-		bigBox = game.add.sprite(game.world.centerX, finalBigBoxPosition, 'bigBox');
-		bigBox.scale.setTo(scaleVal, scaleVal);
-		//game.physics.enable(bigBox, Phaser.Physics.ARCADE);
-		bigBox.anchor.set(0.5);
-		
 		// mute button
 		soundToggleButton = game.add.sprite(65, 60, 'soundToggleButton', muteVal);
 		soundToggleButton.inputEnabled = true;
@@ -35,10 +29,8 @@ var winState = {
 		if(muteVal == 1) {
 			game.sound.mute = true;
 		}
-
-		if (gameWinner){
-
-			// Player1 Pic Stroke
+		
+		// Player1 Pic Stroke
 			player1PicStroke = game.add.sprite(game.world.centerX, 1740, 'playerPicStroke');
 			player1PicStroke.height = 400;
 			player1PicStroke.width = 400;
@@ -62,27 +54,8 @@ var winState = {
 			player1Name = game.add.text(0, 0, player1Obj.name, playerNamesFont);
 			player1Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player1Name.alignTo(player1PicStroke, Phaser.BOTTOM_CENTER);
-
-			youWin.play();
-			splash = 'gameWon';
-			
-			// throw confetti
-			var emitter = game.add.emitter(game.world.centerX, 0, 400);
-			emitter.width = game.world.width;
-			emitter.makeParticles('confetti', [0,1,2,3,4], 1200, false, false);
-			emitter.minParticleScale = 1;
-			emitter.maxParticleScale = 2.5;
-			emitter.setYSpeed(10, 100);
-			emitter.setXSpeed(-5, 5);
-			emitter.minRotation = -100;
-			emitter.maxRotation = 100;
-			emitter.start(false, 0, 5, 0);
-
-			setTimeout(winState.callShare, 10000);
-
-		} else {
-
-			// Player2 Pic Stroke
+		
+		// Player2 Pic Stroke
 			player2PicStroke = game.add.sprite(game.world.centerX, 140, 'playerPicStroke');
 			player2PicStroke.height = 300;
 			player2PicStroke.width = 300;
@@ -106,13 +79,35 @@ var winState = {
 			player2Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player2Name.alignTo(player2PicStroke, Phaser.BOTTOM_CENTER, 0, -10);
 
+		if (gameWinner){
+
+			youWin.play();
+			splash = 'gameWon';
+			
+			// throw confetti
+			var emitter = game.add.emitter(game.world.centerX, 0, 400);
+			emitter.width = game.world.width;
+			emitter.makeParticles('confetti', [0,1,2,3,4], 1200, false, false);
+			emitter.minParticleScale = 1;
+			emitter.maxParticleScale = 2.5;
+			emitter.setYSpeed(10, 100);
+			emitter.setXSpeed(-5, 5);
+			emitter.minRotation = -100;
+			emitter.maxRotation = 100;
+			emitter.start(false, 0, 5, 0);
+
+			setTimeout(winState.callShare, 10000);
+
+		} else {
+
 			youLose.play();
 			splash = 'gameLost';
 			setTimeout(winState.callShare, 7000);
 		}
 
 		// Game Results
-		gameResults = game.add.sprite(game.world.centerX, 875, splash);
+		gameResults = game.add.sprite(game.world.centerX, 925, splash);
+		gameResults.scale.setTo(.85, .85);
 		gameResults.anchor.set(0.5, 0.5);
 
 		// do some clean up
