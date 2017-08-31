@@ -123,7 +123,7 @@ var playState = {
 			timerPos = game.time.events.loop(Phaser.Timer.SECOND * timerVal, this.newBubble.bind(this), this);
 
 			// Get current time for very first tapBubble
-      nowTime = this.time.now;
+      		nowTime = this.time.now;
 			tapTime = nowTime; //initialize tapTime for notTapping function
 
 			// Listen for missed taps
@@ -178,6 +178,14 @@ var playState = {
 				game.state.start('win'); // call win state
 
 				console.log('[PlayState]: onGameplayEnd, user won?', userWon, gameWinner);
+			});
+		
+			// do some clean up
+			gameService.addListener('onLeavingCurrentState', function () {
+
+			
+
+				console.log('[PlayState]: leaving play state');
 			});
 	},
 
