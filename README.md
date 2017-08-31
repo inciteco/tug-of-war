@@ -64,7 +64,7 @@ The following items are still in the works!
 - [x] add logout
 - [x] compress image assets
 - [ ] compress audio assets
-- [ ] swap png assets for jpg where appropriate
+- [x] swap png assets for jpg where appropriate
 - [x] style loading state while processing login (takes a few moments)
 - [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
 - [ ] use browserify/webpack to minify and obfuscate source code (AB)
