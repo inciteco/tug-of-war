@@ -17,7 +17,7 @@ var game; // instantiate variable
 game = new Phaser.Game(
 	gWidth,
 	gHeight,
-	Phaser.AUTO, 	// TODO: test w/ Phaser.AUTO?
+	Phaser.CANVAS, 	// TODO: test w/ Phaser.AUTO?
 	'popeye-game',
 	null,						//
 	true,						//
