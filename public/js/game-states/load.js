@@ -38,7 +38,6 @@ var loadState = {
 		game.load.image('waitingPic', 'assets/images/waitingPlayerPic.png'); // Get waiting player temp pic
 		game.load.image('tapArea', 'assets/images/tapMissArea.png');
 		game.load.spritesheet('soundToggleButton', 'assets/images/soundToggleButton.png', 98, 98, 2);
-		game.load.spritesheet('nonFBPlayerPics', 'assets/images/nonFBPlayerPics.png', 225, 225, 8);
 		game.load.image('bigBox', 'assets/images/bigBox.png');
 		game.load.image('gameBoard', 'assets/images/gameTable.png');
 		game.load.image('somethingWrongWindow', 'assets/images/somethingWrongWindow.png');
