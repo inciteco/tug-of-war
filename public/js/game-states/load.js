@@ -36,7 +36,7 @@ var loadState = {
 		game.load.image('gameWon', 'assets/images/winSplash.png');
 		game.load.image('gameLost', 'assets/images/loseSplash.png');
 		game.load.image('waitingPic', 'assets/images/waitingPlayerPic.png'); // Get waiting player temp pic
-		game.load.image('tapArea', 'assets/images/tapMissArea.png');
+		game.load.image('tapArea', 'assets/images/tapMissArea.jpg');
 		game.load.spritesheet('soundToggleButton', 'assets/images/soundToggleButton.png', 98, 98, 2);
 		game.load.image('bigBox', 'assets/images/bigBox.png');
 		game.load.image('gameBoard', 'assets/images/gameTable.png');
