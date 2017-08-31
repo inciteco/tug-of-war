@@ -44,10 +44,6 @@ var loadState = {
 		game.load.image('somethingWrongWindow', 'assets/images/somethingWrongWindow.png');
 		game.load.spritesheet('confetti', 'assets/images/confettisheet.jpg', 8, 8);
 		game.load.spritesheet('shoutOuts', 'assets/images/shoutouts.png', 500, 200, 10);
-		
-		// Load video assets
-    	game.load.video('craveVid', 'assets/Popeyesvid.mp4');
-		
 	
 		// Load audio assets
 		game.load.audio('tapHit', ['assets/sounds/tapHit.mp3', 'assets/sounds/tapHit.ogg']);

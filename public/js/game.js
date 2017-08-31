@@ -93,9 +93,6 @@ game = new Phaser.Game(
 	var tenSecsLeft;
 	var muteVal = 0; // for carryover between states
 
-	// Video
-	var craveVid;
-
 	// Gameplay variables
 	var score; // player's total game score
 	var tapScore; // player's per tap score
