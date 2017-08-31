@@ -22,7 +22,7 @@
 		<meta name="msapplication-TileImage" content="assets/images/icons/ms-icon-144x144.png">
 		<meta name="theme-color" content="#ffffff">
 
-		<title>Popeye's Big Box Crave Off</title>
+		<title>Popeyes Big Box Crave Off</title>
 
 		<!-- Load js libraries and styles -->
 		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
@@ -52,15 +52,17 @@
 					gameService.signInWithEmail(email, first, last);
 				});
 				
+				// let users press enter to submit form
 				$("input").keypress(function(event) {
 					if (event.which == 13) {
 						
 						const email = $('#email').val();
-					const first = $('#firstname').val();
-					const last = $('#lastname').val();
+						const first = $('#firstname').val();
+						const last = $('#lastname').val();
 
-					gameService.signInWithEmail(email, first, last);
+						gameService.signInWithEmail(email, first, last);
 						event.preventDefault();
+						
 						$("submitForm").submit();
 						return false;
 					}
@@ -160,7 +162,7 @@
 				<div id="primary">
 					<img src="assets/images/popeyesCraveLogo.png" alt="Big Box Crave Off Logo" />
 					<div id="register">
-						Log in to play live and be entered for the chance to win Popeye's&reg; for a year!
+						Log in to play live and be entered for the chance to win Popeyes&reg; for a year!
 					</div>
 
 					<!-- Facebook Login -->
@@ -186,7 +188,7 @@
 
 								<div class="checkbox-wrapper">
 									<input type="checkbox" class="checkbox" id="eightteen" name="eightteen" checked title="eightteen">
-									<div id="18text" class="checkboxText">
+									<div id="eighteentext" class="checkboxText">
 										<label for="eightteen">Yes, I am 18 or over.</label>
 									</div>
 								</div>
@@ -194,7 +196,7 @@
 								<div class="checkbox-wrapper">
 									<input type="checkbox" class="checkbox" id="newsletter" name="newsletter" checked title="newsletter">
 									<div id="newsletterText" class="checkboxText">
-										<label for="newsletter">Yes, I would like to receive future emails from Popeye's&reg; about special offers and promotions. (Optional)</label>
+										<label for="newsletter">Yes, I would like to receive future emails from Popeyes&reg; about special offers and promotions. (Optional)</label>
 									</div>
 								</div>
 								<div id="submitButton"><img id="submitForm" src="assets/images/submitButton.png" alt="Submit Button Contest Entry"></div>
@@ -203,7 +205,7 @@
 						</fieldset>
 					</div><!-- #formWrapper -->
 					<div id="legalText">
-						Complete all required fields to register. By registering you are comfirming that you understand and agree to the <a  id="rulesOpener">Official Rules</a> & <a id="privacyOpener">Privacy Policy</a>.
+						Complete all required fields to register. Limit one entry per day. By registering you are comfirming that you understand and agree to the <a  id="rulesOpener">Official Rules</a> & <a id="privacyOpener">Privacy Policy</a>.
 					</div>
 
 					<!-- Rules modal -->

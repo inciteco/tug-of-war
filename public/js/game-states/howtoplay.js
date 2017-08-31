@@ -31,19 +31,19 @@ var howtoplayState = {
 		// PLAYER 1
 		
 			// Player Pic Stroke
-			player1PicStroke = game.add.sprite(game.world.centerX, 300, 'playerPicStroke');
+			player1PicStroke = game.add.sprite(game.world.centerX, 250, 'playerPicStroke');
 			player1PicStroke.height = 400;
 			player1PicStroke.width = 400;
 			player1PicStroke.anchor.set(0.5);
 
 			// Player 1 Pic
-			player1Pic = game.add.sprite(game.world.centerX, 300, 'player1Pic');
+			player1Pic = game.add.sprite(game.world.centerX, 250, 'player1Pic');
 			player1Pic.height = 300;
 			player1Pic.width = 300;
 			player1Pic.anchor.set(0.5);
 
 			// Player 1 mask
-			player1PicMask = game.add.graphics(game.world.centerX, 300);
+			player1PicMask = game.add.graphics(game.world.centerX, 250);
 			player1PicMask.anchor.set(0.5);
 			player1PicMask.beginFill(0xffffff);
 			player1PicMask.drawCircle(0, 0, 300);
@@ -69,8 +69,8 @@ var howtoplayState = {
 		underline.lineTo(70, 0);
 		
 		// "You have entered" Text
-		var youHaveEnteredText = game.add.text(0, 0, 'You’re almost there! Check out the Crave Off instructions below.', bodyFont);
-		youHaveEnteredText.alignTo(notYouText, Phaser.BOTTOM_CENTER, 0, 30);
+		var youHaveEnteredText = game.add.text(0, 0, 'You’ve been entered to win! Check out the Crave Off instructions below.', bodyFont);
+		youHaveEnteredText.alignTo(notYouText, Phaser.BOTTOM_CENTER, 0, 40);
 		
 		
 		

@@ -42,7 +42,6 @@ fieldset {
 	margin-top: 0px;
 	margin-bottom: 5px;
 	font-size: 1.2em;
-	font-weight: bold;
 }
 
 .wrap {
@@ -54,8 +53,8 @@ fieldset {
 #primary, #shareprimary {
 	width: 100%;
 	max-width: 400px;
-	margin: 0 auto;
-	margin-top: 5%;
+	margin: 8% auto 0;
+/*	margin-top: 8%;*/
 	text-align: center;
 }
 
@@ -64,13 +63,18 @@ fieldset {
 }
 
 #primary img, #shareprimary img {
-	width: 75%;
+	width: 80%;
 }
 
 #register {
 	width: 95%;
 	font-size: .9em;
 	margin: 10px auto;
+}
+
+#facebookLogin img {
+	width: 70%;
+	margin: 4px 0;	
 }
 
 .video_container {
@@ -146,7 +150,7 @@ a {
 
 input[type="text"], input[type="email"] {
 	height: 30px;
-	font-size: 18px;
+	font-size: 1.2em;
 	margin-bottom: 8px;
 	border: none;
 	border-bottom: 1px solid #fff;
@@ -274,8 +278,8 @@ input[type="checkbox"]:checked
 	font-weight: 400;
 }
 
-#18text {
-	font-size: 1.2em;
+#eighteentext {
+	font-size: .8em;
 }
 
 #newsletterText, #officialRules, #privacyPolicy {

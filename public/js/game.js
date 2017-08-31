@@ -47,7 +47,7 @@ game = new Phaser.Game(
 	// Fonts
 	var playerNamesFont = { font: 'bold 60px Trebuchet MS', fill: '#F58426' };
 	var playerHowFont = { font: 'bold 60px Trebuchet MS', fill: '#fff' };
-	var bodyFont = { font: 'italic 46px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 700, align: 'center' };
+	var bodyFont = { font: 'italic 46px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 800, align: 'center' };
 	var loadingFont = { font: '280px UTTriumph-Regular', fill: '#F58426' };
 	var notYouFont = { font: 'italic 38px Trebuchet MS', fill: '#fff', align: 'center' };
 	var tipsFont = { font: '56px Trebuchet MS', fill: '#fff', wordWrap: true, wordWrapWidth: 1170, align: 'left' };
