@@ -21,7 +21,7 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="assets/images/icons/ms-icon-144x144.png">
 		<meta name="theme-color" content="#ffffff">
-		
+
 		<title>Popeye's Big Box Crave Off</title>
 
 		<!-- Load js libraries and styles -->
@@ -31,19 +31,13 @@
   	<script type="text/javascript" src="js/lib/firebase.js"></script>
   	<script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
+		<script type="text/javascript" src="js/lib/polyfills.js"></script>
 		<script type="text/javascript" src="js/services/GameService.js"></script>
 
   		<link rel="stylesheet" href="css/jquery-ui.min.css">
   		<link rel="stylesheet" href="css/style.css">
 
     	<script>
-			// AB: removed in lieu of the gameService onPlayerReady call above
-      // $.validator.setDefaults({
-			// 	submitHandler: function() {
-			// 		//window.location = "phaser.html";
-			// 	}
-			// });
-
 			$().ready(function() {
 
 				$('#facebookLogin').on("click", function () {
@@ -247,7 +241,9 @@
 					return;
 				}
 
-				document.location = "/phaser.html";
+				debugger;
+
+				// document.location = "/phaser.html";
 			})
 			window.gameService = gameService;
 		</script>

@@ -363,9 +363,11 @@ function GameService (enableLogging) {
   this.emit = function(type) {
     this.log('triggering', type);
 
+    var args = Array.prototype.slice.call(arguments, 1);
+
     this.emitter.emitEvent(
       type,
-      arguments //.splice(1, arguments.length-1)
+      args
     );
   }
 
