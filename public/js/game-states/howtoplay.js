@@ -55,9 +55,24 @@ var howtoplayState = {
 			player1Name.setShadow(3, 3, 'rgba(0,0,0,0.2)', 2);
 			player1Name.alignTo(player1PicStroke, Phaser.BOTTOM_CENTER);
 		
+		// To logout
+		var notYouText = game.add.text(0, 0, '(Not you?)', notYouFont);
+		notYouText.anchor.set(0.5);
+		notYouText.inputEnabled = true;
+		notYouText.events.onInputDown.add(this.logOutGame, this);
+		notYouText.alignTo(player1Name, Phaser.BOTTOM_CENTER, 0, -10);
+		
+		// give appearance of hypertext
+		var underline = this.game.add.graphics(game.world.centerX, notYouText.bottom - 5);
+		underline.lineStyle(2, 0xffffff);
+		underline.moveTo(-76, 0);
+		underline.lineTo(70, 0);
+		
 		// "You have entered" Text
 		var youHaveEnteredText = game.add.text(0, 0, 'You’re almost there! Check out the Crave Off instructions below.', bodyFont);
-		youHaveEnteredText.alignTo(player1Name, Phaser.BOTTOM_CENTER, 0, 40);
+		youHaveEnteredText.alignTo(notYouText, Phaser.BOTTOM_CENTER, 0, 30);
+		
+		
 		
 		// HOW TO PLAY CARD
 		
@@ -77,6 +92,11 @@ var howtoplayState = {
 		
 		
 		
+	},
+	
+	// logout, change user
+	logOutGame: function() {
+		gameService.signOut();
 	},
 	
 	// Call play state

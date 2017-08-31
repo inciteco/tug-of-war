@@ -62,7 +62,7 @@ var loadState = {
 //		gameplayText.anchor.set(0.5, 0.5);
 		
 		// Show loading progress
-		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-100, ' ', { font: '280px UTTriumph-Regular', fill: '#F58426' });
+		setLoadingText = game.add.text(game.world.centerX, game.world.centerY-100, ' ', loadingFont);
 		setLoadingText.anchor.set(0.5, 0.5);
 	},
 	

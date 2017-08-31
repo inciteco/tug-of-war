@@ -64,13 +64,13 @@ fieldset {
 }
 
 #primary img, #shareprimary img {
-	width: 90%;
+	width: 75%;
 }
 
 #register {
 	width: 95%;
-	font-size: 1em;
-	margin: 20px auto;
+	font-size: .9em;
+	margin: 10px auto;
 }
 
 .video_container {
@@ -243,7 +243,7 @@ input[type="checkbox"]:checked
 #submitButton {
 	width: 50%;
 	text-align: center;
-	margin: 40px auto 0px;
+	margin: 50px auto 0px;
 }
 
 ::-webkit-input-placeholder
@@ -286,6 +286,6 @@ input[type="checkbox"]:checked
 	width: 95%;
 	margin-top: 0px;
 	margin-bottom: 20px;
-	font-size: .8em;
+	font-size: .7em;
 	font-style: italic;
 }
