@@ -99,18 +99,21 @@
 				font-style: normal;
 			}
 			html {
-				background: url("assets/images/nonGameBG.png") no-repeat center center fixed;
+				background: url("assets/images/nonGameBG.png") no-repeat 50% 50% fixed;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover;
+				
+				height:100%;
+ 				min-height:100%;
 			}
 
 			#loading {
 				display:block;
 				font-family: 'UTTriumph-Regular' !important;
 				color: #fff;
-				font-size: 3em;
+				font-size: 2.5em;
 				text-align: center;
 				margin: 0 auto;
 				margin-top: -100px;
@@ -124,19 +127,31 @@
 	<body>
 
 		<div id="loading">
+			<style>
+				html {
+					background: url("assets/images/nonGameBG.png") no-repeat center center fixed;
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+					
+					height:100%;
+ 					min-height:100%;
+				}
+			</style>
 			Connecting...
 		</div>
 		<div id="main" style="display:none;">
 			<div class="wrap">
 				<div id="primary">
-					<img src="assets/images/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
+					<img src="assets/images/popeyesCraveLogo.png" alt="Big Box Crave Off Logo" />
 					<div id="register">
 						Log in to play live and be entered for the chance to win Popeye's&reg; for a year!
 					</div>
 
 					<!-- Facebook Login -->
 					<div id="facebookLogin">
-						<img src="assets/images/facebookButton.png" />
+						<img src="assets/images/facebookButton.png" alt="Facebook Login Button" />
 					</div>
 
 					<div id="orText">&mdash; OR &mdash;</div>
@@ -168,7 +183,8 @@
 										<label for="newsletter">Yes, I would like to receive future emails from Popeye's&reg; about special offers and promotions. (Optional)</label>
 									</div>
 								</div>
-								<div id="submitButton"><img id="submitForm" src="assets/images/submitButton.png"></div>
+								<div id="submitButton"><img id="submitForm" src="assets/images/submitButton.png" alt="Submit Button Contest Entry"></div>
+								<input type="submit" style="display: none" />
 							</form>
 						</fieldset>
 					</div><!-- #formWrapper -->
