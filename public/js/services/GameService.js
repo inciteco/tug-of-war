@@ -351,20 +351,15 @@ function GameService (enableLogging) {
   }
 
   this.addListener = function (event, callback) {
-    this.log('adding listener for', event);
     this.emitter.addListener(event, callback);
   }
 
   this.removeListener = function (event, callback) {
-    this.log('removing listener for', event);
     this.emitter.removeListener(event, callback);
   }
 
   this.emit = function(type) {
-    this.log('triggering', type);
-
     var args = Array.prototype.slice.call(arguments, 1);
-
     this.emitter.emitEvent(
       type,
       args
@@ -373,7 +368,6 @@ function GameService (enableLogging) {
 
   // util to keep things clean
   this.log = function () {
-    // debugger;
     console.log('[GameService]', arguments);
   }
 
@@ -390,7 +384,7 @@ function GameService (enableLogging) {
       return;
     }
 
-    this.findExistingGame()
+    this.findExistingGame();
   }
 
   this.findExistingGame = function () {
@@ -701,6 +695,7 @@ function GameService (enableLogging) {
     if (!this.state.player_is_host) {
       // only host can schedule start
       this.log('only host can create schedule', this.state.player_is_host);
+
       return;
     }
 
@@ -709,8 +704,15 @@ function GameService (enableLogging) {
     const startAt = new Date();
     startAt.setSeconds(now.getSeconds()+this.COUNTDOWN_SECONDS);
 
-    const endAt = new Date();
-    endAt.setSeconds(startAt.getSeconds()+this.GAMEPLAY_SECONDS);
+    const endAt = new Date(startAt.getTime() + this.GAMEPLAY_SECONDS * 1000);
+
+    const duration = (endAt-startAt)/1000;
+
+    this.log('schedule startAt', startAt);
+    this.log('schedule endAt', endAt);
+    this.log('schedule duration', duration, 'seconds');
+
+    if (duration < this.GAMEPLAY_SECONDS)
 
     this.state.gameSession.update({
       game_start_time: startAt.toISOString(),
