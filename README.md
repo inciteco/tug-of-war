@@ -68,11 +68,11 @@ The following items are still in the works!
 - [x] style loading state while processing login (takes a few moments)
 - [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
 - [ ] use browserify/webpack to minify and obfuscate source code (AB)
-- [ ] play with AI after 10 seconds of waiting (AB)
+- [x] play with AI after 10 seconds of waiting (AB)
 - [x] use a phaser state vs share.html to speed up replay
 - [x] show big box in position at endgame (AB)
-- [ ] adjust threshold positions (AB)
-- [ ] add video player controls
+- [x] adjust threshold positions (AB)
+- [x] add video player controls
 
 ### Multiplayer GameServices stuff (AB)
 - [x] configure firebase deploy
@@ -88,8 +88,8 @@ The following items are still in the works!
     - [ ] enforce participants?
     - [ ] store 1 entry per day per player
 - [ ] reporting feature to dump data
-- [ ] send proper asset when non FB user logs in
-- [ ] send proper object info when bot player is used
+- [x] send proper asset when non FB user logs in
+- [x] send proper object info when bot player is used
 - [ ] enable FB share button on share.js
 - [ ] gather checkbox data
 
