@@ -51,6 +51,20 @@
 
 					gameService.signInWithEmail(email, first, last);
 				});
+				
+				$("input").keypress(function(event) {
+					if (event.which == 13) {
+						
+						const email = $('#email').val();
+					const first = $('#firstname').val();
+					const last = $('#lastname').val();
+
+					gameService.signInWithEmail(email, first, last);
+						event.preventDefault();
+						$("submitForm").submit();
+						return false;
+					}
+				});
 
 				// validate signup form on keyup and submit
 				$("#signupForm").validate({
