@@ -17,7 +17,7 @@ var game; // instantiate variable
 game = new Phaser.Game(
 	gWidth,
 	gHeight,
-	Phaser.CANVAS, 	// TODO: test w/ Phaser.AUTO?
+	Phaser.AUTO, 	// TODO: test w/ Phaser.AUTO?
 	'popeye-game',
 	null,						//
 	true,						//
@@ -152,19 +152,42 @@ game.state.add('connecterror', connecterrorState);
 if (gameService.getPlayer()) {
 	startBootState();
 } else {
+	waitForBootState();
+}
+
+function waitForBootState() {
+	console.log('[Game] waitForBootState');
 	gameService.addListener('onPlayerReady', startBootState);
 }
 
 function startBootState() {
+	console.log('[Game] startBootState');
 	game.state.start('boot');
+}
+
+function toggleShareOn() {
+	console.log('[Game] toggleShareOn');
+
+	document.getElementById("popeye-game").style.display = "none";
+	document.getElementById("forShareOnly").style.display = "block";
+}
+
+function toggleShareOff() {
+	console.log('[Game] toggleShareOff');
+
+	document.getElementById("popeye-game").style.display = "block";
+	document.getElementById("forShareOnly").style.display = "none";
 }
 
 // Return to How to Play to start again
 function playAgain() {
+	console.log('[Game] playAgain');
+
 	// Make sure to start clean!
 	gameService.reset();
-	document.getElementById("popeyeVid").src = "https://www.youtube.com/embed/4Sf20y3Hd8A";
-	document.getElementById("popeye-game").style.display = "block";
-	document.getElementById("forShareOnly").style.display = "none";
+
+	// Hide sharedCopyCanvas
+	toggleShareOff();
+
 	game.state.start('howtoplay');
 }

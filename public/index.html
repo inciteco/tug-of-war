@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-		
+
 		<link rel="apple-touch-icon" sizes="57x57" href="assets/images/icons/apple-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="assets/images/icons/apple-icon-60x60.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="assets/images/icons/apple-icon-72x72.png">
@@ -28,8 +28,8 @@
 		<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
-    	<script type="text/javascript" src="js/lib/firebase.js"></script>
-    	<script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
+  	<script type="text/javascript" src="js/lib/firebase.js"></script>
+  	<script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
 		<script type="text/javascript" src="js/services/GameService.js"></script>
 
@@ -105,13 +105,13 @@
 				font-style: normal;
 			}
 			html {
-				background: url("assets/images/nonGameBG.png") no-repeat center center fixed; 
+				background: url("assets/images/nonGameBG.png") no-repeat center center fixed;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover;
 			}
-			
+
 			#loading {
 				display:block;
 				font-family: 'UTTriumph-Regular' !important;
@@ -128,7 +128,7 @@
 	</head>
 
 	<body>
-		
+
 		<div id="loading">
 			Connecting...
 		</div>
@@ -223,27 +223,27 @@
 					</script>
 				</div><!-- #primary -->
 			</div><!-- .wrap -->
-		
+
 		</div><!-- #main -->
-		
-		
-	
+
+
+
 		<script type="text/javascript">
-			console.log(GameService);
+			console.log('init login stuff');
 
 			var gameService = new GameService(true);
 			gameService.addListener('onPlayerReady', function (player) {
-				console.log('is ready?', player);
+				console.log('[index] player:', player);
 
 				if (!player) {
-					console.log('player not ready');
-					
+					console.log('[index] no player found!');
+
 					const loadingEl = document.getElementById('loading');
 					loadingEl.style.display = "none";
-					
+
 					const mainEl = document.getElementById('main');
 					mainEl.style.display = "block";
-					
+
 					return;
 				}
 
@@ -251,6 +251,6 @@
 			})
 			window.gameService = gameService;
 		</script>
-		
+
 	</body>
 </html>

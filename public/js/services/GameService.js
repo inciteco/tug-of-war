@@ -49,7 +49,8 @@ function GameService (enableLogging) {
     score: 0,
     gameSession: null
   }
-  this.state = Object.assign({}, this.defaultState);
+
+  this.state = JSON.parse(JSON.stringify(this.defaultState));
 
   // init!
   this.init = function () {
@@ -350,20 +351,28 @@ function GameService (enableLogging) {
   }
 
   this.addListener = function (event, callback) {
+    this.log('adding listener for', event);
     this.emitter.addListener(event, callback);
   }
 
   this.removeListener = function (event, callback) {
+    this.log('removing listener for', event);
     this.emitter.removeListener(event, callback);
   }
 
-  this.emit = function(type, ...args) {
-    this.emitter.emitEvent(type, args);
+  this.emit = function(type) {
+    this.log('triggering', type);
+
+    this.emitter.emitEvent(
+      type,
+      arguments //.splice(1, arguments.length-1)
+    );
   }
 
   // util to keep things clean
-  this.log = function (...args) {
-    console.log('[GameService]', ...args);
+  this.log = function () {
+    // debugger;
+    console.log('[GameService]', arguments);
   }
 
   this.findOpponent = function (forceFailure) {
@@ -627,7 +636,7 @@ function GameService (enableLogging) {
 
     const playerWonByHigherScore = finalScore > 0;
     const tieGame = finalScore==0;
-    let playerMovedLast = false;
+    var playerMovedLast = false;
     if (tieGame) {
       playerMovedLast =
            (playingAsPlayer1 && finalGameState.last_to_move==1)
@@ -803,7 +812,7 @@ function GameService (enableLogging) {
     this.clearAllTimers();
 
     // reset state
-    this.state = Object.assign({}, this.defaultState);
+    this.state = JSON.parse(JSON.stringify(this.defaultState));
 
     // reinitialize
     this.init();

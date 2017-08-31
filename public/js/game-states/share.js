@@ -1,13 +1,13 @@
 // Share.js
 
 var shareState = {
-	
+
 	create: function() {
+
+		toggleShareOn();
 		
-		document.getElementById("forShareOnly").style.display = "block";
-		document.getElementById("popeye-game").style.display = "none";
 		$("#primary").fitVids();
-	
+
 	},
 
 // Call waitforplayer state
@@ -19,6 +19,5 @@ var shareState = {
 //
 //			game.state.start('howtoplay');
 //	},
-	
-};
 
+};
