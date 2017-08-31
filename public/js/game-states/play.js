@@ -136,7 +136,7 @@ var playState = {
 
 				const maxScore = 100;
 				const centerPoint = 860;
-				const maxDistFromCenter = 600;
+				const maxDistFromCenter = 450;
 
 				game.tweens.removeFrom(bigBox);
 				var tugTween = game.add.tween(bigBox);
