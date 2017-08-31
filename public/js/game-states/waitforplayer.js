@@ -93,7 +93,7 @@ var waitforplayerState = {
 		waitingCircle.anchor.set(0.5);
 
 		// Waiting For Player text
-		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'Waiting for\nlive player', { font: '120px UTTriumph-Regular', fill: '#F58426', align: 'center' });
+		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'Waiting for\nLive Player', { font: '120px UTTriumph-Regular', fill: '#F58426', align: 'center' });
 		waitingforplayerText.anchor.set(0.5);
 
 
@@ -136,8 +136,6 @@ var waitforplayerState = {
 	popPlayer2Obj: function(opponent) {
 		player2Obj = opponent; // reassign object to global variable
 
-		waitingPic.kill(); // delete waitingPic and replace it with P2 pic ?? move
-
 		//player2Caps = player2Obj.name.toUpperCase();
 		player2Name.text = player2Obj.name; // change waiting text
 
@@ -161,6 +159,8 @@ var waitforplayerState = {
 
 	// load is complete, put player 2 image in a sprite
 	loadComplete: function() {
+		
+		waitingPic.kill(); // delete waitingPic and replace it with P2 pic
 		// pop in P2 pic
 		player2Pic = game.add.sprite(game.world.centerX, 140, 'player2Pic');
 		player2Pic.frame = game.rnd.integerInRange(0,7); // get a random avatar
