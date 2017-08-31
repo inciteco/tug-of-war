@@ -328,6 +328,9 @@ function GameService (enableLogging) {
     const scheduleExistsLocally = this.state.game_start_time;
     const scheduleExistsRemotely = game.game_start_time;
 
+    this.log('checkIfStartScheduled', 'scheduleExistsLocally', scheduleExistsLocally);
+    this.log('checkIfStartScheduled', 'scheduleExistsRemotely', scheduleExistsRemotely);
+
     if (!scheduleExistsRemotely) {
       // no schedule yet!
       return;
@@ -368,7 +371,9 @@ function GameService (enableLogging) {
 
   // util to keep things clean
   this.log = function () {
-    console.log('[GameService]', arguments);
+    var args = Array.prototype.slice.call(arguments, 1);
+    args.splice(0, 0, '[GameService]');
+    console.log.apply(this, args);
   }
 
   this.findOpponent = function (forceFailure) {
@@ -681,7 +686,7 @@ function GameService (enableLogging) {
     this.emit('onPlayerReady', player);
   }
 
-  this.startCountdown = function (duration) {
+  c = function (duration) {
 
     this.log('starting countdown as',
       this.state.player_is_host ? 'host' : 'client');

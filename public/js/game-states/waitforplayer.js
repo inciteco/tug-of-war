@@ -98,7 +98,7 @@ var waitforplayerState = {
 
 
 		// GAME SERVICES
-		
+
 			// Check for previously set Mute
 			if(muteVal == 1) {
 				game.sound.mute = true;
@@ -134,7 +134,7 @@ var waitforplayerState = {
 
 	// Populate Player 2 object
 	popPlayer2Obj: function(opponent) {
-		player2Obj = opponent; // reassign object to global variable
+    player2Obj = opponent; // reassign object to global variable
 
 		//player2Caps = player2Obj.name.toUpperCase();
 		player2Name.text = player2Obj.name; // change waiting text
@@ -159,7 +159,7 @@ var waitforplayerState = {
 
 	// load is complete, put player 2 image in a sprite
 	loadComplete: function() {
-		
+
 		waitingPic.kill(); // delete waitingPic and replace it with P2 pic
 		// pop in P2 pic
 		player2Pic = game.add.sprite(game.world.centerX, 140, 'player2Pic');
@@ -173,6 +173,7 @@ var waitforplayerState = {
 
 	// Show player found text for 2 seconds
 	playerFound: function() {
+    debugger;
 
 		waitingforplayerText.text = "Player\nFound!"; // change waiting text
 		playerfoundSound.play(); // play sound effect
