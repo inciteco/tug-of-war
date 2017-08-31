@@ -163,6 +163,7 @@ function startBootState() {
 function playAgain() {
 	// Make sure to start clean!
 	gameService.reset();
+	document.getElementById("popeyeVid").src = "https://www.youtube.com/embed/4Sf20y3Hd8A";
 	document.getElementById("popeye-game").style.display = "block";
 	document.getElementById("forShareOnly").style.display = "none";
 	game.state.start('howtoplay');
