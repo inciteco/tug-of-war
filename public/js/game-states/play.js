@@ -367,19 +367,19 @@ var playState = {
 				break;
 			case (tapScore <= 525 && tapScore > 450):
 				tmpY = 3;
-				p1Move = -5;
+				p1Move = 4;
 				break;
 			case (tapScore <= 625 && tapScore > 525):
 				tmpY = 2;
-				p1Move = -10;
+				p1Move = 3;
 				break;
 			case (tapScore <= 750 && tapScore > 625):
 				tmpY = 1;
-				p1Move = -15;
+				p1Move = 2;
 				break;
 			case (tapScore > 750):
 				tmpY = 0;
-				p1Move = -20;
+				p1Move = 1;
 				break;
 		}
 
