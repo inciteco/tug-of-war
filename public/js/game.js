@@ -158,3 +158,12 @@ if (gameService.getPlayer()) {
 function startBootState() {
 	game.state.start('boot');
 }
+
+// Return to How to Play to start again
+function playAgain() {
+	// Make sure to start clean!
+	gameService.reset();
+	document.getElementById("popeye-game").style.display = "block";
+	document.getElementById("forShareOnly").style.display = "none";
+	game.state.start('howtoplay');
+}

@@ -32,6 +32,7 @@
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
     	<script type="text/javascript" src="js/lib/firebase.js"></script>
 		<script type="text/javascript" src="js/lib/phaser.min.js"></script>
+      	<script src="js/lib/jquery.fitvids.js"></script>
 		<script type="text/javascript" src="js/services/GameService.js"></script>
 
 		<script type="text/javascript">
@@ -116,6 +117,10 @@
 				-o-background-size: cover;
 				background-size: cover;
 			}
+			
+			#forShareOnly {
+				display: none;
+			}
 		</style>
 	</head>
 
@@ -124,10 +129,103 @@
 			<div class="wrap">
 				<div id="primary">
 					<div class="shadow" id="popeye-game" role="main">
-
+						
 					</div><!-- #popeye-game -->
 				</div><!-- #primary -->
 			</div><!-- .wrap -->
 		</div><!-- #main -->
+		<div id="forShareOnly">
+			<style>
+				html {
+					background: url("assets/images/nonGameBG.png") no-repeat center center fixed; 
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				#mainShare {
+					color: #fff; /* temp */
+					font-size: 100%;
+					font-family: Trebuchet MS;
+					font-weight: normal;
+					font-style: normal;
+				}
+				
+				.wrapShare {
+					width: 80%;
+					max-width: 700px;
+					margin: 0 auto;
+				}
+
+				#primaryShare {
+					width: 100%;
+					max-width: 400px;
+					margin: 0 auto;
+					margin-top: 5%;
+					text-align: center;
+				}
+
+				#primaryShare {
+					margin-top: 20px;
+				}
+
+				#primaryShare img {
+					width: 90%;
+				}
+
+				#register {
+					width: 95%;
+					font-size: 1.1em;
+					margin: 20px auto;
+				}
+
+				.video_container {
+					position: relative;
+					padding-bottom: 56.25%;
+					padding-top: 35px;
+					height: 0;
+					overflow: hidden;
+				}
+
+				.video_container iframe {
+					position: absolute;
+					top: 20px;
+					left: 0;
+					width: 100%;
+					height: 100%;
+				}
+				
+				#seeitinaction {
+					margin: 20px auto 10px;
+					text-align: center;
+					font-size: 1.7em;
+				}
+
+				#playorshare {
+					margin: 10px auto;
+					text-align: center;
+				}
+
+				#playorshare img {
+					margin-top: 10px;
+				}
+			</style>
+			<div id="mainShare">
+				<div class="wrapShare">
+					<div id="primaryShare">
+						<img src="assets/images/popeyesCraveLogo.png" alt="Popeye's Chicken Logo" />
+					</div><!-- #primary -->
+					<div class="video_container">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/4Sf20y3Hd8A" frameborder="0" allowfullscreen></iframe>
+					</div><!-- .video_container -->
+					<div id="seeitinaction">See the Popeye's Big Box Crave Off in Action</div>
+					<div id="playorshare">
+						<img width="300" src="assets/images/shareOnFacebook.png" /><br />
+						<a href="javascript:playAgain();"><img width="150" src="assets/images/playAgain.png" /></a>
+					</div>
+				</div><!-- .wrapShare -->
+			</div><!-- #mainShare -->
+		</div>
 	</body>
 </html>
