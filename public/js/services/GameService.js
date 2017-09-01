@@ -194,6 +194,20 @@ function GameService (enableLogging) {
     // start listening
     gameSessionDoc.on('value', this.boundGameUpdate);
 
+    // setup remote disconnect callback
+    const disconnectUpdate = {};
+    const playingAsPlayer1 = this.state.player_is_host;
+
+    if (playingAsPlayer1) {
+      disconnectUpdate.player_1_disconnected = true;
+      disconnectUpdate.player_2 = 'n/a';
+    } else {
+      disconnectUpdate.player_2_disconnected = true;
+    }
+
+    // TODO: cancel this after game ends
+    gameSessionDoc.onDisconnect().update(disconnectUpdate);
+
     this.state.gameSession = gameSessionDoc;
     this.emit('onGameSessionStarted', this.state.gameSession);
 
@@ -204,6 +218,7 @@ function GameService (enableLogging) {
   this.endGameSession = function() {
     this.log('endGameSession');
     this.state.gameSession.off('value', this.boundGameUpdate);
+    this.state.gameSession.onDisconnect().cancel();
   }
 
   this.gameUpdate = function (game) {
@@ -222,6 +237,7 @@ function GameService (enableLogging) {
     }
 
     this.checkForOpponentArrived(game);
+    this.checkIfOpponentDisconnected(game);
     this.checkIfStartScheduled(game);
     this.setScore(game);
     this.checkScoreThresholdReached(game);
@@ -324,6 +340,20 @@ function GameService (enableLogging) {
 
       this.setOpponent(game.player_2);
     }
+  }
+
+  this.checkIfOpponentDisconnected = function (game) {
+    const playingAsPlayer1 = this.state.player_is_host;
+
+    if (game.player_1_disconnected ||
+        game.player_2_disconnected) {
+      this.opponentDisconnected();
+    }
+  }
+
+  this.opponentDisconnected = function () {
+    this.log('opponent disconnected! Ending game...');
+    this.endGame(true);
   }
 
   this.checkIfStartScheduled = function (game) {
@@ -621,7 +651,7 @@ function GameService (enableLogging) {
       }, this))
   }
 
-  this.endGame = function () {
+  this.endGame = function (opponentDisqualified) {
     this.log('endGame called');
 
     clearTimeout(this.state.gameplayEndTimeout);
@@ -641,14 +671,19 @@ function GameService (enableLogging) {
        || (!playingAsPlayer1 && finalGameState.last_to_move==2)
     }
 
-    const playerWon = tieGame ? playerMovedLast : playerWonByHigherScore;
+    const playerWon = opponentDisqualified ||
+      tieGame ? playerMovedLast : playerWonByHigherScore;
 
-    this.log('final game state:');
-    this.log('- finalScore?:', finalScore);
-    this.log('- tie?:', tieGame);
-    this.log('- playingAsPlayer1?:', playingAsPlayer1);
-    this.log('- finalGameState.last_to_move?:', finalGameState.last_to_move);
-    this.log('- playerWon?:', playerWon);
+    if (opponentDisqualified) {
+      this.log('player won due to disqualified opponent');
+    } else {
+      this.log('final game state:');
+      this.log('- finalScore?:', finalScore);
+      this.log('- tie?:', tieGame);
+      this.log('- playingAsPlayer1?:', playingAsPlayer1);
+      this.log('- finalGameState.last_to_move?:', finalGameState.last_to_move);
+      this.log('- playerWon?:', playerWon);
+    }
 
     const now_ts = new Date().toISOString();
     this.state.gameSession.update({
