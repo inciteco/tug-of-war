@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "popeyes-tug-o-war"
+    "default": "popeyes-tug-o-war",
+    "staging": "popeyes-bigboxcraveoff-staging"
   }
 }
