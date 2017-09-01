@@ -681,7 +681,7 @@ function GameService (enableLogging) {
     this.emit('onPlayerReady', player);
   }
 
-  c = function (duration) {
+  this.startCountdown = function (duration) {
 
     this.log('starting countdown as',
       this.state.player_is_host ? 'host' : 'client');
@@ -712,7 +712,9 @@ function GameService (enableLogging) {
     this.log('schedule endAt', endAt);
     this.log('schedule duration', duration, 'seconds');
 
-    if (duration < this.GAMEPLAY_SECONDS)
+    if (duration < this.GAMEPLAY_SECONDS) {
+      console.log('short game c!');
+    }
 
     this.state.gameSession.update({
       game_start_time: startAt.toISOString(),
