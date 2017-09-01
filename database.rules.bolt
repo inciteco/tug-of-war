@@ -22,12 +22,14 @@ type Game {
   finalScore: Number | Null
 
   player_1: Player | Null
-  player_1_joined_at: String | Null
   player_1_score: Number | Null
+  player_1_joined_at: String | Null
+  player_1_connected: Boolean | Null
 
   player_2: Player | Null
-  player_2_joined_at: String | Null
   player_2_score: Number | Null
+  player_2_joined_at: String | Null
+  player_2_connected: Boolean | Null
 
   // TODO:
   // no writes after game_ended allowed
@@ -40,9 +42,9 @@ type Game {
 }
 
 type Player {
-  key: String
-  name: String
-  image: String
+  key: String | Null
+  name: String | Null
+  image: String | Null
 
   validate() {
     this.key != null &&

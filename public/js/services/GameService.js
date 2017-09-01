@@ -24,8 +24,10 @@ const staging_config = {
 }
 
 const on_local = document.location.hostname.includes('localhost');
+const on_ngrok = document.location.hostname.includes('ngrok');
 const on_staging = document.location.hostname.includes('staging');
-const config_to_use = (on_local || on_staging) ? staging_config : prod_config;
+const use_staging = on_local || on_ngrok || on_staging;
+const config_to_use = use_staging ? staging_config : prod_config;
 
 firebase.initializeApp(config_to_use);
 
@@ -40,7 +42,7 @@ function GameService (enableLogging) {
   this.STATIC_PATH = 'assets/images/';
 
   // bot opponent
-  this.BOT_ENABLED = true;
+  this.BOT_ENABLED = false;
   this.BOT_NAME = 'Annie';
   this.BOT_KEY = '-annie-bot-';
   this.BOT_IMAGE = this.STATIC_PATH + 'botAnnie.png';
@@ -213,26 +215,55 @@ function GameService (enableLogging) {
     // start listening
     gameSessionDoc.on('value', this.boundGameUpdate);
 
+    this.state.gameSession = gameSessionDoc;
+    this.emit('onGameSessionStarted', this.state.gameSession);
+
+    this.setupDisconnectAction();
+
+    // warn the user before leaving while playing
+    window.onbeforeunload = function() { return true; }
+  }
+
+  this.setupDisconnectAction = function () {
+    this.log('setupDisconnectAction');
+    if (!this.state.gameSession) {
+      this.log('setupDisconnectAction aborted! no gameSession found...');
+      return;
+    }
+
     // setup remote disconnect callback
     const disconnectUpdate = {};
     const playingAsPlayer1 = this.state.player_is_host;
 
     if (playingAsPlayer1) {
-      disconnectUpdate.player_1_disconnected = true;
-      disconnectUpdate.player_2 = 'n/a';
+      disconnectUpdate.player_1_connected = false;
+      disconnectUpdate.player_2_score = 0;
+      disconnectUpdate.player_2 = {
+        key: 'n/a',
+        name: 'n/a',
+        image: 'n/a'
+      };
     } else {
-      disconnectUpdate.player_2_disconnected = true;
+      disconnectUpdate.player_2_connected = false;
     }
 
-    // TODO: cancel this after game ends
-    gameSessionDoc.onDisconnect().update(disconnectUpdate);
+    this.state.gameSession.onDisconnect()
+      .update(disconnectUpdate)
+      .then(_.bind(function () {
+        this.log('done setting up up disconnect callback');
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('something went wrong setting up disconnect!', error);
+        this.log('trying again in 2 seconds');
+        clearTimeout(this.state.setupDisconnectActionTimeout);
+        const timeoutId = setTimeout(_.bind(function () {
+            this.setupDisconnectAction();
+          }, this), 2000);
+        this.state.setupDisconnectActionTimeout = timeoutId;
+      }, this));
 
-    this.state.gameSession = gameSessionDoc;
-    this.emit('onGameSessionStarted', this.state.gameSession);
-
-    // warn the user before leaving while playing
-    window.onbeforeunload = function() { return true; }
   }
+
 
   this.endGameSession = function() {
     this.log('endGameSession');
@@ -364,8 +395,8 @@ function GameService (enableLogging) {
   this.checkIfOpponentDisconnected = function (game) {
     const playingAsPlayer1 = this.state.player_is_host;
 
-    if (game.player_1_disconnected ||
-        game.player_2_disconnected) {
+    if (game.player_1_connected==false ||
+        game.player_2_connected==false) {
       this.opponentDisconnected();
     }
   }
@@ -504,7 +535,8 @@ function GameService (enableLogging) {
     const update = {
       player_2: this.state.player,
       player_2_score: 0,
-      player_2_joined_at: now_ts
+      player_2_joined_at: now_ts,
+      player_2_connected: true
     };
 
     gameDoc.update(update)
@@ -518,6 +550,7 @@ function GameService (enableLogging) {
 
         // TODO: limit the number of attempts?
 
+        this.log('looking for another game...');
         this.findExistingGame();
       }, this));
   }
@@ -532,33 +565,36 @@ function GameService (enableLogging) {
     const doc = {
       player_1: this.state.player,
       player_1_score: 0,
-      player_1_joined_at: now_ts
+      player_1_joined_at: now_ts,
+      player_1_connected: true
     };
 
     gameSessionDoc.set(doc)
       .then(_.bind(function () {
         this.log('createNewGame done! game.key:', gameSessionDoc.key);
+
+        // set this before first gameUpdate
+        this.state.player_is_host = true;
+
+        // start game updates
+        this.startGameSession(gameSessionDoc);
+
+        if (this.BOT_ENABLED) {
+          // schedule simulated opponent check
+          clearTimeout(this.state.switchToSimulatedOpponentTimeout);
+
+          const timeoutId = setTimeout(
+            _.bind(this.switchToSimulatedOpponent, this),
+            this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
+
+          this.state.switchToSimulatedOpponentTimeout = timeoutId;
+        }
       }, this))
       .catch(_.bind(function(error) {
         this.log('something went wrong while creating game!', error, doc);
+
+        // TODO: "something went wrong? <try again>?
       }, this));
-
-    // set this before first gameUpdate
-    this.state.player_is_host = true;
-
-    // start game updates
-    this.startGameSession(gameSessionDoc);
-
-    if (this.BOT_ENABLED) {
-      // schedule simulated opponent check
-      clearTimeout(this.state.switchToSimulatedOpponentTimeout);
-
-      const timeoutId = setTimeout(
-        _.bind(this.switchToSimulatedOpponent, this),
-        this.MAX_LIVE_PLAYER_WAIT_SECONDS * 1000);
-
-      this.state.switchToSimulatedOpponentTimeout = timeoutId;
-    }
   }
 
   this.switchToSimulatedOpponent = function () {
@@ -799,7 +835,7 @@ function GameService (enableLogging) {
     this.log('schedule duration', duration, 'seconds');
 
     if (duration < this.GAMEPLAY_SECONDS) {
-      console.log('short game c!');
+      this.log('short game found!');
     }
     const update = {
       game_start_time: startAt.toISOString(),
@@ -899,6 +935,7 @@ function GameService (enableLogging) {
     clearTimeout(this.state.switchToSimulatedOpponentTimeout);
     clearTimeout(this.state.gameplayEndTimeout);
     clearTimeout(this.state.findOpponentTimeout);
+    clearTimeout(this.state.setupDisconnectActionTimeout);
   }
 
   this.reset = function () {
