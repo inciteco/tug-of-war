@@ -59,7 +59,7 @@ var howtoplayState = {
 		var notYouText = game.add.text(0, 0, '(Not you?)', notYouFont);
 		notYouText.anchor.set(0.5);
 		notYouText.inputEnabled = true;
-		notYouText.events.onInputDown.add(this.logOutGame, this);
+		notYouText.events.onInputDown.add(howtoplayState.logOutGame, this);
 		notYouText.alignTo(player1Name, Phaser.BOTTOM_CENTER, 0, -10);
 		
 		// give appearance of hypertext
@@ -96,7 +96,8 @@ var howtoplayState = {
 	
 	// logout, change user
 	logOutGame: function() {
-		gameService.signOut();
+		//gameService.signOut();
+		window.location = "/logout.html";
 	},
 	
 	// Call play state
