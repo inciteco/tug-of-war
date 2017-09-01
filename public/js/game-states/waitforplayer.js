@@ -93,7 +93,7 @@ var waitforplayerState = {
 		waitingCircle.anchor.set(0.5);
 
 		// Waiting For Player text
-		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'Waiting for\nLive Player', { font: '120px UTTriumph-Regular', fill: '#F58426', align: 'center' });
+		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'Waiting for\n Live Player ', { font: '120px UTTriumph-Regular', fill: '#F58426', align: 'center' });
 		waitingforplayerText.anchor.set(0.5);
 
 
