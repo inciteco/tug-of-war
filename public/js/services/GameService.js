@@ -363,15 +363,12 @@ function GameService (enableLogging) {
 
   this.emit = function(type) {
     var args = Array.prototype.slice.call(arguments, 1);
-    this.emitter.emitEvent(
-      type,
-      args
-    );
+    this.emitter.emitEvent.apply(this.emitter, [type, args]);
   }
 
   // util to keep things clean
   this.log = function () {
-    var args = Array.prototype.slice.call(arguments, 1);
+    var args = Array.prototype.slice.call(arguments);
     args.splice(0, 0, '[GameService]');
     console.log.apply(this, args);
   }
@@ -457,10 +454,14 @@ function GameService (enableLogging) {
       player_2: this.state.player,
       player_2_score: 0,
       player_2_joined_at: now_ts
-    }).then(_.bind(function () {
-      this.log('joined', gameId);
-      this.state.player_is_host = false;
-    }, this))
+    }).then(
+      _.bind(
+        function () {
+          this.log('joined', gameId);
+          this.state.player_is_host = false;
+        }, this
+      )
+    )
 
     this.startGameSession(gameDoc);
   }
@@ -498,7 +499,6 @@ function GameService (enableLogging) {
     }
   }
 
-  // fill the player_2 slot with a simulated player
   this.switchToSimulatedOpponent = function () {
     const waitingForOpponent = !this.state.opponent;
     if (!waitingForOpponent)
@@ -506,7 +506,6 @@ function GameService (enableLogging) {
 
     this.log('switching to simulated opponent');
 
-    // for now make a fake opponent
     const simulatedOpponent = {
       key: this.BOT_KEY,
       image: this.BOT_IMAGE,
@@ -522,8 +521,6 @@ function GameService (enableLogging) {
       this.log('done switched the game to simulated!');
     }, this));
 
-    // request has been made, once the server aknowledges,
-    // we will start the game via the standard watchers.
     return true;
   }
 
@@ -593,7 +590,6 @@ function GameService (enableLogging) {
       return;
     }
 
-    // only use integers
     move = Math.round(move);
 
     const secondsRemaining = this.getSecondsRemaining();
@@ -626,7 +622,6 @@ function GameService (enableLogging) {
   this.endGame = function () {
     this.log('endGame called');
 
-    // clear scheduled call
     clearTimeout(this.state.gameplayEndTimeout);
 
     const playingAsPlayer1 = this.state.player_is_host;
