@@ -63,7 +63,7 @@ The following items are still in the works!
 - [x] ensure gameService timer durations are used in Phaser
 - [x] add logout
 - [x] compress image assets
-- [ ] compress audio assets
+- [x] compress audio assets
 - [x] swap png assets for jpg where appropriate
 - [x] style loading state while processing login (takes a few moments)
 - [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
@@ -96,5 +96,5 @@ The following items are still in the works!
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
 - [ ] Facebook login not (always) working in safari
-- [ ] First few moves (sometimes none of them) don't always seem to register (visually)
+- [x] First few moves (sometimes none of them) don't always seem to register (visually)
 - [ ] Play Again button takes user back to waitforplayer, but it doesn't ever link you to another player. Just waits...
