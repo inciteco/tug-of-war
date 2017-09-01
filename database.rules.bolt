@@ -1,0 +1,63 @@
+// Allow anyone to read the list of Posts.
+path /games/{date} {
+  read() { isSignedIn() }
+}
+
+// All individual Posts are writable by anyone.
+path /games/{date}/{id} is Game {
+  // TODO: only if player_keys.contains(uid)
+  // or player_keys.length < 2
+  write() { isSignedIn() }
+}
+
+type Game {
+  game_end_time: String | Null
+  game_start_time: String | Null
+
+  game_ended: Boolean | Null
+  game_ended_at: String | Null
+  game_winner: String | Null
+  game_winner_was_host: Boolean | Null
+  last_to_move: Number | Null
+  finalScore: Number | Null
+
+  player_1: Player | Null
+  player_1_joined_at: String | Null
+  player_1_score: Number | Null
+
+  player_2: Player | Null
+  player_2_joined_at: String | Null
+  player_2_score: Number | Null
+
+  // TODO:
+  // no writes after game_ended allowed
+  // only players can write once both players join
+  validate() {
+    (prior(this.player_2) == null) ||
+    (prior(this.player_1) != null && prior(this.player_1.key) == auth.uid ) ||
+    (prior(this.player_2) != null && prior(this.player_2.key) == auth.uid )
+  }
+}
+
+type Player {
+  key: String
+  name: String
+  image: String
+
+  validate() {
+    this.key != null &&
+    this.name != null &&
+    this.image != null
+  }
+}
+
+// helpers
+isCurrentUser(uid) {
+  isSignedIn() && auth.uid == uid
+}
+isSignedIn() {
+  auth != null
+}
+createOnly(value) {
+  prior(value) == null && value != null
+}
