@@ -66,13 +66,13 @@ The following items are still in the works!
 - [x] compress audio assets
 - [x] swap png assets for jpg where appropriate
 - [x] style loading state while processing login (takes a few moments)
-- [ ] toggle the login-form if async-login doesn't find a user (AB to help here)
-- [ ] use browserify/webpack to minify and obfuscate source code (AB)
+- [x] toggle the login-form if async-login doesn't find a user (AB to help here)
 - [x] play with AI after 10 seconds of waiting (AB)
 - [x] use a phaser state vs share.html to speed up replay
 - [x] show big box in position at endgame (AB)
 - [x] adjust threshold positions (AB)
 - [x] add video player controls
+- [ ] use browserify/webpack to minify and obfuscate source code (AB)
 
 ### Multiplayer GameServices stuff (AB)
 - [x] configure firebase deploy
