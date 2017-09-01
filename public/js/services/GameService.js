@@ -96,8 +96,10 @@ function GameService (enableLogging) {
               const photoURL = this.getRandomAvatar();
               this.log('getRandomAvatar', photoURL);
 
+              const lastInitial = lastName.charAt(0);
+
               player.updateProfile({
-                displayName: firstName + ' ' + lastName,
+                displayName: firstName + ' ' + lastInitial + '.',
                 photoURL: photoURL
               }).then(_.bind(function() {
                 this.log('success updating profile!');
