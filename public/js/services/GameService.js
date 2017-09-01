@@ -23,8 +23,9 @@ const staging_config = {
   messagingSenderId: '309004443218'
 }
 
+const on_local = document.location.hostname.includes('localhost');
 const on_staging = document.location.hostname.includes('staging');
-const config_to_use = on_staging ? staging_config : prod_config;
+const config_to_use = (on_local || on_staging) ? staging_config : prod_config;
 
 firebase.initializeApp(config_to_use);
 
@@ -67,7 +68,7 @@ function GameService (enableLogging) {
 
   // init!
   this.init = function () {
-    this.log('init')
+    this.log('init for', (on_local || on_staging) ? 'staging' : 'production');
 
     this.database = firebase.database();
 
@@ -110,16 +111,21 @@ function GameService (enableLogging) {
               this.log('getRandomAvatar', photoURL);
 
               const lastInitial = lastName.charAt(0);
-
-              player.updateProfile({
+              const update = {
                 displayName: firstName + ' ' + lastInitial + '.',
                 photoURL: photoURL
-              }).then(_.bind(function() {
-                this.log('success updating profile!');
-                this.onPlayerReady(player);
-              }, this)).catch(_.bind(function(error) {
-                this.log('something went wrong while updating profile!');
-              }), this);
+              };
+
+              player.updateProfile(update)
+                .then(_.bind(function() {
+                  this.log('success updating profile!');
+                  this.onPlayerReady(player);
+                }, this))
+                .catch(_.bind(function(error) {
+                  this.log(
+                    'something went wrong while updating profile!',
+                    update);
+                }), this);
             }, this))
             .catch(_.bind(function(error) {
               this.log('error signing up with email', error);
@@ -439,6 +445,7 @@ function GameService (enableLogging) {
 
     const now_ts = new Date().toISOString();
     const doc_id = 'games/' + now_ts.split('T')[0] + '/';
+
     const gameListRef = this.database.ref(doc_id)
       .orderByChild('player_2')
       .limitToFirst(1)
@@ -494,21 +501,25 @@ function GameService (enableLogging) {
 
     const gameDoc = this.database.ref(gameId);
     const now_ts = new Date().toISOString();
-
-    gameDoc.update({
+    const update = {
       player_2: this.state.player,
       player_2_score: 0,
       player_2_joined_at: now_ts
-    }).then(
-      _.bind(
-        function () {
-          this.log('joined', gameId);
-          this.state.player_is_host = false;
-        }, this
-      )
-    )
+    };
 
-    this.startGameSession(gameDoc);
+    gameDoc.update(update)
+      .then(_.bind( function () {
+        this.log('joined', gameId);
+        this.state.player_is_host = false;
+        this.startGameSession(gameDoc);
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('error joining', error, update);
+
+        // TODO: limit the number of attempts?
+
+        this.findExistingGame();
+      }, this));
   }
 
   this.createNewGame = function () {
@@ -518,13 +529,19 @@ function GameService (enableLogging) {
     const doc_id = 'games/' + now_ts.split('T')[0] + '/';
     const gameSessionDoc = this.database.ref(doc_id).push();
 
-    gameSessionDoc.set({
+    const doc = {
       player_1: this.state.player,
       player_1_score: 0,
       player_1_joined_at: now_ts
-    }).then(_.bind(function () {
-      this.log('createNewGame done! game.key:', gameSessionDoc.key);
-    }, this))
+    };
+
+    gameSessionDoc.set(doc)
+      .then(_.bind(function () {
+        this.log('createNewGame done! game.key:', gameSessionDoc.key);
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('something went wrong while creating game!', error, doc);
+      }, this));
 
     // set this before first gameUpdate
     this.state.player_is_host = true;
@@ -558,13 +575,20 @@ function GameService (enableLogging) {
     }
 
     const now_ts = new Date().toISOString();
-    this.state.gameSession.update({
+    const update = {
       player_2: simulatedOpponent,
       player_2_score: 0,
       player_2_joined_at: now_ts
-    }).then(_.bind(function () {
-      this.log('done switched the game to simulated!');
-    }, this));
+    };
+
+    this.state.gameSession.update(update)
+      .then(_.bind(function () {
+        this.log('done switched the game to simulated!');
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('error switching to simulated game', error, update);
+        // TODO: handle?
+      }, this));
 
     return true;
   }
@@ -625,6 +649,9 @@ function GameService (enableLogging) {
       .then(_.bind(function () {
         this.log('simulated move synced');
       }, this))
+      .catch(_.bind(function(error) {
+        this.log('something went wrong while simulating move!', error, update);
+      }, this));
   }
 
   this.makeMove = function (move) {
@@ -662,6 +689,9 @@ function GameService (enableLogging) {
       .then(_.bind(function () {
         this.log('move synced');
       }, this))
+      .catch(_.bind(function(error) {
+        this.log('something went wrong while making move!', update);
+      }, this));
   }
 
   this.endGame = function (opponentDisqualified) {
@@ -699,15 +729,21 @@ function GameService (enableLogging) {
     }
 
     const now_ts = new Date().toISOString();
-    this.state.gameSession.update({
+    const update = {
       finalScore: finalScore,
       game_ended: true,
       game_ended_at: now_ts,
       game_winner: playerWon ? this.state.player.key : this.state.opponent.key,
       game_winner_was_host: playerWon
-    }).then(_.bind(function () {
-      this.log('game conclusion saved!');
-    }, this))
+    };
+
+    this.state.gameSession.update(update)
+      .then(_.bind(function () {
+        this.log('game conclusion saved!');
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('something went wrong saving game conclusion!', update);
+      }, this));
   }
 
   this.onConnectionError = function (error) {
@@ -765,14 +801,18 @@ function GameService (enableLogging) {
     if (duration < this.GAMEPLAY_SECONDS) {
       console.log('short game c!');
     }
-
-    this.state.gameSession.update({
+    const update = {
       game_start_time: startAt.toISOString(),
       game_end_time: endAt.toISOString()
-    })
+    };
+
+    this.state.gameSession.update(update)
       .then(_.bind(function () {
         this.log('start scheduled');
       }, this))
+      .catch(_.bind(function(error) {
+        this.log('something went wrong saving schedule!', error, update);
+      }, this));
   }
 
   // params:
