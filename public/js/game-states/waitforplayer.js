@@ -173,8 +173,6 @@ var waitforplayerState = {
 
 	// Show player found text for 2 seconds
 	playerFound: function() {
-    debugger;
-
 		waitingforplayerText.text = "Player\nFound!"; // change waiting text
 		playerfoundSound.play(); // play sound effect
 		waitingCircle.angle = 0; // spin waiting circle
