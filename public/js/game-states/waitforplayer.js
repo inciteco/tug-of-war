@@ -173,9 +173,18 @@ var waitforplayerState = {
 
 	// Show player found text for 2 seconds
 	playerFound: function() {
-		waitingforplayerText.text = "Player\nFound!"; // change waiting text
+		
+		// Waiting Circle
+		waitingCircleDone = game.add.sprite(game.world.centerX, game.world.centerY-160, 'waitingCircleDone');
+		waitingCircleDone.anchor.set(0.5);
+		
+		waitingCircle.kill(); // kill waiting circle
+		
+		// change wait text
+		waitingforplayerText = game.add.text(game.world.centerX, game.world.centerY-160, 'Player\nFound!', { font: '120px UTTriumph-Regular', fill: '#F58426', align: 'center' });
+		waitingforplayerText.anchor.set(0.5);
+		
 		playerfoundSound.play(); // play sound effect
-		waitingCircle.angle = 0; // spin waiting circle
 
 		// Countdown timer to start game
 		setTimeout(waitforplayerState.showCounter, 2000);

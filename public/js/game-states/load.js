@@ -43,6 +43,7 @@ var loadState = {
 		game.load.image('somethingWrongWindow', 'assets/images/somethingWrongWindow.png');
 		game.load.spritesheet('confetti', 'assets/images/confettisheet.jpg', 8, 8);
 		game.load.spritesheet('shoutOuts', 'assets/images/shoutouts.png', 500, 200, 10);
+		game.load.image('waitingCircleDone', 'assets/images/waitingCircleDone.png');
 	
 		// Load audio assets
 		game.load.audio('tapHit', ['assets/sounds/tapHit.mp3', 'assets/sounds/tapHit.ogg']);
