@@ -30,3 +30,8 @@ We use Firebase Realtime Database, Database Rules, Cloud Functions, and Static H
 - [ ] Run `firebase init`, selecting default prompts
 - [ ] Run `firebase use --add` select the project you just created
 - [ ] Run `firebase deploy` and the app should deploy (may take minutes)
+
+**Then update source code to point at the new apps:**
+
+- [ ] update `prod_config` and `staging_config` in [GameService.js](public/js/services/GameService.js):**
+- commit/push and all devs should be able to deploy the app now!
