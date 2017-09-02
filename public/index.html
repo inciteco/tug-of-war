@@ -1148,6 +1148,9 @@
 						modal: true,
 						maxHeight: 500,
 						position: { my: "center bottom", at: "top", of: "#legalText" },
+						open: function () {
+						  $(this).scrollTop(0);
+						}
 						//show: { effect: "drop", direction: "down" }
 					});
 
@@ -1157,6 +1160,9 @@
 						modal: true,
 						maxHeight: 500,
 						position: { my: "center bottom", at: "top", of: "#legalText" },
+						open: function () {
+						  $(this).scrollTop(0);
+						}
 						//show: { effect: "drop", direction: "down" }
 					});
 
