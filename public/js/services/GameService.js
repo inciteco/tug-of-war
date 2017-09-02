@@ -16,11 +16,11 @@ const prod_config = {
 };
 
 const staging_config = {
-  apiKey: 'AIzaSyBnclObbA_Pf8gT5LfoIKXVH1tlDpDdhGQ',
-  authDomain: 'popeyes-bigboxcraveoff-staging.firebaseapp.com',
-  databaseURL: 'popeyes-bigboxcraveoff-staging.firebaseio.com',
-  storageBucket: 'gs://popeyes-bigboxcraveoff-staging.appspot.com',
-  messagingSenderId: '309004443218'
+  apiKey: 'AIzaSyCMRpOnvvm5cZXBkWei4hajlHxI_WJ7BLg',
+  authDomain: 'popeyes-tug-o-war.firebaseapp.com',
+  databaseURL: 'popeyes-tug-o-war.firebaseio.com',
+  storageBucket: 'gs://popeyes-tug-o-war.appspot.com',
+  messagingSenderId: '22295978007'
 }
 
 const on_local = document.location.hostname.includes('localhost');
