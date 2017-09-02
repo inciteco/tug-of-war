@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-		
+
 		<meta property="og:url" content="http://bigboxcraveoff.com" />
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="I just entered for a chance to win Popeyes for a year." />
@@ -57,18 +57,18 @@
 
 					gameService.signInWithEmail(email, first, last);
 				});
-				
+
 				// let users press enter to submit form
 				$("input").keypress(function(event) {
 					if (event.which == 13) {
-						
+
 						const email = $('#email').val();
 						const first = $('#firstname').val();
 						const last = $('#lastname').val();
 
 						gameService.signInWithEmail(email, first, last);
 						event.preventDefault();
-						
+
 						$("submitForm").submit();
 						return false;
 					}
@@ -126,7 +126,7 @@
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover;
-				
+
 				height:100%;
  				min-height:100%;
 			}
@@ -156,7 +156,7 @@
 					-moz-background-size: cover;
 					-o-background-size: cover;
 					background-size: cover;
-					
+
 					height:100%;
  					min-height:100%;
 				}
@@ -224,7 +224,7 @@
 				}
 
 			</style>
-			
+
 			Connecting
 			<div class="loader">
 				<div class="loader--dot"></div>
@@ -1196,7 +1196,7 @@
 					return;
 				}
 
-				document.location = "/phaser.html";
+				document.location = "/play.html";
 			})
 			window.gameService = gameService;
 		</script>
