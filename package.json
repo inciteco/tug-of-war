@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "http-server ./public/",
     "deploy": "firebase deploy",
-    "ngrok": "ngrok http 8080 -subdomain=bixboxcraveoff",
+    "ngrok": "ngrok http 8080 -subdomain=bigboxcraveoff",
     "compress-images": "imagemin src/assets/images/* --out-dir=public/assets/images",
     "compress-audio": "node ./node_modules/audio-converter/index.js ./src/assets/sounds/ ./public/assets/sounds/",
     "compress": "npm run compress-images && npm run compress-audio"
