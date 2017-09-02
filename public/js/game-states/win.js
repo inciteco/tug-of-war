@@ -112,6 +112,7 @@ var winState = {
 
 		// do some clean up
 		gameService.addListener('onLeavingCurrentState', function () {
+
 			console.log('[WinState]: leaving win state');
 		});
 	},
@@ -131,6 +132,21 @@ var winState = {
 	// Call share state
 	callShare: function() {
 		//window.location = "share.html";
+		// kill all sound to ensure no reemergence if user sits on share forever
+			tapHit.stop();
+			tapHitCoke.stop();
+			bgMusic.stop();
+			tapMiss.stop();
+			youLose.stop();
+			youWin.stop();
+			playerfoundSound.stop();
+			countdownSound.stop();
+			playgameSound.stop();
+			tenSecsLeft.stop();
+			
+			console.log('[WinState]: killed all sounds');
+		
+		
 		game.state.start('share');
 	},
 };
