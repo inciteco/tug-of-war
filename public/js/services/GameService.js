@@ -47,7 +47,7 @@ function GameService (enableLogging) {
   this.BOT_KEY = '-annie-bot-';
   this.BOT_IMAGE = this.STATIC_PATH + 'botAnnie.png';
   this.BOT_MOVE_MAX = 7;
-  this.BOT_MOVE_SECONDS_BETWEEN_MOVES = 1;
+  this.BOT_MOVE_SECONDS_BETWEEN_MOVES = .5;
 
   // shared state
   this.defaultState = {
