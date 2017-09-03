@@ -1,10 +1,12 @@
 # Popeye's Tug O' War
 
 Links:
-- [repo](https://github.com/inciteco/tug-of-war)
-- [play now](https://popeyes-tug-o-war.firebaseapp.com)
-- [facebook app](https://developers.facebook.com/apps/472656139771979/dashboard/)
-- [database](https://console.firebase.google.com/u/0/project/popeyes-tug-o-war/database/data)
+- [Repo](https://github.com/inciteco/tug-of-war)
+- [Play now](https://popeyes-tug-o-war.firebaseapp.com)
+- [Facebook app](https://developers.facebook.com/apps/472656139771979/dashboard/)
+- Firebase projects:
+  - [Staging](https://console.firebase.google.com/u/0/project/popeyes-tug-o-war/database/data)
+  - [Production](https://console.firebase.google.com/u/0/project/bigboxcraveoff-prod)
 
 ## Quick start
 
