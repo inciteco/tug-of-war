@@ -182,6 +182,11 @@ function GameService (enableLogging) {
 
   this.trimPlayerName = function(playerName) {
     const parts = playerName.split(' ');
+
+    if (parts.length < 2) {
+      return;
+    }
+
     const firstName = parts[0];
     const lastInitial = parts[1].charAt(0);
 
