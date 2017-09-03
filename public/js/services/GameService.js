@@ -9,7 +9,7 @@ window.firebase = firebase
 
 const prod_config = {
   apiKey: 'AIzaSyDweB4wi1uKsELQCXIULlPIiv9dIOp7qyY',
-  authDomain: 'bigboxcraveoff-prod.firebaseapp.com',
+  authDomain: 'bigboxcraveoff.com',
   databaseURL: 'bigboxcraveoff-prod.firebaseio.com',
   storageBucket: 'gs://bigboxcraveoff-prod.appspot.com',
   messagingSenderId: '777408489283'
@@ -184,7 +184,7 @@ function GameService (enableLogging) {
     const parts = playerName.split(' ');
 
     if (parts.length < 2) {
-      return;
+      return playerName;
     }
 
     const firstName = parts[0];
