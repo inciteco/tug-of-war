@@ -95,41 +95,21 @@ function GameService (enableLogging) {
     const password = 'password';
 
     auth.signInWithEmailAndPassword(email, password)
-      .then(_.bind(function(error) {
+      .then(_.bind(function(player) {
         this.log('success signing in with email', email);
-        // TODO:
-        // - update profile's DisplayName
-        // - then emit for a redirect?
+
+        // force new name and avatar
+        this.setPlayerNameAndAvatar(player, firstName, lastName);
       }, this))
       .catch(_.bind(function(error) {
         if (error.code === "auth/user-not-found") {
           this.log('user doesn\'t exist yet! creating...');
-
           auth.createUserWithEmailAndPassword(email, password)
             .then(_.bind(function(player) {
               this.log('success signing up with email', player);
 
-              const displayName = firstName + ' ' + lastName;
-              const update = {
-                displayName: displayName
-              };
-
-              const photoURL = this.getRandomAvatar();
-              this.log('getRandomAvatar', photoURL);
-
-              update.photoURL =  photoURL;
-
-              player.updateProfile(update)
-                .then(_.bind(function() {
-                  this.log('success updating profile!');
-                  this.onPlayerReady(player);
-                }, this))
-                .catch(_.bind(function(error) {
-                  this.log(
-                    'something went wrong while updating profile!',
-                    update);
-                }), this);
-
+              // force new name and avatar
+              this.setPlayerNameAndAvatar(player, firstName, lastName);
             }, this))
             .catch(_.bind(function(error) {
               this.log('error signing up with email', error);
@@ -138,6 +118,25 @@ function GameService (enableLogging) {
           this.log('error signing in with email', error);
         }
       }, this));
+  }
+
+  this.setPlayerNameAndAvatar = function (player, firstName, lastName) {
+    const displayName = firstName + ' ' + lastName;
+    const photoURL = this.getRandomAvatar();
+    const update = {
+      displayName: displayName,
+      photoURL: photoURL
+    };
+    player.updateProfile(update)
+      .then(_.bind(function() {
+        this.log('success updating profile!');
+        this.onPlayerReady(player);
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log(
+          'something went wrong while updating profile!',
+          update);
+      }), this);
   }
 
   this.getRandomAvatar = function () {
