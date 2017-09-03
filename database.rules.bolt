@@ -8,6 +8,7 @@ path /games/{date}/{id} is Game {
   // TODO: only if player_keys.contains(uid)
   // or player_keys.length < 2
   write() { isSignedIn() }
+  index() { [ "player_2" ] }
 }
 
 type Game {
@@ -32,8 +33,7 @@ type Game {
   player_2_connected: Boolean | Null
 
   // TODO:
-  // no writes after game_ended allowed
-  // only players can write once both players join
+  // no writes after game_ended allowed?
   validate() {
     (prior(this.player_2) == null) ||
     (prior(this.player_1) != null && prior(this.player_1.key) == auth.uid ) ||
