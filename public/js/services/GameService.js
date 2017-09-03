@@ -8,11 +8,11 @@
 window.firebase = firebase
 
 const prod_config = {
-  apiKey: 'AIzaSyCMRpOnvvm5cZXBkWei4hajlHxI_WJ7BLg',
-  authDomain: 'popeyes-tug-o-war.firebaseapp.com',
-  databaseURL: 'popeyes-tug-o-war.firebaseio.com',
-  storageBucket: 'gs://popeyes-tug-o-war.appspot.com',
-  messagingSenderId: '22295978007'
+  apiKey: 'AIzaSyDweB4wi1uKsELQCXIULlPIiv9dIOp7qyY',
+  authDomain: 'bigboxcraveoff-prod.firebaseapp.com',
+  databaseURL: 'bigboxcraveoff-prod.firebaseio.com',
+  storageBucket: 'gs://bigboxcraveoff-prod.appspot.com',
+  messagingSenderId: '777408489283'
 };
 
 const staging_config = {
@@ -23,9 +23,10 @@ const staging_config = {
   messagingSenderId: '22295978007'
 }
 
-const on_local = document.location.hostname.includes('localhost');
-const on_ngrok = document.location.hostname.includes('ngrok');
-const on_staging = document.location.hostname.includes('staging');
+const host = document.location.hostname;
+const on_local = host.includes('localhost');
+const on_ngrok = host.includes('ngrok');
+const on_staging = host.includes('staging');
 const use_staging = on_local || on_ngrok || on_staging;
 const config_to_use = use_staging ? staging_config : prod_config;
 
@@ -107,16 +108,16 @@ function GameService (enableLogging) {
           auth.createUserWithEmailAndPassword(email, password)
             .then(_.bind(function(player) {
               this.log('success signing up with email', player);
-              this.log('updating profile...');
+
+              const displayName = firstName + ' ' + lastName;
+              const update = {
+                displayName: displayName
+              };
 
               const photoURL = this.getRandomAvatar();
               this.log('getRandomAvatar', photoURL);
 
-              const lastInitial = lastName.charAt(0);
-              const update = {
-                displayName: firstName + ' ' + lastInitial + '.',
-                photoURL: photoURL
-              };
+              update.photoURL =  photoURL;
 
               player.updateProfile(update)
                 .then(_.bind(function() {
@@ -128,6 +129,7 @@ function GameService (enableLogging) {
                     'something went wrong while updating profile!',
                     update);
                 }), this);
+
             }, this))
             .catch(_.bind(function(error) {
               this.log('error signing up with email', error);
@@ -171,19 +173,37 @@ function GameService (enableLogging) {
       this.setPlayer({
         key: user.uid,
         image: user.photoURL,
-        name: user.displayName
+        name: this.trimPlayerName(user.displayName)
       });
     } else {
       this.setPlayer(null);
     }
   }
 
+  this.trimPlayerName = function(playerName) {
+    const parts = playerName.split(' ');
+    const firstName = parts[0];
+    const lastInitial = parts[1].charAt(0);
+
+    const trimmedName = firstName + ' ' + lastInitial + '.';
+
+    return trimmedName;
+  }
+
   this.setPlayer = function(player) {
+    if (player && player.name) {
+      player.name = this.trimPlayerName(player.name);
+    }
+
     this.state.player = player;
     this.onPlayerReady(player);
   }
 
   this.setOpponent = function(opponent) {
+    if (opponent && opponent.name) {
+      opponent.name = this.trimPlayerName(opponent.name);
+    }
+
     this.log('setOpponent', opponent);
     this.state.opponent = opponent;
 
