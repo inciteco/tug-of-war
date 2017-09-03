@@ -776,7 +776,7 @@ function GameService (enableLogging) {
     }
 
     const playerWon = opponentDisqualified ||
-      tieGame ? playerMovedLast : playerWonByHigherScore;
+      (tieGame ? playerMovedLast : playerWonByHigherScore);
 
     if (opponentDisqualified) {
       this.log('player won due to disqualified opponent');
