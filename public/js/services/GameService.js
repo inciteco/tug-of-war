@@ -4,7 +4,6 @@
   *   @desc: multiplayer services library
   */
 
-// TODO: remove this before releasing
 window.firebase = firebase
 
 const prod_config = {
@@ -75,8 +74,6 @@ function GameService (enableLogging) {
 
     this.database = firebase.database();
 
-    // TODO: make sure this isn't called too quickly?!
-    // ensure a fresh emitter for each session
     this.emitter = new EventEmitter();
 
     // wait for async player auth
@@ -482,7 +479,6 @@ function GameService (enableLogging) {
   this.findOpponent = function (forceFailure) {
     this.log('findOpponent');
 
-    // TODO: find a better way to ensure player exists
     if (!this.state.player) {
       this.log('findOpponent rescheduled without player');
 
@@ -517,8 +513,6 @@ function GameService (enableLogging) {
             const game_key = gameRef.key;
             const game = gameRef.val();
 
-            // no third-wheels allowed
-            // TODO: do this after iterating a few options for a match?
             const gameNeedsOpponent = game.player_2 == null;
             if (!gameNeedsOpponent) {
               this.log('most recent game already has a player!');
@@ -528,21 +522,6 @@ function GameService (enableLogging) {
               return;
             }
 
-            // // don't join a stale game
-            // const now = new Date();
-            // const startedAt = new Date(Date.parse(game.player_1_joined_at));
-            // const gameAge = now.getTime() - startedAt.getTime();
-            // const secondsSinceGameStarted = gameAge / 1000;
-            //
-            // if (secondsSinceGameStarted > this.STALE_GAME_TIMEOUT_SECONDS) {
-            //   this.log('game is stale!', game);
-            //   this.log('starting a new new game instead...');
-            //
-            //   this.createNewGame();
-            //   return;
-            // }
-
-            // must be good if we got here, let's join it
             const gameId = doc_id + game_key;
             this.joinExistingGame(gameId);
           }, this)
@@ -647,7 +626,6 @@ function GameService (enableLogging) {
       }, this))
       .catch(_.bind(function(error) {
         this.log('error switching to simulated game', error, update);
-        // TODO: handle?
       }, this));
 
     return true;
@@ -905,8 +883,6 @@ function GameService (enableLogging) {
         this.BOT_MOVE_SECONDS_BETWEEN_MOVES * 1000);
     }
 
-    // set a timer to fire at the scheduled end of play
-    // TODO:  account for latency
     const secondsRemaining = this.getSecondsRemaining();
 
     this.log('game end scheduled for', secondsRemaining, 'seconds from now');
