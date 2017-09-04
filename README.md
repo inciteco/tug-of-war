@@ -34,6 +34,7 @@ brew install jq
 You can generate a csv of all user sweeps entries with the following command:
 
 ```sh
+npm use production
 npm run entries-report
 ```
 
