@@ -538,7 +538,7 @@ function GameService (enableLogging) {
       return;
     }
 
-    const userOptIn = userPrefs.over_18;
+    const userOptIn = userPrefs.opt_in;
     const name = user.displayName;
     const email = user.email;
     const uid = user.uid;
