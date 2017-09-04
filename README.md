@@ -85,7 +85,6 @@ The following items are still in the works!
 - [x] show big box in position at endgame (AB)
 - [x] adjust threshold positions (AB)
 - [x] add video player controls
-- [ ] use browserify/webpack to minify and obfuscate source code (AB)
 
 ### Multiplayer GameServices stuff (AB)
 - [x] configure firebase deploy

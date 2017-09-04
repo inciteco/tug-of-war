@@ -21,6 +21,7 @@ We use Firebase Realtime Database, Database Rules, Cloud Functions, and Static H
 - [ ] Then click `sign-in methods`, enable `Email/Password` and `Facebook`
   - [ ] Provide the Facebook `app id`
   - [ ] Follow the instructions to add `oauth redirect urls` to Facebook app
+  - [ ] Add custom domains to `Authorized Domains` below (eg. `staging.bigboxcraveoff.com`)
 - [ ] Repeat ^ for `dev`, `staging`, or `production` environments as desired
 - [ ] Add users to each app for each developer
 
