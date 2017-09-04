@@ -60,26 +60,29 @@
 				});
 
 				$('#submitForm').on("click", function () {
-					const email = $('#email').val();
-					const first = $('#firstname').val();
-					const last = $('#lastname').val();
-					setPreferences();
-					gameService.signInWithEmail(email, first, last);
+					if ($('#signupForm').valid()) {
+						const email = $('#email').val();
+						const first = $('#firstname').val();
+						const last = $('#lastname').val();
+						setPreferences();
+						gameService.signInWithEmail(email, first, last);
+					}
 				});
 
 				// let users press enter to submit form
 				$("input").keypress(function(event) {
 					if (event.which == 13) {
+						if ($('#signupForm').valid()) {
+							const email = $('#email').val();
+							const first = $('#firstname').val();
+							const last = $('#lastname').val();
+							setPreferences();
+							gameService.signInWithEmail(email, first, last);
+							event.preventDefault();
 
-						const email = $('#email').val();
-						const first = $('#firstname').val();
-						const last = $('#lastname').val();
-
-						gameService.signInWithEmail(email, first, last);
-						event.preventDefault();
-
-						$("submitForm").submit();
-						return false;
+							//$("submitForm").submit();
+							return false;
+						}
 					}
 				});
 
