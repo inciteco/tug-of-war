@@ -146,8 +146,8 @@ function GameService (enableLogging) {
     return this.STATIC_PATH + randomAvatar;
   }
 
-  this.signInWithFacebook = function (email, firstName, lastName) {
-    this.log('signInFacebook', email, firstName, lastName);
+  this.signInWithFacebook = function () {
+    this.log('signInFacebook');
 
     var provider = new firebase.auth.FacebookAuthProvider();
     provider.addScope('user_birthday');
@@ -502,6 +502,7 @@ function GameService (enableLogging) {
       }, this))
       .catch(_.bind(function(error) {
         this.log('daily entry limit exceeded!');
+        this.log('doc', doc);
       }, this));
   }
 
