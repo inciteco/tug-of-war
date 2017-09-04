@@ -26,7 +26,18 @@ brew update
 brew install ffmpeg
 brew install lame
 brew install --with-libvorbis --with-lame sox
+brew install jq
 ```
+
+## Reporting
+
+You can generate a csv of all user sweeps entries with the following command:
+
+```sh
+npm run entries-report
+```
+
+> Note: make sure you've run `brew install jq`
 
 ## Compressing assets
 
@@ -86,13 +97,13 @@ The following items are still in the works!
   - [ ] use [validation rules](https://firebase.google.com/docs/database/security/) to:
     - [ ] limit changes in score
     - [ ] enforce start/end times
-    - [ ] only allow read if <2 participants?
+    - [x] only allow read if <2 participants?
     - [x] enforce participants?
-    - [ ] store 1 entry per day per player
-- [ ] reporting feature to dump data
+    - [x] store 1 entry per day per player
+- [x] reporting feature to dump data
 - [x] send proper asset when non FB user logs in
 - [x] send proper object info when bot player is used
-- [ ] enable FB share button on share.js
+- [x] enable FB share button on share.js
 - [ ] gather checkbox data
 
 ## found bugs!

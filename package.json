@@ -10,7 +10,9 @@
     "ngrok": "ngrok http 8080 -subdomain=bigboxcraveoff",
     "compress-images": "imagemin src/assets/images/* --out-dir=public/assets/images",
     "compress-audio": "node ./node_modules/audio-converter/index.js ./src/assets/sounds/ ./public/assets/sounds/",
-    "compress": "npm run compress-images && npm run compress-audio"
+    "compress": "npm run compress-images && npm run compress-audio",
+    "entries-report": "firebase database:get /entries | jq '[.[] | .[] | {name: .name, email: .email, earned_at: .earned_at}]' | ./node_modules/json2csv/bin/json2csv.js -o reports/entries-`date \"+%Y%m%d\"`.csv && echo generated in reports/entries-`date \"+%Y%m%d\"`.csv",
+    "postinstall": "mkdir reports"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "firebase-tools": "^3.9.2",
     "http-server": "^0.10.0",
     "imagemin": "^5.3.1",
-    "imagemin-cli": "^3.0.0"
+    "imagemin-cli": "^3.0.0",
+    "json2csv": "^3.11.1"
   }
 }
