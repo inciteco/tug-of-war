@@ -12,6 +12,12 @@ path /entries/{date}/{uid} is Entry {
   write() { isCurrentUser(uid) }
 }
 
+
+path /opt_ins/{uid} is OptIn {
+  index() { ["email"] }
+  write() { isCurrentUser(uid) }
+}
+
 // All individual games are writable by anyone.
 path /games/{date}/{id} is Game {
   // TODO: only if player_keys.contains(uid)
@@ -71,6 +77,12 @@ type Entry {
   validate() {
     prior(this) == null && this != null
   }
+}
+
+type OptIn {
+  name: String
+  email: String
+  opt_in: Boolean
 }
 
 // helpers

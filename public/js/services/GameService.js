@@ -166,13 +166,18 @@ function GameService (enableLogging) {
         this.log('no displayName set, aborting!');
         return;
       }
+
       this.setPlayer({
         key: user.uid,
         image: user.photoURL,
         name: this.trimPlayerName(user.displayName)
       });
+
+      // check preferences
+      this.checkPreferences();
     } else {
       this.setPlayer(null);
+      this.resetPreferences();
     }
   }
 
@@ -479,6 +484,18 @@ function GameService (enableLogging) {
   this.earnEntry = function () {
     this.log('earnEntry');
 
+    const userPrefs = this.state.preferences;
+    if (!userPrefs) {
+      this.log('no user preferences found!');
+      return;
+    }
+
+    const userCanEarnEntries = userPrefs.over_18;
+    if (!userCanEarnEntries) {
+      this.log('User is under 18! No entry granted.');
+      return;
+    }
+
     const user = firebase.auth().currentUser;
     const name = user.displayName;
     const email = user.email;
@@ -506,6 +523,47 @@ function GameService (enableLogging) {
       }, this));
   }
 
+  this.setOptInPreference = function () {
+    this.log('setOptInPreference');
+
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      this.log('no user found!');
+      return;
+    }
+
+    const userPrefs = this.state.preferences;
+    if (!userPrefs) {
+      this.log('no user preferences found!');
+      return;
+    }
+
+    const userOptIn = userPrefs.over_18;
+    const name = user.displayName;
+    const email = user.email;
+    const uid = user.uid;
+
+    const now_ts = new Date().toISOString();
+    const doc_id = 'opt_ins/' + uid;
+    const entryDoc = this.database.ref(doc_id);
+
+    const doc = {
+      name : name,
+      email: email,
+      opt_in: userOptIn
+    };
+
+    entryDoc.set(doc)
+      .then(_.bind(function () {
+        this.log('Opt-in preference saved');
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('Error saving opt-in preference saved');
+        this.log('doc', doc);
+      }, this));
+
+  }
+
   this.findOpponent = function () {
     this.log('findOpponent');
 
@@ -520,6 +578,34 @@ function GameService (enableLogging) {
 
     this.findExistingGame();
   }
+
+  this.checkPreferences = function () {
+    this.log('checkPreferences');
+
+    const prefs = localStorage.getItem("preferences");
+    if (!prefs) {
+      this.log('no existing preferences');
+      return;
+    }
+
+    this.log('found existing preferences', prefs);
+    this.state.preferences = JSON.parse(prefs);
+
+    // signup for newsletter
+    this.setOptInPreference();
+  }
+
+  this.setPreferences = function (prefs) {
+    this.log('setPreferences', prefs);
+    this.state.preferences = prefs;
+
+    localStorage.setItem("preferences", JSON.stringify(prefs));
+  }
+
+  this.resetPreferences = function () {
+    localStorage.setItem("preferences", null);
+  }
+
 
   this.findExistingGame = function () {
     this.log('findExistingGame');

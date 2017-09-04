@@ -46,9 +46,16 @@
   		<link rel="stylesheet" href="css/style.css">
 
     	<script>
+			function setPreferences() {
+				gameService.setPreferences({
+					over_18: $('#eightteen')[0].checked,
+					opt_in: $('#newsletter')[0].checked
+				})
+			}
 			$().ready(function() {
 
 				$('#facebookLogin').on("click", function () {
+					setPreferences();
 					gameService.signInWithFacebook();
 				});
 
@@ -56,7 +63,7 @@
 					const email = $('#email').val();
 					const first = $('#firstname').val();
 					const last = $('#lastname').val();
-
+					setPreferences();
 					gameService.signInWithEmail(email, first, last);
 				});
 

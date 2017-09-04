@@ -92,11 +92,9 @@ The following items are still in the works!
 - [x] determine winner by greater score
 - [x] determine winner during tie
 - [x] win when score > threshold
-- [ ] add cloud functions validations to mitigate cheaters
+- [x] add cloud functions validations to mitigate cheaters
   - [x] use [bolt](https://github.com/firebase/bolt/blob/master/docs/language.md) to enforce database ACL
-  - [ ] use [validation rules](https://firebase.google.com/docs/database/security/) to:
-    - [ ] limit changes in score
-    - [ ] enforce start/end times
+  - [x] use [validation rules](https://firebase.google.com/docs/database/security/) to:
     - [x] only allow read if <2 participants?
     - [x] enforce participants?
     - [x] store 1 entry per day per player
@@ -104,10 +102,10 @@ The following items are still in the works!
 - [x] send proper asset when non FB user logs in
 - [x] send proper object info when bot player is used
 - [x] enable FB share button on share.js
-- [ ] gather checkbox data
-    - [ ] if under 18 do not grant entries
-    - [ ] if newsletter is checked, record user name, email
-    - [ ] if under 18 disregard ^ 
+- [x] gather checkbox data
+    - [x] if under 18 do not grant entries
+    - [x] if newsletter is checked, record user name, email
+    - [x] if under 18 disregard ^ 
 
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
