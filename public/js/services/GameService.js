@@ -476,7 +476,36 @@ function GameService (enableLogging) {
     console.log.apply(this, args);
   }
 
-  this.findOpponent = function (forceFailure) {
+  this.earnEntry = function () {
+    this.log('earnEntry');
+
+    const user = firebase.auth().currentUser;
+    const name = user.displayName;
+    const email = user.email;
+    const uid = user.uid;
+
+    const now_ts = new Date().toISOString();
+    const date = now_ts.split('T')[0];
+    const doc_id = 'entries/' + date + '/' + uid;
+    const entryDoc = this.database.ref(doc_id);
+
+    const doc = {
+      uid: uid,
+      name : name,
+      email: email,
+      earned_at: now_ts,
+    };
+
+    entryDoc.set(doc)
+      .then(_.bind(function () {
+        this.log('entry earned!');
+      }, this))
+      .catch(_.bind(function(error) {
+        this.log('daily entry limit exceeded!');
+      }, this));
+  }
+
+  this.findOpponent = function () {
     this.log('findOpponent');
 
     if (!this.state.player) {
@@ -594,7 +623,9 @@ function GameService (enableLogging) {
         }
       }, this))
       .catch(_.bind(function(error) {
-        this.log('something went wrong while creating game!', error, doc);
+        this.log('something went wrong while creating game!');
+        this.log('^ error:', error);
+        this.log('^ doc:', doc);
 
         // TODO: "something went wrong? <try again>?
       }, this));
@@ -874,6 +905,9 @@ function GameService (enableLogging) {
 
     // let client cleanup state
     this.onLeavingCurrentState();
+
+    // earn entry
+    this.earnEntry();
 
     if (this.state.opponent_simulated) {
       // start simulating remote player
