@@ -105,6 +105,9 @@ The following items are still in the works!
 - [x] send proper object info when bot player is used
 - [x] enable FB share button on share.js
 - [ ] gather checkbox data
+    - [ ] if under 18 do not grant entries
+    - [ ] if newsletter is checked, record user name, email
+    - [ ] if under 18 disregard ^ 
 
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
