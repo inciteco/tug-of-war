@@ -287,9 +287,9 @@ input[type="checkbox"]:checked
 }
 
 #legalText {
-	width: 95%;
+	width: 100%;
 	margin-top: 0px;
 	margin-bottom: 20px;
-	font-size: .7em;
+	font-size: .65em;
 	font-style: italic;
 }
