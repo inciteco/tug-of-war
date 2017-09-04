@@ -108,6 +108,6 @@ The following items are still in the works!
 
 ## found bugs!
 - [ ] Private safari tabs get stuck signing in (related issues:  [1](https://stackoverflow.com/questions/28283221/firebase-authdata-from-third-party-authentication-is-always-null-in-mobile-safar), [2](https://github.com/firebase/firebaseui-web/issues/51))
-- [ ] Facebook login not (always) working in safari
+- [x] Facebook login not (always) working in safari
 - [x] First few moves (sometimes none of them) don't always seem to register (visually)
-- [ ] Play Again button takes user back to waitforplayer, but it doesn't ever link you to another player. Just waits...
+- [x] Play Again button takes user back to waitforplayer, but it doesn't ever link you to another player. Just waits...
