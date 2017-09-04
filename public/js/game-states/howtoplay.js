@@ -60,7 +60,7 @@ var howtoplayState = {
 		notYouText.anchor.set(0.5);
 		notYouText.inputEnabled = true;
 		notYouText.events.onInputDown.add(howtoplayState.logOutGame, this);
-		notYouText.alignTo(player1Name, Phaser.BOTTOM_CENTER, 0, -10);
+		notYouText.alignTo(player1Name, Phaser.BOTTOM_CENTER, 0, -5);
 		
 		// give appearance of hypertext
 		var underline = this.game.add.graphics(game.world.centerX, notYouText.bottom - 5);
