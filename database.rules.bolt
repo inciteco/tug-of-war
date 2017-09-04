@@ -3,7 +3,16 @@ path /games/{date} {
   read() { isSignedIn() }
 }
 
-// All individual Posts are writable by anyone.
+path /entries/{date} {
+  read() { isSignedIn() }
+}
+
+path /entries/{date}/{uid} is Entry {
+  index() { [ "earned_at", "email" ] }
+  write() { isCurrentUser(uid) }
+}
+
+// All individual games are writable by anyone.
 path /games/{date}/{id} is Game {
   // TODO: only if player_keys.contains(uid)
   // or player_keys.length < 2
@@ -50,6 +59,17 @@ type Player {
     this.key != null &&
     this.name != null &&
     this.image != null
+  }
+}
+
+type Entry {
+  uid: String
+  name: String
+  email: String
+  earned_at: String
+
+  validate() {
+    prior(this) == null && this != null
   }
 }
 
