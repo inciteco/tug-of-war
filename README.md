@@ -43,8 +43,6 @@ reports
 └── 2017-09-05T13:46:50-opt_ins.csv
 ```
 
-> Note: make sure you've run `brew install jq`
-
 ## Compressing assets
 
 There is a script to compress all source images in the `src/assets/images` folder into the `public/assets/images`. The initial pass reduced our load from 77mb to 10mb.
