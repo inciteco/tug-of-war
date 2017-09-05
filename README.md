@@ -78,7 +78,7 @@ If you get weird caching things after updating js files, try running this in the
 `localStorage.clear()`
 
 ## Known Issues
-- [ ] [#2](issues/2) Can't login when in private Safari tabs
-- [ ] [#27](issues/27) Back button leads to losing and freezing
-- [ ] [#22](issues/22) Sticky name/avatar
-- Find something? [Report an issue](issues/new)
+- [ ] [#2](/../../issues/2) Can't login when in private Safari tabs
+- [ ] [#27](/../../issues/27) Back button leads to losing and freezing
+- [ ] [#22](/../../issues/22) Sticky name/avatar
+- Find something? [Report an issue](/../../issues/new)
