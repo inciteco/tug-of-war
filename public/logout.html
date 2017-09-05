@@ -10,13 +10,14 @@
     <script type="text/javascript" src="js/lib/EventEmitter.min.js"></script>
 		<script type="text/javascript" src="js/lib/lodash.min.js"></script>
 		<script type="text/javascript" src="js/services/GameService.js"></script>
-
-		<script type="text/javascript">
-			var gameService = new GameService(true);
-			gameService.signOut();
-      document.location = '/';
-		</script>
   </head>
   <body>
+		<script type="text/javascript">
+			firebase.auth().signOut();
+			function redirect() {
+				document.location = '/';
+			}
+			setTimeout(redirect, 200);
+		</script>
 	</body>
 </html>
