@@ -55,14 +55,12 @@ npm run compress
 
 Deploy to Staging:
 ```
-npm use default
-npm run deploy
+firebase use default && firebase deploy
 ```
 
 Deploy to Production:
 ```
-npm use default
-npm run production
+firebase use production && firebase deploy
 ```
 
 ## other notes
