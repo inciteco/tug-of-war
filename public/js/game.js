@@ -176,8 +176,8 @@ function toggleShareOff() {
 	console.log('[Game] toggleShareOff');
 	
 	// Reload youTube source to keep audio from playing into next game
-//	document.getElementById("popeyeVid").src = "https://www.youtube.com/embed/t6k_zjcEFMk?rel=0";
-	document.getElementById("popeyeVid").src = "https://www.youtube.com/embed/4Sf20y3Hd8A?rel=0";
+	document.getElementById("popeyeVid").src = "https://www.youtube.com/embed/t6k_zjcEFMk?rel=0";
+//	document.getElementById("popeyeVid").src = "https://www.youtube.com/embed/4Sf20y3Hd8A?rel=0";
 	
 	document.getElementById("popeye-game").style.display = "block";
 	document.getElementById("forShareOnly").style.display = "none";
