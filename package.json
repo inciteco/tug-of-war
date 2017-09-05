@@ -11,8 +11,7 @@
     "compress-images": "imagemin src/assets/images/* --out-dir=public/assets/images",
     "compress-audio": "node ./node_modules/audio-converter/index.js ./src/assets/sounds/ ./public/assets/sounds/",
     "compress": "npm run compress-images && npm run compress-audio",
-    "entries-report": "firebase database:get /entries | jq '[.[] | .[] | {name: .name, email: .email, earned_at: .earned_at}]' | ./node_modules/json2csv/bin/json2csv.js -o reports/entries-`date \"+%Y%m%d\"`.csv && echo generated in reports/entries-`date \"+%Y%m%d\"`.csv",
-    "optins-report": "firebase database:get /opt_ins | jq '[.[] | {name: .name, email: .email, opt_in: .opt_in}]' | ./node_modules/json2csv/bin/json2csv.js -o reports/opt_ins-`date \"+%Y%m%d\"`.csv && echo generated in reports/opt_ins-`date \"+%Y%m%d\"`.csv",
+    "reports": "sh bin/reports.sh",
     "postinstall": "mkdir reports"
   },
   "repository": {

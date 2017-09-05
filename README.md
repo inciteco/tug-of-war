@@ -31,11 +31,16 @@ brew install jq
 
 ## Reporting
 
-You can generate a csv of all user sweeps entries with the following command:
+You can generate csv-formatted reports with the command below. There will be two files created in the `reports/` directory prefixed with the current timestamp.
 
 ```sh
-npm use production
-npm run entries-report
+reports
+├── 2017-09-05T13:46:50-entries.csv
+└── 2017-09-05T13:46:50-opt_ins.csv
+```
+
+```sh
+npm use production && npm run reports
 ```
 
 > Note: make sure you've run `brew install jq`
