@@ -550,7 +550,8 @@ function GameService (enableLogging) {
     const doc = {
       name : name,
       email: email,
-      opt_in: userOptIn
+      opt_in: userOptIn,
+      updated_at: now_ts
     };
 
     entryDoc.set(doc)
