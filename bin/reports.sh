@@ -14,7 +14,13 @@ exec firebase database:get /opt_ins | \
         select(.email | contains("inciteco.com")    | not) |
         select(.email | contains("helloworld.com")  | not) |
         select(.email | contains("lab-media.com")   | not) |
-        {name: .name, email: .email, opt_in: .opt_in}]' | \
+        {
+          name: .name,
+          email: .email,
+          opt_in: .opt_in,
+          updated_at: .updated_at
+        }
+      ]' | \
   ./node_modules/json2csv/bin/json2csv.js -o $optin_path &&
   echo generated: $optin_path
 
@@ -30,7 +36,12 @@ exec firebase database:get /entries | \
         select(.email | contains("inciteco.com")    | not) |
         select(.email | contains("helloworld.com")  | not) |
         select(.email | contains("lab-media.com")   | not) |
-        {name: .name, email: .email, earned_at: .earned_at}]' | \
+        {
+          name: .name,
+          email: .email,
+          earned_at: .earned_at
+        }
+      ]' | \
   ./node_modules/json2csv/bin/json2csv.js -o $entries_path &&
   echo generated: $entries_path
 

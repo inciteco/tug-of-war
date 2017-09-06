@@ -83,6 +83,7 @@ type OptIn {
   name: String
   email: String
   opt_in: Boolean
+  updated_at: String | Null
 }
 
 // helpers
