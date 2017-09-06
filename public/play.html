@@ -14,7 +14,7 @@
 		})(window,document,'script','dataLayer','GTM-5QDXM5J');</script>
 
 		<!-- End Google Tag Manager -->
-	
+
 		<meta charset="UTF-8">
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
@@ -61,24 +61,38 @@
 
 		<script type="text/javascript">
 
-			console.log('init phaser stuff');
-
 			// create game service
 			const logging = true;
 			const gameService = new GameService(logging);
-			gameService.addListener('onPlayerReady', function (player) {
-				if (!player) {
-					// redirect to login
-					document.location = "/";
-				}
-			})
+			gameService.addListener('onPlayerReady',
+				function (player) {
+					if (!player) {
+						// redirect to login
+						document.location = "/";
+					}
+				})
+
+			gameService.addListener('onGameplayStart',
+				function (player) {
+					trackEvent("gameplay-start");
+				})
+
+			gameService.addListener('onGameplayEnd',
+				function (player) {
+					trackEvent("gameplay-end");
+				})
+
+			function trackEvent (event) {
+				console.log('trackEvent', event);
+
+				// classic GA
+				ga('send', 'event', "engagement", event);
+
+				// tag manager
+				dataLayer.push({ 'event': event });
+			}
+
 			window.gameService = gameService;
-
-			// TODO: find another way to handle resizes since
-			// refreshing will likely interrupt a game?
-
-			// refresh page if browser is resized
-			// window.onresize = function(){ location.reload(); }
 
 		</script>
 

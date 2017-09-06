@@ -5,9 +5,10 @@ var shareState = {
 	create: function() {
 
 		toggleShareOn();
-		
+
 		$("#primary").fitVids();
 
+		trackEvent("final-screen");
 	},
 
 // Call waitforplayer state
