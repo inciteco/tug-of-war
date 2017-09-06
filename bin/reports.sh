@@ -1,4 +1,4 @@
-export now=$(date +'%Y-%m-%dT%H:%M:%S')
+export now=$(date +'%Y%m%d')
 export optin_path="reports/$now-opt_ins.csv"
 export entries_path="reports/$now-entries.csv"
 
