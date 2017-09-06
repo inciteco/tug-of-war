@@ -12,7 +12,7 @@
     "compress-audio": "node ./node_modules/audio-converter/index.js ./src/assets/sounds/ ./public/assets/sounds/",
     "compress": "npm run compress-images && npm run compress-audio",
     "reports": "sh bin/reports.sh",
-    "postinstall": "mkdir reports"
+    "postinstall": "mkdir -p reports"
   },
   "repository": {
     "type": "git",
