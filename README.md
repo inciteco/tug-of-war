@@ -33,7 +33,7 @@ brew install jq
 
 You can generate csv-formatted reports with the command below:
 ```sh
-npm use production && npm run reports
+firebase use production && npm run reports
 ```
 
 This will create two timestamp-prefixed files in `reports/`:
