@@ -77,6 +77,10 @@ gameService.signOut()
 If you get weird caching things after updating js files, try running this in the chrome dev tools console while on the page:
 `localStorage.clear()`
 
+## Source PSD
+
+A fully layered, editable psd is in the root of /src which contains all visual assets
+
 ## Known Issues
 - [x] [#2](/../../issues/2) Can't login when in private Safari tabs
 - [ ] [#27](/../../issues/27) Back button leads to losing and freezing
